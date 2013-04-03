@@ -19,4 +19,5 @@
 @property (strong, nonatomic) NSString *pushedView;
 @property (strong, nonatomic) NSString *class_name; // either class or sub class
 @property (nonatomic, assign, getter=isActualItems) BOOL isActualItems;
+@property (nonatomic, assign, getter=isSubclass) BOOL isSubclass;
 @end
