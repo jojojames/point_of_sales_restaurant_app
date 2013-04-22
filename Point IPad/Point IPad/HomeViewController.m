@@ -10,11 +10,13 @@
 #import "HomeCollection.h"
 #import "HomeCollectionCell.h"
 #import "LoginTableViewController.h"
+#import "HomeViewCellLayout.h"
+#import "QuickServeController.h"
 
-@interface HomeViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HomeViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (retain, nonatomic) IBOutlet HomeCollection *homeCollectionView;
 @property (retain, nonatomic) IBOutlet UIView *HomeTopView;
-
+@property (nonatomic, retain) IBOutlet HomeViewCellLayout *menuLayout;
 @end
 
 @implementation HomeViewController
@@ -28,14 +30,14 @@
 
 - (void)viewDidLoad
 {
-    /*
-     Set a delegate and datasource for whatever view.
-     */
+    // Set a delegate and datasource
     self.homeCollectionView.delegate = self;
     self.homeCollectionView.dataSource = self;
+    self.homeCollectionView.backgroundColor = [UIColor whiteColor];
+    
     
     // Set the options with this line
-    [self setHomeOptions:[[NSArray alloc] initWithObjects:@"Login", @"Quick Serve", @"Blah1", @"blah@", nil]];
+    [self setHomeOptions:[[NSArray alloc] initWithObjects:@"Login", @"Quick Serve", @"SETTINGS", @"TEST", @"TESTSS", @"Blah1", @"blah@", @"test", nil]];
     self.clockedInEmployees = [[NSMutableArray alloc] init];
     self.loggedInEmployee = [[NSMutableArray alloc] init];
     
@@ -65,8 +67,8 @@
 {
     static NSString *identifier = @"homeOptions";
     HomeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Frame.png"]];
     cell.optionLabel.text = [homeOptions objectAtIndex:indexPath.row];
-    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
     NSLog(@"%@", cell.optionLabel.text);
     return cell;
 }
@@ -77,6 +79,11 @@
     if ([pickedHomeOption isEqualToString:@"Login"]) {
         [self performSegueWithIdentifier:@"loginSegue" sender:self];
     }
+    
+    if ([pickedHomeOption isEqualToString:@"Quick Serve"]) {
+        [self performSegueWithIdentifier:@"quickServe" sender:self];
+    }
+    
     // add more like quickserve in here
 }
 
@@ -87,6 +94,13 @@
         destViewController.allEmployees = [[self database] returnEmployees];
         destViewController.clockedInEmployees = [self clockedInEmployees];
         destViewController.loggedInEmployee = [self loggedInEmployee];
+    }
+    
+    if ([segue.identifier isEqualToString:@"quickServe"]) {
+        QuickServeController *destViewController = segue.destinationViewController;
+        destViewController.database = [self database];
+        destViewController.pushedView = @"mainClassItems";
+        destViewController.isActualItems = FALSE; // items don't show immediately, only class names
     }
 }
 

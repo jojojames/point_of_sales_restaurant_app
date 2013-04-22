@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B771AED1725F9FC0092003B /* Dec_Art_Jam_Frame_PNG_file_by_mashi.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B771AEC1725F9FC0092003B /* Dec_Art_Jam_Frame_PNG_file_by_mashi.png */; };
+		8B771AEF1725FA070092003B /* SwirlBlkFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B771AEE1725FA070092003B /* SwirlBlkFrame.png */; };
+		8B771AF11725FB420092003B /* Frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B771AF01725FB420092003B /* Frame.png */; };
+		8B771AF41725FCC00092003B /* QuickServeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AF31725FCC00092003B /* QuickServeController.m */; };
+		8B771AF81725FD070092003B /* QuickServeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AF71725FD070092003B /* QuickServeCell.m */; };
 		8B8C892F1713744B00C9E1BE /* PGSQLColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89241713744B00C9E1BE /* PGSQLColumn.m */; };
 		8B8C89301713744B00C9E1BE /* PGSQLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89261713744B00C9E1BE /* PGSQLConnection.m */; };
 		8B8C89311713744B00C9E1BE /* PGSQLConnectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89281713744B00C9E1BE /* PGSQLConnectionInfo.m */; };
@@ -60,6 +65,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B771AEC1725F9FC0092003B /* Dec_Art_Jam_Frame_PNG_file_by_mashi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dec_Art_Jam_Frame_PNG_file_by_mashi.png; sourceTree = "<group>"; };
+		8B771AEE1725FA070092003B /* SwirlBlkFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwirlBlkFrame.png; sourceTree = "<group>"; };
+		8B771AF01725FB420092003B /* Frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Frame.png; sourceTree = "<group>"; };
+		8B771AF21725FCC00092003B /* QuickServeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickServeController.h; path = QuickServe/QuickServeController.h; sourceTree = "<group>"; };
+		8B771AF31725FCC00092003B /* QuickServeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickServeController.m; path = QuickServe/QuickServeController.m; sourceTree = "<group>"; };
+		8B771AF61725FD070092003B /* QuickServeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickServeCell.h; path = QuickServe/QuickServeCell.h; sourceTree = "<group>"; };
+		8B771AF71725FD070092003B /* QuickServeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickServeCell.m; path = QuickServe/QuickServeCell.m; sourceTree = "<group>"; };
 		8B8C86F51713741400C9E1BE /* ecpg_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpg_config.h; sourceTree = "<group>"; };
 		8B8C86F61713741400C9E1BE /* ecpg_informix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpg_informix.h; sourceTree = "<group>"; };
 		8B8C86F71713741400C9E1BE /* ecpgerrno.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpgerrno.h; sourceTree = "<group>"; };
@@ -652,6 +664,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B771AF51725FCC60092003B /* QuickServe */ = {
+			isa = PBXGroup;
+			children = (
+				8B771AF21725FCC00092003B /* QuickServeController.h */,
+				8B771AF31725FCC00092003B /* QuickServeController.m */,
+				8B771AF61725FD070092003B /* QuickServeCell.h */,
+				8B771AF71725FD070092003B /* QuickServeCell.m */,
+			);
+			name = QuickServe;
+			sourceTree = "<group>";
+		};
 		8B8C86F41713741400C9E1BE /* libpq */ = {
 			isa = PBXGroup;
 			children = (
@@ -1571,6 +1594,7 @@
 		8BF9051E17135FF500B02EB3 /* Point IPad */ = {
 			isa = PBXGroup;
 			children = (
+				8B771AF51725FCC60092003B /* QuickServe */,
 				8B8C891D1713744B00C9E1BE /* PGSQLKit */,
 				8B8C86F41713741400C9E1BE /* libpq */,
 				8BF90545171373C200B02EB3 /* pqtouch.xcodeproj */,
@@ -1615,6 +1639,9 @@
 		8BF905421713718700B02EB3 /* Pictures */ = {
 			isa = PBXGroup;
 			children = (
+				8B771AF01725FB420092003B /* Frame.png */,
+				8B771AEE1725FA070092003B /* SwirlBlkFrame.png */,
+				8B771AEC1725F9FC0092003B /* Dec_Art_Jam_Frame_PNG_file_by_mashi.png */,
 				8BF905431713718700B02EB3 /* photo-frame.png */,
 			);
 			path = Pictures;
@@ -1703,6 +1730,9 @@
 				8BF9052F17135FF500B02EB3 /* Default-568h@2x.png in Resources */,
 				8BF9053217135FF500B02EB3 /* MainStoryboard.storyboard in Resources */,
 				8BF905441713718700B02EB3 /* photo-frame.png in Resources */,
+				8B771AED1725F9FC0092003B /* Dec_Art_Jam_Frame_PNG_file_by_mashi.png in Resources */,
+				8B771AEF1725FA070092003B /* SwirlBlkFrame.png in Resources */,
+				8B771AF11725FB420092003B /* Frame.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1736,6 +1766,8 @@
 				8BB3FF2C1713893200E2C4C0 /* LoginTableViewCell.m in Sources */,
 				8BB3FF2F171391A700E2C4C0 /* EmployeeListTableViewController.m in Sources */,
 				8BB3FF321713921900E2C4C0 /* EmployeeListTableViewCell.m in Sources */,
+				8B771AF41725FCC00092003B /* QuickServeController.m in Sources */,
+				8B771AF81725FD070092003B /* QuickServeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
