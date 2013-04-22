@@ -53,15 +53,6 @@
     [self testLogin];
 }
 
-- (void)testLogin
-{
-    if (self.isLoggedIn) {
-        NSLog(@"Logged In");
-    } else {
-        NSLog((@"Not Logged In"));
-    }
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

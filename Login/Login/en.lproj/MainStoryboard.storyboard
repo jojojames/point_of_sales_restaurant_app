@@ -140,7 +140,7 @@
             </objects>
             <point key="canvasLocation" x="-1028" y="22"/>
         </scene>
-        <!--Quick Serve Collection View Controller - Class-->
+        <!--Quick Serve Collection View Controller - Quick Serve-->
         <scene sceneID="XsL-xa-fLD">
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="pEb-P0-iBv" customClass="QuickServeCollectionViewController" sceneMemberID="viewController">
@@ -187,14 +187,14 @@
                             <outlet property="delegate" destination="pEb-P0-iBv" id="9uw-mp-dCe"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Class" id="aNA-b3-jJq"/>
+                    <navigationItem key="navigationItem" title="Quick Serve" id="aNA-b3-jJq"/>
                     <connections>
                         <outlet property="classMenuItemsView" destination="RNY-Be-b8b" id="HsK-Wt-t8x"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Noo-0b-F0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-528" y="-782"/>
+            <point key="canvasLocation" x="-483" y="-540"/>
         </scene>
         <!--Login Menu Controller - Login-->
         <scene sceneID="lqb-vU-j8T">
@@ -311,7 +311,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6PP-n2-NCz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-581" y="286"/>
+            <point key="canvasLocation" x="-483" y="346"/>
         </scene>
         <!--Login Table View Controller - Employees-->
         <scene sceneID="VBw-Fp-qCp">
@@ -409,7 +409,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ync-iD-NIJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13" y="507"/>
+            <point key="canvasLocation" x="105" y="581"/>
         </scene>
         <!--Password View Controller For Log In - Password-->
         <scene sceneID="TvN-Dg-OMJ">
@@ -455,7 +455,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9qu-qg-khW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="380" y="507"/>
+            <point key="canvasLocation" x="397" y="602"/>
         </scene>
         <!--Password View Controller - Password-->
         <scene sceneID="DdL-EQ-7Nf">
@@ -525,6 +525,75 @@
             <point key="canvasLocation" x="-1390" y="22"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="HomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="currentUserLabel" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="homeButtons" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LoginMenuController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginMenuController.h"/>
+            <relationships>
+                <relationship kind="outletCollection" name="loginButtons" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LoginTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginTableViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="employeeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LoginTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="empListView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PasswordViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PasswordViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="clockingButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="PasswordViewControllerForLogIn" superclassName="PasswordViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PasswordViewControllerForLogIn.h"/>
+            <relationships>
+                <relationship kind="outlet" name="loggingButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="QuickServeCollectionViewCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickServeCollectionViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="itemLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="QuickServeCollectionViewController" superclassName="UICollectionViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickServeCollectionViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="classMenuItemsView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="oneFingerOneTap" candidateClass="UITapGestureRecognizer"/>
+            </relationships>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewController.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
