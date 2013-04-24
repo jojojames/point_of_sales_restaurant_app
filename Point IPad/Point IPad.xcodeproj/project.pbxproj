@@ -12,6 +12,7 @@
 		8B771AF11725FB420092003B /* Frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B771AF01725FB420092003B /* Frame.png */; };
 		8B771AF41725FCC00092003B /* QuickServeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AF31725FCC00092003B /* QuickServeController.m */; };
 		8B771AF81725FD070092003B /* QuickServeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AF71725FD070092003B /* QuickServeCell.m */; };
+		8B771AFB172853950092003B /* HomeCollectionFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AFA172853950092003B /* HomeCollectionFlow.m */; };
 		8B8C892F1713744B00C9E1BE /* PGSQLColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89241713744B00C9E1BE /* PGSQLColumn.m */; };
 		8B8C89301713744B00C9E1BE /* PGSQLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89261713744B00C9E1BE /* PGSQLConnection.m */; };
 		8B8C89311713744B00C9E1BE /* PGSQLConnectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89281713744B00C9E1BE /* PGSQLConnectionInfo.m */; };
@@ -72,6 +73,8 @@
 		8B771AF31725FCC00092003B /* QuickServeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickServeController.m; path = QuickServe/QuickServeController.m; sourceTree = "<group>"; };
 		8B771AF61725FD070092003B /* QuickServeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickServeCell.h; path = QuickServe/QuickServeCell.h; sourceTree = "<group>"; };
 		8B771AF71725FD070092003B /* QuickServeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickServeCell.m; path = QuickServe/QuickServeCell.m; sourceTree = "<group>"; };
+		8B771AF9172853950092003B /* HomeCollectionFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeCollectionFlow.h; path = HomeScreen/HomeCollectionFlow.h; sourceTree = "<group>"; };
+		8B771AFA172853950092003B /* HomeCollectionFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeCollectionFlow.m; path = HomeScreen/HomeCollectionFlow.m; sourceTree = "<group>"; };
 		8B8C86F51713741400C9E1BE /* ecpg_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpg_config.h; sourceTree = "<group>"; };
 		8B8C86F61713741400C9E1BE /* ecpg_informix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpg_informix.h; sourceTree = "<group>"; };
 		8B8C86F71713741400C9E1BE /* ecpgerrno.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpgerrno.h; sourceTree = "<group>"; };
@@ -1623,6 +1626,8 @@
 		8BF9053E171361E300B02EB3 /* HomeScreen */ = {
 			isa = PBXGroup;
 			children = (
+				8B771AF9172853950092003B /* HomeCollectionFlow.h */,
+				8B771AFA172853950092003B /* HomeCollectionFlow.m */,
 				8BF9053F1713622E00B02EB3 /* HomeCollectionCell.h */,
 				8BF905401713622E00B02EB3 /* HomeCollectionCell.m */,
 				8BF9052717135FF500B02EB3 /* HomeAppDelegate.h */,
@@ -1768,6 +1773,7 @@
 				8BB3FF321713921900E2C4C0 /* EmployeeListTableViewCell.m in Sources */,
 				8B771AF41725FCC00092003B /* QuickServeController.m in Sources */,
 				8B771AF81725FD070092003B /* QuickServeCell.m in Sources */,
+				8B771AFB172853950092003B /* HomeCollectionFlow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

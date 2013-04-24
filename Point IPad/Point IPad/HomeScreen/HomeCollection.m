@@ -8,7 +8,7 @@
 
 #import "HomeCollection.h"
 
-@implementation HomeCollection
+@implementation HomeCollection 
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -18,6 +18,8 @@
     }
     return self;
 }
+
+
 
 
 /*

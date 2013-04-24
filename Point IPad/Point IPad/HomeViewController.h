@@ -10,7 +10,7 @@
 #import "DatabaseAccess.h"
 #import "Employee.h"
 
-@interface HomeViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HomeViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) DatabaseAccess *database; // the main database that the whole program draws from
 @property (nonatomic, strong) NSArray *homeOptions;
 // clocked in employees

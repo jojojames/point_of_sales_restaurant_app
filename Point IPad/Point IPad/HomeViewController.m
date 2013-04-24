@@ -10,17 +10,19 @@
 #import "HomeCollection.h"
 #import "HomeCollectionCell.h"
 #import "LoginTableViewController.h"
-#import "HomeViewCellLayout.h"
 #import "QuickServeController.h"
+#import "HomeCollectionFlow.h"
 
 @interface HomeViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (retain, nonatomic) IBOutlet HomeCollection *homeCollectionView;
 @property (retain, nonatomic) IBOutlet UIView *HomeTopView;
-@property (nonatomic, retain) IBOutlet HomeViewCellLayout *menuLayout;
+@property (strong, nonatomic) HomeCollectionFlow *flowLayout;
 @end
 
 @implementation HomeViewController
 @synthesize homeOptions;
+@synthesize homeCollectionView;
+
 
 - (DatabaseAccess *)database
 {
@@ -30,14 +32,18 @@
 
 - (void)viewDidLoad
 {
-    // Set a delegate and datasource
-    self.homeCollectionView.delegate = self;
-    self.homeCollectionView.dataSource = self;
-    self.homeCollectionView.backgroundColor = [UIColor whiteColor];
     
+    // Set the layout
+    self.flowLayout = [[HomeCollectionFlow alloc] init];
+    // init the collection view
+    self.homeCollectionView = [[HomeCollection alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
+    
+    // Set datasource and delegate
+    homeCollectionView.delegate = self;
+    homeCollectionView.dataSource = self;
     
     // Set the options with this line
-    [self setHomeOptions:[[NSArray alloc] initWithObjects:@"Login", @"Quick Serve", @"SETTINGS", @"TEST", @"TESTSS", @"Blah1", @"blah@", @"test", nil]];
+    [self setHomeOptions:[[NSArray alloc] initWithObjects:@"Login", @"Quick Serve", @"Settings", @"Alpha", @"Beta", @"Gamma", @"Delta", @"Epsilon", @"Zeta", @"Eta", @"Theta", @"Iota", @"Kappa", @"Lambda", @"Mu", @"Nu", @"Xi", @"Omicron", @"Pi", @"Rho", @"Sigma", @"Tau", @"Upsilon", @"Phi", @"Chi", @"Psi", @"Omega", nil]];
     self.clockedInEmployees = [[NSMutableArray alloc] init];
     self.loggedInEmployee = [[NSMutableArray alloc] init];
     
@@ -67,8 +73,11 @@
 {
     static NSString *identifier = @"homeOptions";
     HomeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Frame.png"]];
+    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Frame.png"]];
+    cell.backgroundColor = [UIColor whiteColor];
     cell.optionLabel.text = [homeOptions objectAtIndex:indexPath.row];
+    [cell changeBorders:cell.frame];
+    
     NSLog(@"%@", cell.optionLabel.text);
     return cell;
 }
@@ -87,6 +96,7 @@
     // add more like quickserve in here
 }
 
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"loginSegue"]) {
@@ -104,14 +114,16 @@
     }
 }
 
-- (void)printAllEmployees:(NSMutableArray *)array {
+- (void)printAllEmployees:(NSMutableArray *)array
+{
     for (int i=0; i<[array count]; i++) {
         NSLog(@"%@", [[array objectAtIndex:i] fullname]);
     }
 }
 
-- (void)dealloc {
-    [_homeCollectionView release];
+- (void)dealloc
+{
+    [homeCollectionView release];
     [_HomeTopView release];
     [super dealloc];
 }

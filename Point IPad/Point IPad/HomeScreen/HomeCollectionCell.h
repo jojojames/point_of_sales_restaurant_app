@@ -10,5 +10,5 @@
 
 @interface HomeCollectionCell : UICollectionViewCell
 @property (retain, nonatomic) IBOutlet UILabel *optionLabel;
-
+- (void)changeBorders:(CGRect)frame;
 @end

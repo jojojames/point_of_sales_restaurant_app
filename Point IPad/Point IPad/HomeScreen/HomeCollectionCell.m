@@ -12,28 +12,32 @@
 @implementation HomeCollectionCell
 @synthesize optionLabel;
 
-- (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.restorationIdentifier = @"homeOptions";
-        self.backgroundColor = [UIColor clearColor];
-        self.autoresizingMask = UIViewAutoresizingNone;
-        
-        CGFloat borderWidth = 3.0f;
-        UIView *bgView = [[UIView alloc] initWithFrame:frame];
-        bgView.layer.borderColor = [UIColor redColor].CGColor;
-        bgView.layer.borderWidth = borderWidth;
-        self.selectedBackgroundView = bgView;
-        
-        CGRect myContentRect = CGRectInset(self.contentView.bounds, borderWidth, borderWidth);
-        
-        UIView *myContentView = [[UIView alloc] initWithFrame:myContentRect];
-        myContentView.backgroundColor = [UIColor whiteColor];
-        myContentView.layer.borderColor = [UIColor colorWithWhite:0.5f alpha:1.0f].CGColor;
-        myContentView.layer.borderWidth = borderWidth;
-        [self.contentView addSubview:myContentView];
-    }
+- (id)initWithFrame:(CGRect)frame
+{
+    if (!(self = [super initWithFrame:frame])) return nil;
     return self;
+}
+
+- (void)changeBorders:(CGRect)frame
+{
+    self.restorationIdentifier = @"restHomeOptions";
+    self.backgroundColor = [UIColor clearColor];
+    self.autoresizingMask = UIViewAutoresizingNone;
+    
+    CGFloat borderWidth = 3.0f;
+    UIView *bgView = [[UIView alloc] initWithFrame:frame];
+    bgView.layer.borderColor = [UIColor redColor].CGColor;
+    bgView.layer.borderWidth = borderWidth;
+    self.selectedBackgroundView = bgView;
+    
+    CGRect myContentRect = CGRectInset(self.contentView.bounds, borderWidth, borderWidth);
+    
+    UIView *myContentView = [[UIView alloc] initWithFrame:myContentRect];
+    myContentView.backgroundColor = [UIColor whiteColor];
+    myContentView.layer.borderColor = [UIColor colorWithWhite:0.5f alpha:1.0f].CGColor;
+    myContentView.layer.borderWidth = borderWidth;
+    [self.contentView addSubview:myContentView];
+    [self.contentView bringSubviewToFront:optionLabel];
 }
 
 /*
@@ -45,7 +49,9 @@
 }
 */
 
-- (void)dealloc {
+- (void)dealloc
+{
     [super dealloc];
 }
+
 @end

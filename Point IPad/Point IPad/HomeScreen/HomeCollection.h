@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HomeCollectionFlow.h"
 
-@interface HomeCollection : UICollectionView
+@interface HomeCollection : UICollectionView 
 
 @end
