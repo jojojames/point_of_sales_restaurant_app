@@ -11,7 +11,7 @@
 @interface QuickServeCell : UICollectionViewCell
 @property (retain, nonatomic) IBOutlet UILabel *itemLabel;
 
-
+- (void)changeBorders:(CGRect)frame;
 
 
 @end

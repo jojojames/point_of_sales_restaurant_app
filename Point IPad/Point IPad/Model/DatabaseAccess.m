@@ -41,7 +41,7 @@
     [pgConn setPassword:password];
 }
 
-- (NSArray *)returnEmployees
+- (NSArray *)employeesFromDatabase
 {
     NSArray *employees = [[self getEmployeeFromDatabase] copy];
     return employees;
@@ -71,7 +71,7 @@
     return employeeArray;
 }
 
-- (void)getItemProperties:(ItemProperties *)item withItemId:(NSString *)itemId
+- (void)itemProperties:(ItemProperties *)item withItemId:(NSString *)itemId
 {
     NSString *query = [[NSString alloc] initWithFormat:@"SELECT HOTNESS, OPTIONS, COMMENT, TOPPINGS_LEVEL, TOPPING_THRESHOLD, TOPPING_PRICE, NAME, HOTNESS_LEVEL, COMMENTS_LEVEL, OPTIONS_LEVEL, QUANTITY_LEVEL, EXTRAS_LEVEL, HAS_SUBITEMS, getTaxPercentage(%@), COOK_ITEM, SET_PRICE, SLOT_TIME, COURSE FROM TBL_ITEMS WHERE ITEM_ID = %@", itemId, itemId];
     
@@ -105,7 +105,7 @@
     
 }
 
-- (void)getItemExtras:(ItemProperties *)item withItemId:(NSString *)itemId
+- (void)itemExtras:(ItemProperties *)item withItemId:(NSString *)itemId
 {
     NSString *selectExtras = [[NSString alloc] initWithFormat:
                               @"SELECT EXTRAS_ID, PRICE FROM TBL_EXTRAS WHERE ITEM_ID = %@::text", itemId];
@@ -122,7 +122,7 @@
     
 }
 
-- (void)getItemToppings:(ItemProperties *)item withItemId:(NSString *)itemId
+- (void)itemToppings:(ItemProperties *)item withItemId:(NSString *)itemId
 {
     NSString *query = [[NSString alloc] initWithFormat:@"SELECT A.TOPPING_ID, B.TOPPING_NAME, B.TOPPING_VALUE FROM TBL_ITEM_TOPPINGS A, TBL_TOPPINGS B WHERE A.ITEM_ID = %@ AND A.TOPPING_ID=B.TOPPING_ID", itemId];
     NSMutableString *command = [[NSMutableString alloc] initWithString:query];
@@ -139,7 +139,7 @@
     }
 }
 
-- (void)getItemValues:(ItemProperties *)item withItemId:(NSString *)itemId
+- (void)itemValues:(ItemProperties *)item withItemId:(NSString *)itemId
 {
     NSString *selectValues = [[NSString alloc] initWithFormat:
                               @"SELECT getPrice(%@), getTax(%@) FROM TBL_ITEMS WHERE ITEM_ID = %@", itemId, itemId, itemId];
@@ -152,8 +152,8 @@
 - (void)insertClockIn:(Employee *)employee
 {
     
-    NSString *CURRENT_DATE = [time getYearMonthDay];
-    NSString *CURRENT_TIMESTAMP = [time getYearMonthDayTime];
+    NSString *CURRENT_DATE = [time yearMonthDay];
+    NSString *CURRENT_TIMESTAMP = [time yearMonthDayTime];
     
     NSString *insertString = [NSString stringWithFormat:
                               @"insert into tbl_salary(DATE, EMPLOYEE_ID, CLOCK_IN, auto_status, update_status, hrs_status) VALUES(\'%@\', %@, \'%@\', %@, %@, %@)", CURRENT_DATE, [employee empId], CURRENT_TIMESTAMP, @"false", @"false", @"true"];
@@ -172,8 +172,8 @@
 - (void)insertClockOut:(Employee *)employee
 {
     // time
-    NSString *CURRENT_TIMESTAMP = [time getYearMonthDayTime];
-    double timeDiff = [time getTimeIntervalBetweenFirstDate:[employee clockInTime] andSecondDate:CURRENT_TIMESTAMP];
+    NSString *CURRENT_TIMESTAMP = [time yearMonthDayTime];
+    double timeDiff = [time timeBetweenDate:[employee clockInTime] andSecondDate:CURRENT_TIMESTAMP];
     double timeDiffInHours = timeDiff / SECONDS_IN_HOURS;
     
     // sql
@@ -188,7 +188,7 @@
 }
 
 /* Get a distinct set of class names to display to the user. */
-- (NSMutableArray *)getClassNames
+- (NSMutableArray *)classNames
 {
     NSString *query = [NSString stringWithFormat:
                        @"SELECT DISTINCT CLASS FROM TBL_ITEMS"];
@@ -206,7 +206,7 @@
 
 
 /* User picks choice of class/food choices, to retrieve the subclass of the food. */
-- (NSMutableArray *)getSubClassNameGivenClassName:(NSString *)className
+- (NSMutableArray *)subclassWhereClassIs:(NSString *)className
 {
     
     NSLog(@"%@:", className);
@@ -223,7 +223,7 @@
     return vSubClassNames;
 }
 
-- (NSMutableArray *)getItemNamesGivenClassName:(NSString *)className
+- (NSMutableArray *)itemsWhereClassIs:(NSString *)className
 {
     NSString *query = [NSString stringWithFormat:
                        @"SELECT DISTINCT NAME FROM TBL_ITEMS WHERE CLASS='%@'", className];
@@ -238,8 +238,25 @@
     return vItemNames;
 }
 
+- (NSNumber *)itemIdWhereClassIs:(NSString *)className andSubclassIs:(NSString *)subClassName andItemIs:(NSString *)itemName
+{
+    
+    NSString *query;
+    if (subClassName) {
+        query = [NSString stringWithFormat:
+                          @"SELECT item_id from TBL_ITEMS WHERE CLASS='%@' AND SUBCLASS='%@' AND NAME='%@'", className, subClassName, itemName];
+    } else {
+        // subclass name empty
+        query = [NSString stringWithFormat:@"SELECT item_id from TBL_ITEMS WHERE CLASS='%@' AND NAME='%@'", className, itemName];
+    }
+    //NSLog(@"%@", subClassName);
 
-- (NSMutableArray *)getItemsGiveSubClassName:(NSString *)className
+    PGSQLRecordset *rs = [pgConn open:query];
+    return [[rs fieldByIndex:0] asNumber];
+}
+
+
+- (NSMutableArray *)itemsWhereSubclassIs:(NSString *)className
 {
     NSLog(@"CLASSNAME: : : : %@:", className);
     NSString *query = [NSString stringWithFormat:
@@ -256,7 +273,7 @@
 }
 
 
-- (NSMutableArray *)getItemsWithClassName:(NSString *)className andSubClassName:(NSString *)subClassName
+- (NSMutableArray *)itemsWhereClassIs:(NSString *)className andSubclassIs:(NSString *)subClassName
 {
     
     NSString *queryStripped = [NSString stringWithFormat:
@@ -303,45 +320,18 @@
     //NSLog([[vItems objectAtIndex:0] itemName]);
     return vItems;
     
-    /*
-     
-    if(StringUtils.checkEmptyAndNull(status)||status.equals("OFF"))
-    {
-        sqlString = "SELECT ITEM_ID,NAME,getPrice(ITEM_ID),getTax(ITEM_ID)," +
-        " ITEM_COLOR,ITEM_IMAGE,ITEM_LOCATION,item_size,font_size FROM TBL_ITEMS " +
-        " WHERE CLASS = '" +
-        className + "' AND SUBCLASS  = '" + subClassName + "'" +
-        "AND SUBSTRING(MODULE from " +
-        DeliveryTypeConstants.getDeliveryTypeConstant(deliveryType) +
-        " for 1) = '1'" + " AND getPrice(ITEM_ID)!=0 ORDER BY ITEM_LOCATION";
-    }
-    else
-    {
-        sqlString = "SELECT ITEM_ID,NAME,getPrice(ITEM_ID),getTax(ITEM_ID)," +
-        " ITEM_COLOR,ITEM_IMAGE,ITEM_LOCATION,item_size,font_size FROM TBL_ITEMS " +
-        " WHERE CLASS = '" +
-        className + "' AND SUBCLASS  = '" + subClassName + "'" +
-        "AND SUBSTRING(MODULE from " +
-        DeliveryTypeConstants.getDeliveryTypeConstant(deliveryType) +
-        " for 1) = '1'" + " AND getPrice(ITEM_ID)!=0 ORDER BY NAME";
-    } */
-    
-    
-    /*
-    while(rs.next())
-    {
-        ItemColorProperties itemColorProperties = new ItemColorProperties();
-        itemColorProperties.setItemId(rs.getString(1));
-        itemColorProperties.setItemName(rs.getString(2));
-        itemColorProperties.setItemPrice(rs.getString(3));
-        itemColorProperties.setItemTax(rs.getString(4));
-        itemColorProperties.setItemColor(rs.getString(5));
-        itemColorProperties.setItemImage(rs.getString(6));
-        itemColorProperties.setItemsize(rs.getString(8));
-        itemColorProperties.setFontSize(rs.getString(9));
-        
-        vItems.addElement(itemColorProperties);
-    } */
+}
+
+- (NSMutableArray *)hotnessOptionsModifierOne:(NSNumber *)item_id
+{
+    NSMutableArray *hotnessOptions = [[NSMutableArray alloc] init];
+    NSString *query = [NSString stringWithFormat:@"SELECT hotness, hotness_level, hotness_threshold, hotness_images from TBL_ITEMS where item_id=%@", item_id];
+    PGSQLRecordset *rs = [pgConn open:query];
+    [hotnessOptions addObject:[[rs fieldByIndex:0] asString]];
+    [hotnessOptions addObject:[[rs fieldByIndex:1] asString]];
+    [hotnessOptions addObject:[[rs fieldByIndex:2] asString]];
+    [hotnessOptions addObject:[[rs fieldByIndex:3] asString]];
+    return hotnessOptions;
 }
 
 - (void)closeConnection

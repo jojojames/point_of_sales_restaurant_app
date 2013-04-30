@@ -83,23 +83,23 @@
 
 - (void)getItemProperties
 {
-    [[self database] getItemProperties:self withItemId:[self itemId]];
+    [[self database] itemProperties:self withItemId:[self itemId]];
 }
 
 - (void)getExtras
 {
-    [[self database] getItemExtras:self withItemId:[self itemId]];
+    [[self database] itemExtras:self withItemId:[self itemId]];
 }
 
 - (void)getToppings
 {
-    [[self database] getItemToppings:self withItemId:[self itemId]];
+    [[self database] itemToppings:self withItemId:[self itemId]];
 }
 
 - (void)getItemValues
 {
     // grab the item price and item tax
-    [[self database] getItemValues:self withItemId:[self itemId]];
+    [[self database] itemValues:self withItemId:[self itemId]];
 }
 
 

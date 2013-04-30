@@ -33,6 +33,9 @@
 - (void)viewDidLoad
 {
     
+    // Testing setting an image.
+    self.HomeTopView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background2.png"]];
+    
     // Set the layout
     self.flowLayout = [[HomeCollectionFlow alloc] init];
     // init the collection view
@@ -47,8 +50,20 @@
     self.clockedInEmployees = [[NSMutableArray alloc] init];
     self.loggedInEmployee = [[NSMutableArray alloc] init];
     
+    
+    
+    /*
+    Gold -- R250 G166 B52
+    Blue -- R0 G113 B143
+    Light Grey -- R182 G184 B186
+    Dark Grey -- R76 G90 B82
+     */
+    
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    // not working
+    [homeCollectionView setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,6 +86,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     static NSString *identifier = @"homeOptions";
     HomeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Frame.png"]];
@@ -101,7 +117,7 @@
 {
     if ([segue.identifier isEqualToString:@"loginSegue"]) {
         LoginTableViewController *destViewController = segue.destinationViewController;
-        destViewController.allEmployees = [[self database] returnEmployees];
+        destViewController.allEmployees = [[self database] employeesFromDatabase];
         destViewController.clockedInEmployees = [self clockedInEmployees];
         destViewController.loggedInEmployee = [self loggedInEmployee];
     }

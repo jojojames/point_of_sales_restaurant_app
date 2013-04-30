@@ -10,4 +10,9 @@
 
 @interface Orders : NSObject
 
+@property (nonatomic, strong) NSNumber * totalPrice;
+@property (nonatomic, strong) NSMutableArray * currentOrder;
+
+- (void)addToOrder:(NSString *)itemName;
+
 @end

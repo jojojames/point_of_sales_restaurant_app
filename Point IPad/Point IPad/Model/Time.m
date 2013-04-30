@@ -10,7 +10,7 @@
 
 @implementation Time
 
-- (NSString *)getYearMonthDay
+- (NSString *)yearMonthDay
 {
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -20,7 +20,7 @@
     return dateString;
 }
 
-- (NSString *)getYearMonthDayTime
+- (NSString *)yearMonthDayTime
 {
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -30,7 +30,7 @@
     return dateString;
 }
 
-- (NSTimeInterval)getTimeIntervalBetweenFirstDate:(NSString *)firstDate andSecondDate:(NSString *)secondDate
+- (NSTimeInterval)timeBetweenDate:(NSString *)firstDate andSecondDate:(NSString *)secondDate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];

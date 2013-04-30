@@ -22,21 +22,26 @@
 }
 
 // Database access for Employees, Logging In/Logging Out
-- (NSArray *)returnEmployees;
+- (NSArray *)employeesFromDatabase;
 - (void)insertClockIn:(Employee *)employee;
 - (void)insertClockOut:(Employee *)employee;
 
 
 // ItemProperties class
-- (void)getItemProperties:(ItemProperties *)item withItemId:(NSString *)itemId;
-- (void)getItemExtras:(ItemProperties *)item withItemId:(NSString *)itemId;
-- (void)getItemToppings:(ItemProperties *)item withItemId:(NSString *)itemId;
-- (void)getItemValues:(ItemProperties *)item withItemId:(NSString *)itemId;
+- (void)itemProperties:(ItemProperties *)item withItemId:(NSString *)itemId;
+- (void)itemExtras:(ItemProperties *)item withItemId:(NSString *)itemId;
+- (void)itemToppings:(ItemProperties *)item withItemId:(NSString *)itemId;
+- (void)itemValues:(ItemProperties *)item withItemId:(NSString *)itemId;
 
 // Database access for displaying item names, subclass names
-- (NSMutableArray *)getItemsWithClassName:(NSString *)className andSubClassName:(NSString *)subClassName;
-- (NSMutableArray *)getClassNames;
-- (NSMutableArray *)getSubClassNameGivenClassName:(NSString *)className;
-- (NSMutableArray *)getItemNamesGivenClassName:(NSString *)className;
-- (NSMutableArray *)getItemsGiveSubClassName:(NSString *)className;
+- (NSMutableArray *)itemsWhereClassIs:(NSString *)className andSubclassIs:(NSString *)subClassName;
+- (NSMutableArray *)classNames;
+- (NSMutableArray *)subclassWhereClassIs:(NSString *)className;
+- (NSMutableArray *)itemsWhereClassIs:(NSString *)className;
+- (NSMutableArray *)itemsWhereSubclassIs:(NSString *)className;
+
+- (NSNumber *)itemIdWhereClassIs:(NSString *)className andSubclassIs:(NSString *)subClassName andItemIs:(NSString *)itemName;
+
+// Database access to pull modifier settings
+- (NSMutableArray *)hotnessOptionsModifierOne:(NSNumber *)item_id;
 @end

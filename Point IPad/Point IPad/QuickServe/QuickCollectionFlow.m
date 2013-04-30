@@ -10,4 +10,13 @@
 
 @implementation QuickCollectionFlow
 
+- (id)init
+{
+    if (!(self = [super init])) return nil;
+    
+    // change insets later, they're already set in storyboard
+    self.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
+    return self;
+}
+
 @end

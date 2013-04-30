@@ -10,8 +10,8 @@
 
 @interface Time : NSObject
 
-- (NSString *)getYearMonthDay;
-- (NSString *)getYearMonthDayTime;
-- (NSTimeInterval)getTimeIntervalBetweenFirstDate:(NSString *)firstDate andSecondDate:(NSString *)secondDate;
+- (NSString *)yearMonthDay;
+- (NSString *)yearMonthDayTime;
+- (NSTimeInterval)timeBetweenDate:(NSString *)firstDate andSecondDate:(NSString *)secondDate;
 
 @end
