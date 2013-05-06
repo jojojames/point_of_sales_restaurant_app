@@ -12,8 +12,9 @@
 #import "ItemColorProperties.h"
 #import "QuickCollection.h"
 #import "QuickCollectionFlow.h"
+#import "SBTableAlert.h"
 
-@interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate>
+@interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate, SBTableAlertDelegate, SBTableAlertDataSource>
 
 @property (retain, nonatomic) IBOutlet UITapGestureRecognizer *oneFingerOneTap;
 
@@ -220,81 +221,26 @@
 
 }
 
+
 - (void)showModifiers
 {
+    //remove this after fixing
     [self showHotnessMod];
     
 }
 
 - (void)showHotnessMod
 {
-    NSMutableArray *hotnessOption = [[self database] hotnessOptionsModifierOne:self.selectedItemId];
-    if ([[hotnessOption objectAtIndex:1] isEqualToString:@"Forced"]) {
-        NSLog(@"%@", [hotnessOption objectAtIndex:0]);
-        NSArray *mods = [[hotnessOption objectAtIndex:0] componentsSeparatedByString:@":"];
-        
-        // todo; refactor this later with the title as a parameter
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Hotness Options"
-                                                                 delegate:self
-                                                        cancelButtonTitle:nil
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:nil];
-        
-        for (int i=0; i<[mods count]; i++) {
-            [sheet addButtonWithTitle:[mods objectAtIndex:i]];
-        }
-        
-        [sheet addButtonWithTitle:@"Cancel"];
-        sheet.cancelButtonIndex = [sheet addButtonWithTitle:@"Cancel"];
-        
-        [sheet showFromToolbar:self.quickToolbar];
-        [sheet release];
-    } else {
-        // no hotness modifier for that item
-        return;
-    }
-}
-
-- (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex animated:(BOOL)animated
-{
-    // not used yet?::
+    SBTableAlert *alert;
+    alert = [[SBTableAlert alloc] initWithTitle:@"Hotness Modifiers" cancelButtonTitle:@"Cancel" messageFormat:@"Select multiple rows!"];
+    [alert setType:SBTableAlertTypeMultipleSelct];
+    [alert.view addButtonWithTitle:@"OK"];
+    [alert.view setTag:0];
+    [alert setDelegate:self];
+	[alert setDataSource:self];
+    [alert show];
+    [alert release];
     
-}
-
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    // an example of how to handle button presses
-    
-    // todo; LOOK UP HOW TO SELECT MULTIPLE ITEMS FOR AN ACTIONSHEET
-    if (buttonIndex == 0) {
-        NSLog(@"Destructive Button Clicked");
-    } else if (buttonIndex == 1) {
-        NSLog(@"Other button 1 clicked");
-    } else if (buttonIndex == 2) {
-        NSLog(@"other button 2 clicked");
-    } else if (buttonIndex == 3) {
-        NSLog(@"cancel button clicked");
-    }
-    
-    /**
-     * OR use the following switch statement
-     * Suggested by Colin =)
-     */
-    /*
-     switch (buttonIndex) {
-     case 0:
-     self.label.text = @"Destructive Button Clicked";
-     break;
-     case 1:
-     self.label.text = @"Other Button 1 Clicked";
-     break;
-     case 2:
-     self.label.text = @"Other Button 2 Clicked";
-     break;
-     case 3:
-     self.label.text = @"Cancel Button Clicked";
-     break;
-     }
-     */
 }
 
 - (void)savePreviousState
@@ -336,11 +282,6 @@
    // NSLog(@"%d", [[self currentMenuItems] count]);
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    
-}
-
 - (void)dealloc
 {
     [quickToolbar release];
@@ -352,6 +293,47 @@
     for (int i=0; i<[array count]; i++) {
         NSLog(@"%@", [array objectAtIndex:i]);
     }
+}
+
+#pragma mark - SBTableAlertDataSource
+
+- (UITableViewCell *)tableAlert:(SBTableAlert *)tableAlert cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	UITableViewCell *cell;
+    
+    
+    // NOT BEING CALLED, http://stackoverflow.com/questions/16207824/sbtablealert-not-working
+    // PROBABLY HAVE TO CREATE ANOTHER CONTROLLER TO USE FOR THE TABLE DATASOURCE AND DELEGATE
+    
+    NSArray *mods;
+    NSMutableArray *hotnessOption = [[self database] hotnessOptionsModifierOne:self.selectedItemId];
+	
+    // Note: SBTableAlertCell
+    cell = [[SBTableAlertCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+	
+    // SET THE TEXT HERE TO BE THE MODS OF A PARTICULAR ITEM
+    // THE MODS THAT ARE DISPLAYED ARE DETERMINED BY A GLOBAL FLAG
+    
+    if (tableAlert.view.tag == 0) {
+        //hotness modifiers
+        mods = [[hotnessOption objectAtIndex:0] componentsSeparatedByString:@":"];
+    } else {
+        mods = [[hotnessOption objectAtIndex:0] componentsSeparatedByString:@":"];
+    }
+    
+	[cell.textLabel setText:[NSString stringWithFormat:@"Cell %@", mods[indexPath.row]]];
+	
+	return cell;
+}
+
+- (NSInteger)tableAlert:(SBTableAlert *)tableAlert numberOfRowsInSection:(NSInteger)section {
+    
+    // get an array and return the count of the array, it'll be 4
+    return 4;
+}
+
+- (NSInteger)numberOfSectionsInTableAlert:(SBTableAlert *)tableAlert {
+    // default
+    return 1;
 }
 
 

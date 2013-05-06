@@ -305,33 +305,43 @@
         [rs moveNext];
         
     }
-    
-    /* NSLog([[rs fieldByIndex:0] asString]);
-    NSLog([[rs fieldByIndex:1] asString]);
-    NSLog([[rs fieldByIndex:2] asString]);
-    NSLog([[rs fieldByIndex:3] asString]);
-    NSLog([[rs fieldByIndex:4] asString]);
-    NSLog([[rs fieldByIndex:5] asString]);
-    NSLog([[rs fieldByIndex:6] asString]);
-    NSLog([[rs fieldByIndex:7] asString]);
-    NSLog([[rs fieldByIndex:8] asString]); */
-    
-    
-    //NSLog([[vItems objectAtIndex:0] itemName]);
     return vItems;
     
 }
 
 - (NSMutableArray *)hotnessOptionsModifierOne:(NSNumber *)item_id
 {
-    NSMutableArray *hotnessOptions = [[NSMutableArray alloc] init];
     NSString *query = [NSString stringWithFormat:@"SELECT hotness, hotness_level, hotness_threshold, hotness_images from TBL_ITEMS where item_id=%@", item_id];
+    return [self createModsUsing:query];
+}
+
+- (NSMutableArray *)quantityOptionsModifierTwo:(NSNumber *)item_id
+{
+    NSString *query = [NSString stringWithFormat:@"SELECT size, quantity_id, price, quantity_images from TBL_QUANTITY where item_id=%@", item_id];
+    return [self createModsUsing:query];
+}
+
+- (NSMutableArray *)extraOptionsModifierThree:(NSNumber *)item_id
+{
+    NSString *query = [NSString stringWithFormat:@"SElECT extras, extras_id, price, extra_images from TBL_EXTRAS where item_id=%@", item_id];
+    return [self createModsUsing:query];
+}
+
+- (NSMutableArray *)optionOptionsModifierFour:(NSNumber *)item_id
+{
+    NSString *query = [NSString stringWithFormat:@"SELECT options, options_level, options_threshold, option_images from TBL_ITEMS where item_id=%@", item_id];
+    return [self createModsUsing:query];
+}
+
+- (NSMutableArray *)createModsUsing:(NSString *)query
+{
+    NSMutableArray *modOptions = [[NSMutableArray alloc] init];
     PGSQLRecordset *rs = [pgConn open:query];
-    [hotnessOptions addObject:[[rs fieldByIndex:0] asString]];
-    [hotnessOptions addObject:[[rs fieldByIndex:1] asString]];
-    [hotnessOptions addObject:[[rs fieldByIndex:2] asString]];
-    [hotnessOptions addObject:[[rs fieldByIndex:3] asString]];
-    return hotnessOptions;
+    [modOptions addObject:[[rs fieldByIndex:0] asString]];
+    [modOptions addObject:[[rs fieldByIndex:1] asString]];
+    [modOptions addObject:[[rs fieldByIndex:2] asString]];
+    [modOptions addObject:[[rs fieldByIndex:3] asString]];
+    return modOptions;
 }
 
 - (void)closeConnection

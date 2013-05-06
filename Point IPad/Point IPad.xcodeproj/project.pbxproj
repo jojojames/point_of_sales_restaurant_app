@@ -37,6 +37,7 @@
 		8BD30EBA172F02EC00569A01 /* Orders.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD30EB9172F02EC00569A01 /* Orders.m */; };
 		8BD30EBD172F0CEB00569A01 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD30EBC172F0CEB00569A01 /* background.png */; };
 		8BD30EC5172F4FA900569A01 /* background2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD30EC4172F4FA900569A01 /* background2.png */; };
+		8BD30EC817384CF000569A01 /* SBTableAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD30EC717384CEF00569A01 /* SBTableAlert.m */; };
 		8BF9051917135FF500B02EB3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF9051817135FF500B02EB3 /* UIKit.framework */; };
 		8BF9051B17135FF500B02EB3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF9051A17135FF500B02EB3 /* Foundation.framework */; };
 		8BF9051D17135FF500B02EB3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF9051C17135FF500B02EB3 /* CoreGraphics.framework */; };
@@ -641,6 +642,8 @@
 		8BD30EB9172F02EC00569A01 /* Orders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Orders.m; sourceTree = "<group>"; };
 		8BD30EBC172F0CEB00569A01 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		8BD30EC4172F4FA900569A01 /* background2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background2.png; sourceTree = "<group>"; };
+		8BD30EC617384CEF00569A01 /* SBTableAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBTableAlert.h; sourceTree = "<group>"; };
+		8BD30EC717384CEF00569A01 /* SBTableAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBTableAlert.m; sourceTree = "<group>"; };
 		8BF9051517135FF500B02EB3 /* Point IPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Point IPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF9051817135FF500B02EB3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8BF9051A17135FF500B02EB3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1585,9 +1588,19 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
+		8BD30EC917384D0000569A01 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				8BD30EC617384CEF00569A01 /* SBTableAlert.h */,
+				8BD30EC717384CEF00569A01 /* SBTableAlert.m */,
+			);
+			name = Misc;
+			sourceTree = "<group>";
+		};
 		8BF9050C17135FF500B02EB3 = {
 			isa = PBXGroup;
 			children = (
+				8BD30EC917384D0000569A01 /* Misc */,
 				8BB3FF0C1713756800E2C4C0 /* Model */,
 				8BF9051E17135FF500B02EB3 /* Point IPad */,
 				8BF9051717135FF500B02EB3 /* Frameworks */,
@@ -1800,6 +1813,7 @@
 				8B0F62D2172875CE00752C8B /* QuickCollection.m in Sources */,
 				8B0F62D61728766F00752C8B /* QuickCollectionFlow.m in Sources */,
 				8BD30EBA172F02EC00569A01 /* Orders.m in Sources */,
+				8BD30EC817384CF000569A01 /* SBTableAlert.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
