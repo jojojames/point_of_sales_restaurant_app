@@ -163,6 +163,7 @@
                                             <action selector="flipBackMenuItems:" destination="uKR-RY-WVo" id="F5w-8y-y8e"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Mods" id="WWH-gs-ilG"/>
                                 </items>
                                 <color key="tintColor" red="1" green="0.5832718093" blue="0.072018742080000003" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
@@ -187,6 +188,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="ir4-71-6Ex"/>
                     <connections>
+                        <outlet property="modButton" destination="WWH-gs-ilG" id="vmP-Q4-HQB"/>
                         <outlet property="oneFingerOneTap" destination="AVl-SZ-NVn" id="w3G-R0-KZt"/>
                         <outlet property="quickCollectionView" destination="fqe-7V-XvG" id="KR9-rU-yA9"/>
                         <outlet property="quickToolbar" destination="h0N-yf-jfw" id="jlT-9E-uLi"/>

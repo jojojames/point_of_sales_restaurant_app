@@ -12,9 +12,9 @@
 #import "ItemColorProperties.h"
 #import "QuickCollection.h"
 #import "QuickCollectionFlow.h"
-#import "SBTableAlert.h"
+#import "ModPickerViewController.h"
 
-@interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate, SBTableAlertDelegate, SBTableAlertDataSource>
+@interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate>
 
 @property (retain, nonatomic) IBOutlet UITapGestureRecognizer *oneFingerOneTap;
 
@@ -22,6 +22,8 @@
 @property (retain, nonatomic) IBOutlet UIView *quickTopView;
 @property (strong, nonatomic) QuickCollectionFlow *flowLayout;
 @property (retain, nonatomic) IBOutlet UIToolbar *quickToolbar;
+@property (retain, nonatomic) UIPopoverController* popover;
+@property (retain, nonatomic) IBOutlet UIBarButtonItem *modButton;
 
 @end
 
@@ -42,6 +44,7 @@
 @synthesize subclassNameForDatabase;
 @synthesize selectedItemId;
 @synthesize quickToolbar;
+@synthesize modButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -65,6 +68,7 @@
     // The current menu items are always Class Names first.
     self.currentMenuItems = [[self database] classNames];
     
+    // Initialize
     
     // Holds previous menu arrays to jump backwards
     self.stackOfMenus = [[NSMutableArray alloc] init];
@@ -231,17 +235,39 @@
 
 - (void)showHotnessMod
 {
-    SBTableAlert *alert;
-    alert = [[SBTableAlert alloc] initWithTitle:@"Hotness Modifiers" cancelButtonTitle:@"Cancel" messageFormat:@"Select multiple rows!"];
-    [alert setType:SBTableAlertTypeMultipleSelct];
-    [alert.view addButtonWithTitle:@"OK"];
-    [alert.view setTag:0];
-    [alert setDelegate:self];
-	[alert setDataSource:self];
-    [alert show];
-    [alert release];
+    ModPickerViewController *picker = [[ModPickerViewController alloc] initWithStyle:UITableViewStylePlain withDB:self.database usingItem:self.selectedItemId];
+    
+    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:picker];
+    [popover presentPopoverFromBarButtonItem:self.modButton permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+    
+    
+    
+
     
 }
+/*
+#pragma mark - IBActions
+-(IBAction)chooseColorButtonTapped:(id)sender
+{
+    if (_colorPicker == nil) {
+        //Create the ColorPickerViewController.
+        _colorPicker = [[ColorPickerViewController alloc] initWithStyle:UITableViewStylePlain];
+        
+        //Set this VC as the delegate.
+        _colorPicker.delegate = self;
+    }
+    
+    if (_colorPickerPopover == nil) {
+        //The color picker popover is not showing. Show it.
+        _colorPickerPopover = [[UIPopoverController alloc] initWithContentViewController:_colorPicker];
+        [_colorPickerPopover presentPopoverFromBarButtonItem:(UIBarButtonItem *) sender  permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    } else {
+        //The color picker popover is showing. Hide it.
+        [_colorPickerPopover dismissPopoverAnimated:YES];
+        _colorPickerPopover = nil;
+    }
+}
+*/
 
 - (void)savePreviousState
 {
@@ -285,6 +311,7 @@
 - (void)dealloc
 {
     [quickToolbar release];
+    [modButton release];
     [super dealloc];
 }
 
@@ -295,46 +322,6 @@
     }
 }
 
-#pragma mark - SBTableAlertDataSource
-
-- (UITableViewCell *)tableAlert:(SBTableAlert *)tableAlert cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	UITableViewCell *cell;
-    
-    
-    // NOT BEING CALLED, http://stackoverflow.com/questions/16207824/sbtablealert-not-working
-    // PROBABLY HAVE TO CREATE ANOTHER CONTROLLER TO USE FOR THE TABLE DATASOURCE AND DELEGATE
-    
-    NSArray *mods;
-    NSMutableArray *hotnessOption = [[self database] hotnessOptionsModifierOne:self.selectedItemId];
-	
-    // Note: SBTableAlertCell
-    cell = [[SBTableAlertCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-	
-    // SET THE TEXT HERE TO BE THE MODS OF A PARTICULAR ITEM
-    // THE MODS THAT ARE DISPLAYED ARE DETERMINED BY A GLOBAL FLAG
-    
-    if (tableAlert.view.tag == 0) {
-        //hotness modifiers
-        mods = [[hotnessOption objectAtIndex:0] componentsSeparatedByString:@":"];
-    } else {
-        mods = [[hotnessOption objectAtIndex:0] componentsSeparatedByString:@":"];
-    }
-    
-	[cell.textLabel setText:[NSString stringWithFormat:@"Cell %@", mods[indexPath.row]]];
-	
-	return cell;
-}
-
-- (NSInteger)tableAlert:(SBTableAlert *)tableAlert numberOfRowsInSection:(NSInteger)section {
-    
-    // get an array and return the count of the array, it'll be 4
-    return 4;
-}
-
-- (NSInteger)numberOfSectionsInTableAlert:(SBTableAlert *)tableAlert {
-    // default
-    return 1;
-}
 
 
 @end
