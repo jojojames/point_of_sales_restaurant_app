@@ -11,6 +11,8 @@
 
 @interface ModPickerViewController : UITableViewController
 
-@property (nonatomic, strong) NSMutableArray *modNames;
-- (id)initWithStyle:(UITableViewStyle)style withDB:(DatabaseAccess *)db usingItem:(NSNumber *)itemId;
+@property (nonatomic, strong) NSArray *modNames;
+@property (strong, nonatomic) DatabaseAccess *database;
+@property (nonatomic, strong) NSNumber *selectedItemId;
+- (id)initWithStyle:(UITableViewStyle)style withDB:(DatabaseAccess *)db usingItem:(NSNumber *)itemId withMOD:(NSString *)modifier;
 @end

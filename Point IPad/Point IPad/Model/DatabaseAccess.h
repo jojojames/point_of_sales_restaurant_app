@@ -44,4 +44,7 @@
 
 // Database access to pull modifier settings
 - (NSMutableArray *)hotnessOptionsModifierOne:(NSNumber *)item_id;
+- (NSMutableArray *)quantityOptionsModifierTwo:(NSNumber *)item_id;
+- (NSMutableArray *)extraOptionsModifierThree:(NSNumber *)item_id;
+- (NSMutableArray *)optionOptionsModifierFour:(NSNumber *)item_id;
 @end

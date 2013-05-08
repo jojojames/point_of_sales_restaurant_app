@@ -51,7 +51,6 @@
 		8BF9053D171361D200B02EB3 /* HomeCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF9053C171361D200B02EB3 /* HomeCollection.m */; };
 		8BF905411713622E00B02EB3 /* HomeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF905401713622E00B02EB3 /* HomeCollectionCell.m */; };
 		8BF905441713718700B02EB3 /* photo-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BF905431713718700B02EB3 /* photo-frame.png */; };
-		8BFABF23173ADFBE00C15FDA /* PopOverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFABF22173ADFBE00C15FDA /* PopOverController.m */; };
 		8BFABF2C173AE31300C15FDA /* ModPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFABF2B173AE31300C15FDA /* ModPickerViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -665,8 +664,6 @@
 		8BF905401713622E00B02EB3 /* HomeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeCollectionCell.m; path = HomeScreen/HomeCollectionCell.m; sourceTree = "<group>"; };
 		8BF905431713718700B02EB3 /* photo-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-frame.png"; sourceTree = "<group>"; };
 		8BF90545171373C200B02EB3 /* pqtouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = pqtouch.xcodeproj; path = ../../pqtouch/pqtouch.xcodeproj; sourceTree = "<group>"; };
-		8BFABF21173ADFBE00C15FDA /* PopOverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopOverController.h; path = QuickServe/PopOverController.h; sourceTree = "<group>"; };
-		8BFABF22173ADFBE00C15FDA /* PopOverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopOverController.m; path = QuickServe/PopOverController.m; sourceTree = "<group>"; };
 		8BFABF2A173AE31300C15FDA /* ModPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModPickerViewController.h; path = "Point IPad/Misc/ModPickerViewController.h"; sourceTree = "<group>"; };
 		8BFABF2B173AE31300C15FDA /* ModPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModPickerViewController.m; path = "Point IPad/Misc/ModPickerViewController.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -697,8 +694,6 @@
 				8B771AF71725FD070092003B /* QuickServeCell.m */,
 				8B0F62D0172875CE00752C8B /* QuickCollection.h */,
 				8B0F62D1172875CE00752C8B /* QuickCollection.m */,
-				8BFABF21173ADFBE00C15FDA /* PopOverController.h */,
-				8BFABF22173ADFBE00C15FDA /* PopOverController.m */,
 			);
 			name = QuickServe;
 			sourceTree = "<group>";
@@ -1818,7 +1813,6 @@
 				8B0F62D2172875CE00752C8B /* QuickCollection.m in Sources */,
 				8B0F62D61728766F00752C8B /* QuickCollectionFlow.m in Sources */,
 				8BD30EBA172F02EC00569A01 /* Orders.m in Sources */,
-				8BFABF23173ADFBE00C15FDA /* PopOverController.m in Sources */,
 				8BFABF2C173AE31300C15FDA /* ModPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

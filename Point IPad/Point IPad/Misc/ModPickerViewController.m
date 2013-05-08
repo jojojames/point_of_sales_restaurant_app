@@ -14,6 +14,8 @@
 
 @implementation ModPickerViewController
 @synthesize modNames;
+@synthesize database;
+@synthesize selectedItemId;
 
 - (id)initWithStyle:(UITableViewStyle)style 
 {
@@ -21,52 +23,6 @@
     if (self) {
         // Custom initialization
     }
-    
-    //Make row selections persist.
-    self.clearsSelectionOnViewWillAppear = NO;
-    
-    //Calculate how tall the view should be by multiplying the individual row height by the total number of rows.
-    NSInteger rowsCount = [modNames count];
-    NSInteger singleRowHeight = [self.tableView.delegate tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    NSInteger totalRowsHeight = rowsCount * singleRowHeight;
-    
-    //Calculate how wide the view should be by finding how wide each string is expected to be
-    CGFloat largestLabelWidth = 0;
-    
-    for( NSString *modName in modNames) {
-        //Checks size of text using the default font for UITableViewCell's textLabel.
-        CGSize labelSize = [modName sizeWithFont:[UIFont boldSystemFontOfSize:20.0f]];
-        if (labelSize.width > largestLabelWidth) {
-            largestLabelWidth = labelSize.width;
-        }
-    }
-    
-    //Add a little padding to the width
-    CGFloat popoverWidth = largestLabelWidth + 100;
-    
-    //Set the property to tell the popover container how big this view will be.
-    self.contentSizeForViewInPopover = CGSizeMake(popoverWidth, totalRowsHeight);
-    return self;
-}
-
-- (id)initWithStyle:(UITableViewStyle)style withDB:(DatabaseAccess *)db usingItem:(NSNumber *)itemId
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    
-    modNames = [[NSMutableArray alloc] init];
-    [modNames addObject:@"Hotness"];
-    [modNames addObject:@"Quantity"];
-    [modNames addObject:@"Extras"];
-    [modNames addObject:@"Options"];
-    
-    //***************** REFERENCE ***********************//
-    // modNames = [db hotnessOptionsModifierOne:itemId];
-    // CAN GET MOD NAMES USING [db modifireoptionsasdfasdf: usingItemId
-    // mods = [[hotnessOption objectAtIndex:0] componentsSeparatedByString:@":"];
-    //***************** THIS LINE ***********************//
     
     //Register the identifier
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
@@ -97,6 +53,58 @@
     self.contentSizeForViewInPopover = CGSizeMake(popoverWidth, totalRowsHeight);
     return self;
 }
+
+- (id)initWithStyle:(UITableViewStyle)style withDB:(DatabaseAccess *)db usingItem:(NSNumber *)itemId withMOD:(NSString *)modifier
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+    }
+    
+    NSMutableArray *modSet = [[NSMutableArray alloc] init];
+    
+    if ([modifier isEqualToString:@"Hotness"]) {
+        modSet = [db hotnessOptionsModifierOne:itemId];
+    } else if ([modifier isEqualToString:@"Quantity"]) {
+        modSet = [db quantityOptionsModifierTwo:itemId];
+    } else if ([modifier isEqualToString:@"Extras"]) {
+        modSet = [db extraOptionsModifierThree:itemId];
+    } else if ([modifier isEqualToString:@"Options"]) {
+        modSet = [db optionOptionsModifierFour:itemId];
+    }
+    
+    modNames = [[modSet objectAtIndex:0] componentsSeparatedByString:@":"];
+    
+    //Register the identifier
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    
+    //Make row selections persist.
+    self.clearsSelectionOnViewWillAppear = NO;
+    
+    //Calculate how tall the view should be by multiplying the individual row height by the total number of rows.
+    NSInteger rowsCount = [modNames count];
+    NSInteger singleRowHeight = [self.tableView.delegate tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    NSInteger totalRowsHeight = rowsCount * singleRowHeight;
+    
+    //Calculate how wide the view should be by finding how wide each string is expected to be
+    CGFloat largestLabelWidth = 0;
+    
+    for( NSString *modName in modNames) {
+        //Checks size of text using the default font for UITableViewCell's textLabel.
+        CGSize labelSize = [modName sizeWithFont:[UIFont boldSystemFontOfSize:20.0f]];
+        if (labelSize.width > largestLabelWidth) {
+            largestLabelWidth = labelSize.width;
+        }
+    }
+    
+    //Add a little padding to the width
+    CGFloat popoverWidth = largestLabelWidth + 100;
+    
+    //Set the property to tell the popover container how big this view will be.
+    self.contentSizeForViewInPopover = CGSizeMake(popoverWidth, totalRowsHeight);
+    return self;
+}
+
 
 - (void)viewDidLoad
 {
@@ -140,14 +148,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
 }
 
 /*

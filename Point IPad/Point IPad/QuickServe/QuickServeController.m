@@ -22,7 +22,7 @@
 @property (retain, nonatomic) IBOutlet UIView *quickTopView;
 @property (strong, nonatomic) QuickCollectionFlow *flowLayout;
 @property (retain, nonatomic) IBOutlet UIToolbar *quickToolbar;
-@property (retain, nonatomic) UIPopoverController* popover;
+@property (strong, nonatomic) UIPopoverController* popover;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *modButton;
 
 @end
@@ -45,6 +45,7 @@
 @synthesize selectedItemId;
 @synthesize quickToolbar;
 @synthesize modButton;
+@synthesize popover;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -228,46 +229,30 @@
 
 - (void)showModifiers
 {
-    //remove this after fixing
-    [self showHotnessMod];
-    
+    // HANDLE NILLS
+    [self showMod:@"Hotness"];
+    //[self showMod:@"Quantity"];
+    //[self showMod:@"Extras"];
+    //[self showMod:@"Options"];
 }
 
-- (void)showHotnessMod
+- (void)showMod:(NSString *)modName
 {
-    ModPickerViewController *picker = [[ModPickerViewController alloc] initWithStyle:UITableViewStylePlain withDB:self.database usingItem:self.selectedItemId];
     
-    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:picker];
+    ModPickerViewController *picker = [[ModPickerViewController alloc] initWithStyle:UITableViewStylePlain withDB:self.database usingItem:self.selectedItemId withMOD:modName];
+    picker.selectedItemId = self.selectedItemId;
+    picker.database = self.database;
+    picker.title = modName;
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:picker];
+    
+    popover = [[UIPopoverController alloc] initWithContentViewController:nav];
     [popover presentPopoverFromBarButtonItem:self.modButton permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
     
-    
-    
-
+    //[nav release];
+    //[popover release];
     
 }
-/*
-#pragma mark - IBActions
--(IBAction)chooseColorButtonTapped:(id)sender
-{
-    if (_colorPicker == nil) {
-        //Create the ColorPickerViewController.
-        _colorPicker = [[ColorPickerViewController alloc] initWithStyle:UITableViewStylePlain];
-        
-        //Set this VC as the delegate.
-        _colorPicker.delegate = self;
-    }
-    
-    if (_colorPickerPopover == nil) {
-        //The color picker popover is not showing. Show it.
-        _colorPickerPopover = [[UIPopoverController alloc] initWithContentViewController:_colorPicker];
-        [_colorPickerPopover presentPopoverFromBarButtonItem:(UIBarButtonItem *) sender  permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-    } else {
-        //The color picker popover is showing. Hide it.
-        [_colorPickerPopover dismissPopoverAnimated:YES];
-        _colorPickerPopover = nil;
-    }
-}
-*/
 
 - (void)savePreviousState
 {
