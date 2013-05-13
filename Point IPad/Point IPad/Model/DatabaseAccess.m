@@ -329,20 +329,51 @@
 
 - (NSMutableArray *)optionOptionsModifierFour:(NSNumber *)item_id
 {
-    NSString *query = [NSString stringWithFormat:@"SELECT options, options_level, options_threshold, option_images from TBL_ITEMS where item_id=%@", item_id];
+    NSString *query = [NSString stringWithFormat:@"SELECT options, options_level, option_threshold, option_images from TBL_ITEMS where item_id=%@", item_id];
     return [self createModsUsing:query];
+}
+
+- (NSNumber *)getLunchPriceUsing:(NSNumber *)itemId
+{
+    NSString *query = [NSString stringWithFormat:@"SELECT lunch_price from TBL_ITEMS where item_id=%@", itemId];
+    PGSQLRecordset *rs = [pgConn open:query];
+    return [[rs fieldByIndex:0] asNumber];
 }
 
 - (NSMutableArray *)createModsUsing:(NSString *)query
 {
+    
     NSMutableArray *modOptions = [[NSMutableArray alloc] init];
     PGSQLRecordset *rs = [pgConn open:query];
-    [modOptions addObject:[[rs fieldByIndex:0] asString]];
-    [modOptions addObject:[[rs fieldByIndex:1] asString]];
-    [modOptions addObject:[[rs fieldByIndex:2] asString]];
-    [modOptions addObject:[[rs fieldByIndex:3] asString]];
+    
+    if([[rs fieldByIndex:0] asString]) {
+        [modOptions addObject:[[rs fieldByIndex:0] asString]];
+    } else {
+        [modOptions insertObject:@"null" atIndex:[modOptions count]];
+    }
+    
+    if([[rs fieldByIndex:1] asString]) {
+        [modOptions addObject:[[rs fieldByIndex:1] asString]];
+    } else {
+        [modOptions insertObject:@"null" atIndex:[modOptions count]];
+    }
+    
+    if([[rs fieldByIndex:2] asString]) {
+        [modOptions addObject:[[rs fieldByIndex:2] asString]];
+    } else {
+        [modOptions insertObject:@"null" atIndex:[modOptions count]];
+    }
+    
+    if([[rs fieldByIndex:3] asString]) {
+        [modOptions addObject:[[rs fieldByIndex:3] asString]];
+    } else {
+        [modOptions insertObject:@"null" atIndex:[modOptions count]];
+    }
+    
     return modOptions;
 }
+
+
 
 - (void)closeConnection
 {

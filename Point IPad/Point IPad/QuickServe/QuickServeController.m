@@ -12,7 +12,7 @@
 #import "ItemColorProperties.h"
 #import "QuickCollection.h"
 #import "QuickCollectionFlow.h"
-#import "ModPickerViewController.h"
+#import "QuickModifierController.h"
 
 @interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate>
 
@@ -129,7 +129,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)handleOneTap:(UITapGestureRecognizer *)sender {
+- (IBAction)handleOneTap:(UITapGestureRecognizer *)sender
+{
     CGPoint point = [sender locationInView:[self quickCollectionView]];
     NSIndexPath *indexPath = [self.quickCollectionView indexPathForItemAtPoint:point];
     self.nameOfSelected = [[self currentMenuItems] objectAtIndex:indexPath.row];
@@ -214,9 +215,18 @@
         if (buttonIndex == 1) {
             // yes, pull modifier information from database, then show toppings
             [alertView dismissWithClickedButtonIndex:0 animated:YES];
-            [self showModifiers];
+            
+            
+            //SEGUE TO NEXT VIEW AND HANDLE MODIFIERS THERE
+            //AFTER HANDLING INPUT, RETURN TO THIS VIEW
+            [self performSegueWithIdentifier:@"showModifiers" sender:self];
+            
         } else if (buttonIndex == 2) {
             // no, proceed with order
+            //CREATE AN ORDER WITHOUT ANY MODS, UPDATE THE VIEW WITH THE PRICE
+            // WRITE A DATABASE FUNCTION TO GET THE PRICE self.selectedItemId;
+            NSLog(@"%@ : %@", self.selectedItemId, [[self database] getLunchPriceUsing:self.selectedItemId]);
+            
         } else {
             return;
             // cancel the order
@@ -226,33 +236,17 @@
 
 }
 
-
-- (void)showModifiers
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // HANDLE NILLS
-    [self showMod:@"Hotness"];
-    //[self showMod:@"Quantity"];
-    //[self showMod:@"Extras"];
-    //[self showMod:@"Options"];
+    if ([segue.identifier isEqualToString:@"showModifiers"]) {
+        QuickModifierController *destViewController = segue.destinationViewController;
+        destViewController.selectedItemId = self.selectedItemId;
+        destViewController.database = self.database;
+        
+    }
+    
 }
 
-- (void)showMod:(NSString *)modName
-{
-    
-    ModPickerViewController *picker = [[ModPickerViewController alloc] initWithStyle:UITableViewStylePlain withDB:self.database usingItem:self.selectedItemId withMOD:modName];
-    picker.selectedItemId = self.selectedItemId;
-    picker.database = self.database;
-    picker.title = modName;
-    
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:picker];
-    
-    popover = [[UIPopoverController alloc] initWithContentViewController:nav];
-    [popover presentPopoverFromBarButtonItem:self.modButton permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
-    
-    //[nav release];
-    //[popover release];
-    
-}
 
 - (void)savePreviousState
 {

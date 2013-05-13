@@ -19,9 +19,10 @@
 }
 
 
-- (void)addToOrder:(NSString *)itemName
+- (void)addToOrder:(NSNumber *)itemId
 {
     // use a database, get the price of the item and then add it to the total of the order
+    // add somethign to the currentOrder array
 }
 
 @end

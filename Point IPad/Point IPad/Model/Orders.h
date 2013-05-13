@@ -13,6 +13,6 @@
 @property (nonatomic, strong) NSNumber * totalPrice;
 @property (nonatomic, strong) NSMutableArray * currentOrder;
 
-- (void)addToOrder:(NSString *)itemName;
+- (void)addToOrder:(NSNumber *)itemId;
 
 @end

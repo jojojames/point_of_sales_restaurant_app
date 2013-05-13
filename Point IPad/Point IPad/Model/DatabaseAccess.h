@@ -47,4 +47,7 @@
 - (NSMutableArray *)quantityOptionsModifierTwo:(NSNumber *)item_id;
 - (NSMutableArray *)extraOptionsModifierThree:(NSNumber *)item_id;
 - (NSMutableArray *)optionOptionsModifierFour:(NSNumber *)item_id;
+
+// Dealing with orders
+- (NSNumber *)getLunchPriceUsing:(NSNumber *)itemId;
 @end
