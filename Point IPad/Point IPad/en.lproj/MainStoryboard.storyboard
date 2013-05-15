@@ -170,22 +170,56 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghq-QZ-FhE">
                                 <color key="backgroundColor" red="0.71372549019607845" green="0.72156862745098038" blue="0.72941176470588232" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="czY-LL-9XY">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="czY-LL-9XY" customClass="QuickTable">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="520" id="4fe-MI-fQI"/>
+                                    <constraint firstAttribute="width" constant="528" id="WZ3-nK-eyF"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="0Mv-V3-W0G">
-                                        <rect key="frame" x="0.0" y="22" width="520" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="quickTableCell" id="0Mv-V3-W0G" customClass="QuickServeTableCell">
+                                        <rect key="frame" x="0.0" y="22" width="528" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="520" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="528" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qF8-XF-Id8">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Price" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M56-rO-tLJ">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Quantity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khA-ca-y9D">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="M56-rO-tLJ" firstAttribute="baseline" secondItem="qF8-XF-Id8" secondAttribute="baseline" type="default" id="3Go-ja-6EM"/>
+                                            <constraint firstAttribute="trailing" secondItem="M56-rO-tLJ" secondAttribute="trailing" constant="211" id="7nL-Lt-dcE"/>
+                                            <constraint firstItem="khA-ca-y9D" firstAttribute="baseline" secondItem="M56-rO-tLJ" secondAttribute="baseline" type="default" id="G9X-c2-WLQ"/>
+                                            <constraint firstItem="qF8-XF-Id8" firstAttribute="leading" secondItem="0Mv-V3-W0G" secondAttribute="leading" constant="20" type="default" id="Ilb-lm-DFm"/>
+                                            <constraint firstItem="qF8-XF-Id8" firstAttribute="top" secondItem="0Mv-V3-W0G" secondAttribute="top" constant="11" id="Tbv-H5-0YY"/>
+                                            <constraint firstAttribute="trailing" secondItem="khA-ca-y9D" secondAttribute="trailing" constant="130" id="UId-oh-aoz"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="itemNameLabel" destination="qF8-XF-Id8" id="IKh-T1-uoP"/>
+                                            <outlet property="priceLabel" destination="M56-rO-tLJ" id="5Ad-p1-wJh"/>
+                                            <outlet property="qtyLabel" destination="khA-ca-y9D" id="Cqa-ED-g1O"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="uKR-RY-WVo" id="tpa-hK-S54"/>
+                                    <outlet property="delegate" destination="uKR-RY-WVo" id="24Z-lv-7xr"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -195,15 +229,15 @@
                             <constraint firstItem="h0N-yf-jfw" firstAttribute="bottom" secondItem="fqe-7V-XvG" secondAttribute="top" type="default" id="7eX-6B-yqj"/>
                             <constraint firstItem="ghq-QZ-FhE" firstAttribute="top" secondItem="Ujp-sc-Gsa" secondAttribute="top" type="default" id="BRU-mK-ZeU"/>
                             <constraint firstItem="h0N-yf-jfw" firstAttribute="top" secondItem="czY-LL-9XY" secondAttribute="bottom" type="default" id="SFY-70-LqK"/>
+                            <constraint firstItem="czY-LL-9XY" firstAttribute="leading" secondItem="Ujp-sc-Gsa" secondAttribute="leading" type="default" id="UDu-ZS-NlP"/>
                             <constraint firstItem="fqe-7V-XvG" firstAttribute="trailing" secondItem="Ujp-sc-Gsa" secondAttribute="trailing" type="default" id="eLg-tb-aTg"/>
                             <constraint firstItem="h0N-yf-jfw" firstAttribute="leading" secondItem="Ujp-sc-Gsa" secondAttribute="leading" type="default" id="eYC-5b-zRg"/>
                             <constraint firstItem="fqe-7V-XvG" firstAttribute="bottom" secondItem="Ujp-sc-Gsa" secondAttribute="bottom" type="default" id="elQ-XW-CJL"/>
                             <constraint firstItem="fqe-7V-XvG" firstAttribute="leading" secondItem="Ujp-sc-Gsa" secondAttribute="leading" type="default" id="h3T-NG-xA1"/>
-                            <constraint firstItem="ghq-QZ-FhE" firstAttribute="leading" secondItem="czY-LL-9XY" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="hNZ-FS-fZb"/>
+                            <constraint firstItem="ghq-QZ-FhE" firstAttribute="leading" secondItem="Ujp-sc-Gsa" secondAttribute="leading" constant="528" id="iIf-bE-HHn"/>
                             <constraint firstItem="h0N-yf-jfw" firstAttribute="top" secondItem="ghq-QZ-FhE" secondAttribute="bottom" type="default" id="iOx-Q2-aOh"/>
                             <constraint firstItem="h0N-yf-jfw" firstAttribute="trailing" secondItem="Ujp-sc-Gsa" secondAttribute="trailing" type="default" id="llj-k6-k4h"/>
                             <constraint firstItem="ghq-QZ-FhE" firstAttribute="trailing" secondItem="Ujp-sc-Gsa" secondAttribute="trailing" type="default" id="oQr-AC-lxs"/>
-                            <constraint firstItem="czY-LL-9XY" firstAttribute="leading" secondItem="Ujp-sc-Gsa" secondAttribute="leading" type="default" id="zh1-pe-9ar"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Quick Serve" id="ir4-71-6Ex"/>
@@ -211,6 +245,7 @@
                         <outlet property="modButton" destination="WWH-gs-ilG" id="vmP-Q4-HQB"/>
                         <outlet property="oneFingerOneTap" destination="AVl-SZ-NVn" id="w3G-R0-KZt"/>
                         <outlet property="quickCollectionView" destination="fqe-7V-XvG" id="KR9-rU-yA9"/>
+                        <outlet property="quickTableView" destination="czY-LL-9XY" id="MhH-bQ-0U1"/>
                         <outlet property="quickToolbar" destination="h0N-yf-jfw" id="jlT-9E-uLi"/>
                         <outlet property="quickTopView" destination="ghq-QZ-FhE" id="wU4-8s-ran"/>
                         <segue destination="VSn-C8-Rda" kind="push" identifier="showModifiers" id="rbU-Ao-joC"/>
@@ -381,25 +416,9 @@
         </class>
         <class className="EmployeeListTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EmployeeListTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="EmployeeList" candidateClass="UITableView"/>
-            </relationships>
         </class>
         <class className="HomeCollection" superclassName="UICollectionView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeCollection.h"/>
-        </class>
-        <class className="HomeCollectionCell" superclassName="UICollectionViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeCollectionCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="optionLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="HomeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="HomeTopView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="homeCollectionView" candidateClass="HomeCollection"/>
-            </relationships>
         </class>
         <class className="LoginTableViewCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginTableViewCell.h"/>
@@ -418,9 +437,6 @@
         </class>
         <class className="QuickModifierCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickModifierCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="quickModifierLabel" candidateClass="UILabel"/>
-            </relationships>
         </class>
         <class className="QuickModifierController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickModifierController.h"/>
@@ -437,12 +453,22 @@
         <class className="QuickServeController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickServeController.h"/>
             <relationships>
-                <relationship kind="outlet" name="modButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="oneFingerOneTap" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="quickCollectionView" candidateClass="QuickCollection"/>
-                <relationship kind="outlet" name="quickToolbar" candidateClass="UIToolbar"/>
+                <relationship kind="action" name="flipBackMenuItems:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="handleOneTap:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="action" name="stepperValueChanged:" candidateClass="UIStepper"/>
                 <relationship kind="outlet" name="quickTopView" candidateClass="UIView"/>
             </relationships>
+        </class>
+        <class className="QuickServeTableCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickServeTableCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="itemNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="qtyLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="QuickTable" superclassName="UITableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickTable.h"/>
         </class>
         <class className="UICollectionReusableView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>

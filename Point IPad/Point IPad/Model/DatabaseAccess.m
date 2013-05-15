@@ -333,12 +333,7 @@
     return [self createModsUsing:query];
 }
 
-- (NSNumber *)getLunchPriceUsing:(NSNumber *)itemId
-{
-    NSString *query = [NSString stringWithFormat:@"SELECT lunch_price from TBL_ITEMS where item_id=%@", itemId];
-    PGSQLRecordset *rs = [pgConn open:query];
-    return [[rs fieldByIndex:0] asNumber];
-}
+
 
 - (NSMutableArray *)createModsUsing:(NSString *)query
 {
@@ -373,7 +368,22 @@
     return modOptions;
 }
 
+// Dealing with orders
+- (NSNumber *)getLunchPriceUsing:(NSNumber *)itemId
+{
+    NSString *query = [NSString stringWithFormat:@"SELECT lunch_price from TBL_ITEMS where item_id=%@", itemId];
+    NSLog(@"DATABASEACCESS: ITEM_ID: %@", itemId);
+    PGSQLRecordset *rs = [pgConn open:query];
+    NSLog(@"PRICE: %@", [[rs fieldByIndex:0] asNumber]);
+    return [[rs fieldByIndex:0] asNumber];
+}
 
+- (NSString *)getItemNameUsing:(NSNumber *)itemId
+{
+    NSString *query = [NSString stringWithFormat:@"SELECT name from TBL_ITEMS where item_id=%@", itemId];
+    PGSQLRecordset *rs = [pgConn open:query];
+    return [[rs fieldByIndex:0] asString];
+}
 
 - (void)closeConnection
 {

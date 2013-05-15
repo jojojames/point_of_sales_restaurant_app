@@ -10,11 +10,17 @@
 
 @implementation Orders
 @synthesize totalPrice;
-@synthesize currentOrder;
+@synthesize currentNames;
+@synthesize currentPrices;
+@synthesize currentQtys;
+@synthesize database;
 
 - (Orders *)init
 {
-    currentOrder = [[NSMutableArray alloc] init];
+    currentNames = [[NSMutableArray alloc] init];
+    currentPrices = [[NSMutableArray alloc] init];
+    currentQtys = [[NSMutableArray alloc] init];
+    database = [[DatabaseAccess alloc] init];
     return self;
 }
 
@@ -23,6 +29,16 @@
 {
     // use a database, get the price of the item and then add it to the total of the order
     // add somethign to the currentOrder array
+    
+    //NSLog(@"%@ : %@", self.selectedItemId, [[self database] getLunchPriceUsing:self.selectedItemId]);
+    
+    NSString *itemName = [[self database] getItemNameUsing:itemId];
+    NSNumber *itemPrice = [[self database] getLunchPriceUsing:itemId];
+    NSNumber *itemQty = [NSNumber numberWithInt:1]; // every item starts at 1 quantity
+    [currentNames addObject:itemName];
+    [currentPrices addObject:itemPrice];
+    [currentQtys addObject:itemQty];
+    
 }
 
 @end

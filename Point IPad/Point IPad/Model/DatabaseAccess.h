@@ -50,4 +50,5 @@
 
 // Dealing with orders
 - (NSNumber *)getLunchPriceUsing:(NSNumber *)itemId;
+- (NSString *)getItemNameUsing:(NSNumber *)itemId;
 @end

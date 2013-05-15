@@ -53,6 +53,8 @@
 		8BF905441713718700B02EB3 /* photo-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BF905431713718700B02EB3 /* photo-frame.png */; };
 		8BFABF3B17416FD600C15FDA /* QuickModifierController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFABF3A17416FD600C15FDA /* QuickModifierController.m */; };
 		8BFABF3E17417F2F00C15FDA /* QuickModifierCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFABF3D17417F2F00C15FDA /* QuickModifierCell.m */; };
+		8BFABF411744158100C15FDA /* QuickServeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFABF401744158100C15FDA /* QuickServeTableCell.m */; };
+		8BFABF44174425F500C15FDA /* QuickTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFABF43174425F500C15FDA /* QuickTable.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -669,6 +671,10 @@
 		8BFABF3A17416FD600C15FDA /* QuickModifierController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickModifierController.m; path = QuickServe/QuickModifierController.m; sourceTree = "<group>"; };
 		8BFABF3C17417F2F00C15FDA /* QuickModifierCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickModifierCell.h; path = QuickServe/QuickModifierCell.h; sourceTree = "<group>"; };
 		8BFABF3D17417F2F00C15FDA /* QuickModifierCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickModifierCell.m; path = QuickServe/QuickModifierCell.m; sourceTree = "<group>"; };
+		8BFABF3F1744158100C15FDA /* QuickServeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickServeTableCell.h; path = QuickServe/QuickServeTableCell.h; sourceTree = "<group>"; };
+		8BFABF401744158100C15FDA /* QuickServeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickServeTableCell.m; path = QuickServe/QuickServeTableCell.m; sourceTree = "<group>"; };
+		8BFABF42174425F500C15FDA /* QuickTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickTable.h; path = QuickServe/QuickTable.h; sourceTree = "<group>"; };
+		8BFABF43174425F500C15FDA /* QuickTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickTable.m; path = QuickServe/QuickTable.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -697,10 +703,14 @@
 				8B771AF71725FD070092003B /* QuickServeCell.m */,
 				8B0F62D0172875CE00752C8B /* QuickCollection.h */,
 				8B0F62D1172875CE00752C8B /* QuickCollection.m */,
+				8BFABF42174425F500C15FDA /* QuickTable.h */,
+				8BFABF43174425F500C15FDA /* QuickTable.m */,
 				8BFABF3917416FD600C15FDA /* QuickModifierController.h */,
 				8BFABF3A17416FD600C15FDA /* QuickModifierController.m */,
 				8BFABF3C17417F2F00C15FDA /* QuickModifierCell.h */,
 				8BFABF3D17417F2F00C15FDA /* QuickModifierCell.m */,
+				8BFABF3F1744158100C15FDA /* QuickServeTableCell.h */,
+				8BFABF401744158100C15FDA /* QuickServeTableCell.m */,
 			);
 			name = QuickServe;
 			sourceTree = "<group>";
@@ -1820,6 +1830,8 @@
 				8BD30EBA172F02EC00569A01 /* Orders.m in Sources */,
 				8BFABF3B17416FD600C15FDA /* QuickModifierController.m in Sources */,
 				8BFABF3E17417F2F00C15FDA /* QuickModifierCell.m in Sources */,
+				8BFABF411744158100C15FDA /* QuickServeTableCell.m in Sources */,
+				8BFABF44174425F500C15FDA /* QuickTable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

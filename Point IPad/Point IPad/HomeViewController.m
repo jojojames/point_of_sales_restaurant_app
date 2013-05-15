@@ -22,6 +22,7 @@
 @implementation HomeViewController
 @synthesize homeOptions;
 @synthesize homeCollectionView;
+@synthesize HomeTopView;
 
 
 - (DatabaseAccess *)database
@@ -94,7 +95,7 @@
     cell.optionLabel.text = [homeOptions objectAtIndex:indexPath.row];
     [cell changeBorders:cell.frame];
     
-    NSLog(@"%@", cell.optionLabel.text);
+    //NSLog(@"%@", cell.optionLabel.text);
     return cell;
 }
 
@@ -140,7 +141,7 @@
 - (void)dealloc
 {
     [homeCollectionView release];
-    [_HomeTopView release];
+    [HomeTopView release];
     [super dealloc];
 }
 @end

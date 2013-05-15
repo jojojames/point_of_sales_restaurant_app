@@ -13,8 +13,11 @@
 #import "QuickCollection.h"
 #import "QuickCollectionFlow.h"
 #import "QuickModifierController.h"
+#import "QuickServeTableCell.h"
+#import "QuickTable.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate>
+@interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UITapGestureRecognizer *oneFingerOneTap;
 
@@ -24,6 +27,7 @@
 @property (retain, nonatomic) IBOutlet UIToolbar *quickToolbar;
 @property (strong, nonatomic) UIPopoverController* popover;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *modButton;
+@property (retain, nonatomic) IBOutlet QuickTable *quickTableView;
 
 @end
 
@@ -46,6 +50,7 @@
 @synthesize quickToolbar;
 @synthesize modButton;
 @synthesize popover;
+@synthesize quickTableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -54,6 +59,8 @@
         // set source and delegates
         quickCollectionView.delegate = self;
         quickCollectionView.dataSource = self;
+        quickTableView.delegate = self;
+        quickTableView.dataSource = self;
     }
     return self;
 }
@@ -63,8 +70,7 @@
     // Set up the order.
     self.order = [[Orders alloc] init];
     
-    // Set up the background.
-    self.quickTopView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background2.png"]];
+    [self applyColorToBackgrounds];
     
     // The current menu items are always Class Names first.
     self.currentMenuItems = [[self database] classNames];
@@ -92,6 +98,22 @@
     
 }
 
+- (void)applyColorToBackgrounds
+{
+    // Set up the background.
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background2.png"]];
+    
+    self.quickTopView.backgroundColor = [UIColor clearColor];
+    self.quickTopView.layer.borderColor = [UIColor orangeColor].CGColor;
+    self.quickTopView.layer.borderWidth = 2.0f;
+    
+    
+    self.quickTableView.backgroundColor = [UIColor clearColor];
+    self.quickTableView.layer.borderColor = [UIColor orangeColor].CGColor;
+    self.quickTableView.layer.borderWidth = 2.0f;
+    
+}
+
 - (IBAction)flipBackMenuItems:(UIBarButtonItem *)sender
 {
     if ([stackOfMenus count] == 0) {
@@ -108,6 +130,7 @@
     [stackOfIsActualItemBools removeLastObject];
     
     [[self quickCollectionView] reloadData];
+    [[self quickTableView] reloadData];
 }
 
 
@@ -186,6 +209,7 @@
     
     // refresh the screen with new menu items
     [[self quickCollectionView] reloadData];
+    [[self quickTableView] reloadData];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
@@ -225,7 +249,10 @@
             // no, proceed with order
             //CREATE AN ORDER WITHOUT ANY MODS, UPDATE THE VIEW WITH THE PRICE
             // WRITE A DATABASE FUNCTION TO GET THE PRICE self.selectedItemId;
-            NSLog(@"%@ : %@", self.selectedItemId, [[self database] getLunchPriceUsing:self.selectedItemId]);
+            //NSLog(@"%@ : %@", self.selectedItemId, [[self database] getLunchPriceUsing:self.selectedItemId]);
+            
+            [order addToOrder:self.selectedItemId];
+            [self.quickTableView reloadData];
             
         } else {
             return;
@@ -287,10 +314,79 @@
    // NSLog(@"%d", [[self currentMenuItems] count]);
 }
 
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [[order currentNames] count];
+}
+
+#define STEPPER_MAX_VALUE 20
+#define STEPPER_MIN_VALUE 1
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"quickTableCell";
+    QuickServeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    UIStepper *stepperView = [[UIStepper alloc] initWithFrame:CGRectZero];
+    cell.accessoryView = stepperView;
+    stepperView.minimumValue = STEPPER_MIN_VALUE;
+    stepperView.maximumValue = STEPPER_MAX_VALUE;
+    stepperView.stepValue = 1;
+    stepperView.wraps = YES;
+    stepperView.autorepeat = YES;
+    stepperView.continuous = YES;
+    [stepperView addTarget:self action:@selector(stepperValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [stepperView release];
+    
+    cell.itemNameLabel.text = [[order currentNames] objectAtIndex:indexPath.row];
+    NSLog(@"%@", [[order currentNames] objectAtIndex:indexPath.row]);
+    
+    // currentPrices returns an NSNumber, so convert it to a string while changing the label's text.
+    cell.priceLabel.text = [NSString stringWithFormat:@"$%@", [[order currentPrices] objectAtIndex:indexPath.row] ];
+    NSLog(@"%@", [[order currentPrices] objectAtIndex:indexPath.row]);
+    
+    // currentQuantities returns an NSNumber, so convert it to a string while changing the label's text.
+    cell.qtyLabel.text = [NSString stringWithFormat:@"%@", [[order currentQtys] objectAtIndex:indexPath.row]];
+    return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"---------Name----------------------------Price-----Quantity--------------";
+}
+
+- (IBAction)stepperValueChanged:(UIStepper *)sender
+{
+    // Update the model with updated quantity, then display it.
+    QuickServeTableCell *parentCell = (QuickServeTableCell *)sender.superview;
+    NSIndexPath *indexPath = [self.quickTableView indexPathForCell:parentCell];
+    [[order currentQtys] replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithInt:(int)sender.value]];
+    parentCell.qtyLabel.text = [NSString stringWithFormat:@"%@", [[order currentQtys] objectAtIndex:indexPath.row]];
+    
+    // If the stepper reached the max value, it means the item should be removed from the table/order.
+    if (sender.value == STEPPER_MAX_VALUE) {
+        
+        // TODO: WHEN REMOVING THE ITEMS, MAKE SURE TO SUBTRACT THE PRICE FROM THE TOTAL PRICE
+        // AND UPDATE THE VIEW ACCORDINGLY
+        [[order currentQtys] removeObjectAtIndex:indexPath.row];
+        [[order currentNames] removeObjectAtIndex:indexPath.row];
+        [[order currentPrices] removeObjectAtIndex:indexPath.row];
+        [[self quickTableView] reloadData];
+    }
+}
+
 - (void)dealloc
 {
     [quickToolbar release];
     [modButton release];
+    [quickTableView release];
     [super dealloc];
 }
 

@@ -97,61 +97,42 @@
 #define HAVE_SYSCONF 1
 #define HAVE_TOWLOWER 1
 #define HAVE_UTIME 1
-#define HAVE_UTIMES 1
-#define HAVE_WAITPID 1
-#define HAVE_WCSTOMBS 1
-#define HAVE_WCSTOMBS_L 1
-#define HAVE_FSEEKO 1
-#define HAVE_FSEEKO 1
-#define HAVE_DECL_POSIX_FADVISE 0
-#define HAVE_DECL_FDATASYNC 0
-#define HAVE_DECL_STRLCAT 1
-#define HAVE_DECL_STRLCPY 1
-#define HAVE_DECL_F_FULLFSYNC 1
-#define HAVE_IPV6 1
-#define HAVE_SNPRINTF 1
-#define HAVE_VSNPRINTF 1
-#define HAVE_DECL_SNPRINTF 1
-#define HAVE_DECL_VSNPRINTF 1
-#define HAVE_ISINF 1
-#define HAVE_CRYPT 1
-#define HAVE_ERAND48 1
-#define HAVE_GETOPT 1
-#define HAVE_GETRUSAGE 1
-#define HAVE_INET_ATON 1
-#define HAVE_RANDOM 1
-#define HAVE_RINT 1
-#define HAVE_SRANDOM 1
-#define HAVE_STRDUP 1
-#define HAVE_STRERROR 1
-#define HAVE_STRLCAT 1
-#define HAVE_STRLCPY 1
-#define HAVE_STRTOL 1
-#define HAVE_STRTOUL 1
-#define HAVE_UNSETENV 1
-#define HAVE_GETPEEREID 1
-#define HAVE_GETADDRINFO 1
-#define HAVE_GETOPT_LONG 1
-#define HAVE_RL_COMPLETION_APPEND_CHARACTER 1
-#define HAVE_RL_COMPLETION_MATCHES 1
-#define HAVE_RL_FILENAME_COMPLETION_FUNCTION 1
-#define HAVE_HISTORY_TRUNCATE_FILE 1
-#define HAVE_SIGSETJMP 1
-#define HAVE_DECL_SYS_SIGLIST 1
-#define HAVE_SYSLOG 1
-#define HAVE_INT_OPTERR 1
-#define HAVE_INT_OPTRESET 1
-#define HAVE_STRTOLL 1
-#define HAVE_STRTOULL 1
-#define HAVE_ATEXIT 1
 /* end confdefs.h.  */
-#include <pthread.h>
+/* Define utimes to an innocuous variant, in case <limits.h> declares utimes.
+   For example, HP-UX 11i <limits.h> declares gettimeofday.  */
+#define utimes innocuous_utimes
+
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char utimes (); below.
+    Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
+    <limits.h> exists even on freestanding compilers.  */
+
+#ifdef __STDC__
+# include <limits.h>
+#else
+# include <assert.h>
+#endif
+
+#undef utimes
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char utimes ();
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined __stub_utimes || defined __stub___utimes
+choke me
+#endif
+
 int
 main ()
 {
-pthread_t th; pthread_join(th, 0);
-                     pthread_attr_init(0); pthread_cleanup_push(0, 0);
-                     pthread_create(0,0,0,0); pthread_cleanup_pop(0);
+return utimes ();
   ;
   return 0;
 }
