@@ -20,14 +20,20 @@
 @interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UITapGestureRecognizer *oneFingerOneTap;
-
-@property (retain, nonatomic) IBOutlet QuickCollection *quickCollectionView;
-@property (retain, nonatomic) IBOutlet UIView *quickTopView;
 @property (strong, nonatomic) QuickCollectionFlow *flowLayout;
 @property (retain, nonatomic) IBOutlet UIToolbar *quickToolbar;
-@property (strong, nonatomic) UIPopoverController* popover;
+@property (strong, nonatomic) UIPopoverController *popover;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *modButton;
+
+// Views
+@property (retain, nonatomic) IBOutlet QuickCollection *quickCollectionView;
+@property (retain, nonatomic) IBOutlet UIView *quickTopView;
 @property (retain, nonatomic) IBOutlet QuickTable *quickTableView;
+
+// Displays on quickTopView
+@property (retain, nonatomic) IBOutlet UILabel *amountLabel;
+@property (retain, nonatomic) IBOutlet UILabel *taxLabel;
+@property (retain, nonatomic) IBOutlet UILabel *totalLabel;
 
 @end
 
@@ -52,6 +58,10 @@
 @synthesize popover;
 @synthesize quickTableView;
 
+@synthesize amountLabel;
+@synthesize taxLabel;
+@synthesize totalLabel;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -70,12 +80,12 @@
     // Set up the order.
     self.order = [[Orders alloc] init];
     
-    [self applyColorToBackgrounds];
     
     // The current menu items are always Class Names first.
     self.currentMenuItems = [[self database] classNames];
     
     // Initialize
+    [self applyColorToBackgrounds];
     
     // Holds previous menu arrays to jump backwards
     self.stackOfMenus = [[NSMutableArray alloc] init];
@@ -94,6 +104,11 @@
     NSString *itemTestid = [[NSString alloc] initWithFormat:@"%d", 74];
     ItemProperties *itemProperties = [[ItemProperties alloc] initWithItemId:itemTestid];
     
+    // Initialize the labels to nothing.
+    amountLabel.text = @"";
+    taxLabel.text = @".09";
+    totalLabel.text = @"";
+    
     [super viewDidLoad];
     
 }
@@ -102,12 +117,13 @@
 {
     // Set up the background.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background2.png"]];
+    //self.view.backgroundColor = [UIColor grayColor];
     
+    // view top right
     self.quickTopView.backgroundColor = [UIColor clearColor];
     self.quickTopView.layer.borderColor = [UIColor orangeColor].CGColor;
     self.quickTopView.layer.borderWidth = 2.0f;
-    
-    
+    // table top left
     self.quickTableView.backgroundColor = [UIColor clearColor];
     self.quickTableView.layer.borderColor = [UIColor orangeColor].CGColor;
     self.quickTableView.layer.borderWidth = 2.0f;
@@ -132,7 +148,6 @@
     [[self quickCollectionView] reloadData];
     [[self quickTableView] reloadData];
 }
-
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
@@ -200,10 +215,9 @@
             
             // don't show modifiers, but ask them if they want to see toppings
         self.selectedItemId = [[self database] itemIdWhereClassIs:self.classNameForDatabase andSubclassIs:self.subclassNameForDatabase andItemIs:self.nameOfSelected];
-        //NSLog(@"classname: %@, subclassname: %@, itemname: %@, id: %@", self.classNameForDatabase, self.subclassNameForDatabase, self.nameOfSelected, self.selectedItemId);
-            
+        
         [self extraItemOptions];
-        NSLog(@"RETURNED");
+        //NSLog(@"RETURNED");
     }
     
     
@@ -230,7 +244,6 @@
     
 }
 
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
@@ -252,6 +265,10 @@
             //NSLog(@"%@ : %@", self.selectedItemId, [[self database] getLunchPriceUsing:self.selectedItemId]);
             
             [order addToOrder:self.selectedItemId];
+            
+            // update the total of the order visually
+            [self updateTotalOfOrderLabels];
+            
             [self.quickTableView reloadData];
             
         } else {
@@ -261,6 +278,16 @@
         }
     }
 
+}
+
+- (void)updateTotalOfOrderLabels
+{
+    // update the model and then update the view
+    [order updateTotals];
+    NSLog(@"total amount: %@", order.totalAmount);
+    NSLog(@"total price: %@", order.totalPrice);
+    amountLabel.text = [NSString stringWithFormat:@"%@", order.totalAmount];
+    totalLabel.text = [NSString stringWithFormat:@"%@", order.totalPrice];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -273,7 +300,6 @@
     }
     
 }
-
 
 - (void)savePreviousState
 {
@@ -345,6 +371,8 @@
     [stepperView addTarget:self action:@selector(stepperValueChanged:) forControlEvents:UIControlEventValueChanged];
     [stepperView release];
     
+    stepperView.value = [[[order currentQtys] objectAtIndex:indexPath.row] doubleValue];
+    
     cell.itemNameLabel.text = [[order currentNames] objectAtIndex:indexPath.row];
     NSLog(@"%@", [[order currentNames] objectAtIndex:indexPath.row]);
     
@@ -357,9 +385,31 @@
     return cell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+    //return @"---------Name----------------------------Price-----Quantity--------------";
+//}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return @"---------Name----------------------------Price-----Quantity--------------";
+    //UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, quickTableView.frame.size.width, 18)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, quickTableView.frame.size.width, 20)];
+    /* Create custom view to display section header... */
+    //UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, quickTableView.frame.size.width, 18)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, quickTableView.frame.size.width, 20)];
+    [label setFont:[UIFont boldSystemFontOfSize:12]];
+    NSString *string = @"      Name                                                                   Price               Quantity       ";
+    
+    [label setText:string];
+    [view addSubview:label];
+    
+    [label setBackgroundColor:[UIColor blueColor]];
+    [view setBackgroundColor:[UIColor blackColor]];
+    [label setBackgroundColor:[UIColor clearColor]];
+    [view setBackgroundColor:[UIColor clearColor]];
+    //[view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]]; //your background color...
+    return view;
+    
 }
 
 - (IBAction)stepperValueChanged:(UIStepper *)sender
@@ -372,14 +422,14 @@
     
     // If the stepper reached the max value, it means the item should be removed from the table/order.
     if (sender.value == STEPPER_MAX_VALUE) {
-        
-        // TODO: WHEN REMOVING THE ITEMS, MAKE SURE TO SUBTRACT THE PRICE FROM THE TOTAL PRICE
-        // AND UPDATE THE VIEW ACCORDINGLY
+        // remove the object from order model, update every label
         [[order currentQtys] removeObjectAtIndex:indexPath.row];
         [[order currentNames] removeObjectAtIndex:indexPath.row];
         [[order currentPrices] removeObjectAtIndex:indexPath.row];
         [[self quickTableView] reloadData];
+        [self updateTotalOfOrderLabels];
     }
+    [self updateTotalOfOrderLabels];
 }
 
 - (void)dealloc
@@ -387,6 +437,9 @@
     [quickToolbar release];
     [modButton release];
     [quickTableView release];
+    [totalLabel release];
+    [taxLabel release];
+    [amountLabel release];
     [super dealloc];
 }
 

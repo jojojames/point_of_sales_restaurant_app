@@ -177,11 +177,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "122"
-         endingLineNumber = "122"
+         startingLineNumber = "138"
+         endingLineNumber = "138"
          landmarkName = "-flipBackMenuItems:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -190,11 +190,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "140"
-         endingLineNumber = "140"
+         startingLineNumber = "155"
+         endingLineNumber = "155"
          landmarkName = "-gestureRecognizer:shouldReceiveTouch:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -229,11 +229,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "193"
-         endingLineNumber = "193"
+         startingLineNumber = "208"
+         endingLineNumber = "208"
          landmarkName = "-handleOneTap:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -242,11 +242,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "235"
-         endingLineNumber = "235"
+         startingLineNumber = "249"
+         endingLineNumber = "249"
          landmarkName = "-alertView:clickedButtonAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -255,11 +255,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "228"
-         endingLineNumber = "228"
+         startingLineNumber = "243"
+         endingLineNumber = "243"
          landmarkName = "-extraItemOptions"
          landmarkType = "5">
       </FileBreakpoint>
@@ -268,11 +268,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "229"
-         endingLineNumber = "229"
+         startingLineNumber = "244"
+         endingLineNumber = "244"
          landmarkName = "-extraItemOptions"
          landmarkType = "5">
       </FileBreakpoint>
@@ -346,11 +346,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390347590.448442"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "342"
-         endingLineNumber = "342"
+         startingLineNumber = "369"
+         endingLineNumber = "369"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -359,11 +359,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "325"
-         endingLineNumber = "325"
+         startingLineNumber = "352"
+         endingLineNumber = "352"
          landmarkName = "-tableView:numberOfRowsInSection:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -372,11 +372,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "320"
-         endingLineNumber = "320"
+         startingLineNumber = "347"
+         endingLineNumber = "347"
          landmarkName = "-numberOfSectionsInTableView:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -385,11 +385,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390347590.448442"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "341"
-         endingLineNumber = "341"
+         startingLineNumber = "368"
+         endingLineNumber = "368"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -398,11 +398,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "303"
-         endingLineNumber = "303"
+         startingLineNumber = "330"
+         endingLineNumber = "330"
          landmarkName = "-collectionView:cellForItemAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -411,11 +411,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "294"
-         endingLineNumber = "294"
+         startingLineNumber = "321"
+         endingLineNumber = "321"
          landmarkName = "-collectionView:numberOfItemsInSection:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -424,11 +424,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "289"
-         endingLineNumber = "289"
+         startingLineNumber = "316"
+         endingLineNumber = "316"
          landmarkName = "-numberOfSectionsInCollectionView:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -437,11 +437,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390346717.067126"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "321"
-         endingLineNumber = "321"
+         startingLineNumber = "348"
+         endingLineNumber = "348"
          landmarkName = "-numberOfSectionsInTableView:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -450,12 +450,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390347590.448442"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "327"
-         endingLineNumber = "327"
-         landmarkName = "-tableView:numberOfRowsInSection:"
+         startingLineNumber = "354"
+         endingLineNumber = "354"
+         landmarkName = "@implementation QuickServeController"
+         landmarkType = "3">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Point IPad/QuickServe/QuickServeController.m"
+         timestampString = "390356081.784554"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "367"
+         endingLineNumber = "367"
+         landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -463,12 +476,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Point IPad/QuickServe/QuickServeController.m"
-         timestampString = "390347590.448442"
+         timestampString = "390356081.784554"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "340"
-         endingLineNumber = "340"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         startingLineNumber = "314"
+         endingLineNumber = "314"
+         landmarkName = "-numberOfSectionsInCollectionView:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Point IPad/QuickServe/QuickServeController.m"
+         timestampString = "390356081.784554"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "289"
+         endingLineNumber = "289"
+         landmarkName = "-updateTotalOfOrderLabels"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Point IPad/QuickServe/QuickServeController.m"
+         timestampString = "390357043.160489"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "431"
+         endingLineNumber = "431"
+         landmarkName = "-stepperValueChanged:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

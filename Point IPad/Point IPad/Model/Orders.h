@@ -11,11 +11,13 @@
 
 @interface Orders : NSObject
 @property (strong, nonatomic) DatabaseAccess *database; // database query
-@property (nonatomic, strong) NSNumber * totalPrice;
+@property (nonatomic, strong) NSNumber *totalAmount; // the amount without tax
+@property (nonatomic, strong) NSNumber *totalPrice; // the amount with tax
 @property (nonatomic, strong) NSMutableArray *currentNames;  // contains the names of the current order
 @property (nonatomic, strong) NSMutableArray *currentPrices; // contains the prices of the current order
 @property (nonatomic, strong) NSMutableArray *currentQtys;   // containts the quantities of every order
 
+- (void)updateTotals;
 - (void)addToOrder:(NSNumber *)itemId;
 
 @end

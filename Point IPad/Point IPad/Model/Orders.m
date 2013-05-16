@@ -14,6 +14,7 @@
 @synthesize currentPrices;
 @synthesize currentQtys;
 @synthesize database;
+@synthesize totalAmount;
 
 - (Orders *)init
 {
@@ -39,6 +40,24 @@
     [currentPrices addObject:itemPrice];
     [currentQtys addObject:itemQty];
     
+    [self updateTotals]; // update the totals internally
+    
+}
+
+#define TAX .09 // tax percentage
+
+- (void)updateTotals
+{
+    totalAmount = 0;
+    for (int i=0; i<[currentPrices count]; i++) {
+        for (int j=0; j<[[currentQtys objectAtIndex:i] intValue]; j++) {
+            totalAmount = [NSNumber numberWithInt:[[currentPrices objectAtIndex:i] integerValue] + [totalAmount integerValue]];
+        }
+    }
+    
+    int intTotalAmount = [totalAmount intValue];
+    double finalPrice = intTotalAmount + (intTotalAmount * TAX);
+    totalPrice = [NSNumber numberWithDouble:finalPrice];
 }
 
 @end
