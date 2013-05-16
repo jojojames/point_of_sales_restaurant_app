@@ -128,6 +128,9 @@
     self.quickTableView.layer.borderColor = [UIColor orangeColor].CGColor;
     self.quickTableView.layer.borderWidth = 2.0f;
     
+    
+    self.quickCollectionView.backgroundColor = [UIColor clearColor];
+    
 }
 
 - (IBAction)flipBackMenuItems:(UIBarButtonItem *)sender
@@ -360,6 +363,7 @@
     static NSString *CellIdentifier = @"quickTableCell";
     QuickServeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    // Create a stepper that will handle the quantity of an item.
     UIStepper *stepperView = [[UIStepper alloc] initWithFrame:CGRectZero];
     cell.accessoryView = stepperView;
     stepperView.minimumValue = STEPPER_MIN_VALUE;
