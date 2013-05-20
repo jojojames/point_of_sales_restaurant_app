@@ -19,6 +19,7 @@
 @synthesize selectedItemId;
 @synthesize modOptionKeys;
 @synthesize selectedModifier;
+@synthesize modifiersToReturnToRoot;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -37,6 +38,8 @@
     modsToShow = [[NSMutableArray alloc] init];
     modOptionKeys = [[NSMutableArray alloc] init];
     NSString *optionKey = [[NSString alloc] init];
+    
+    modifiersToReturnToRoot = [[NSMutableArray alloc] init];
     
     NSMutableArray *hotnessMods = [database hotnessOptionsModifierOne:selectedItemId];
     NSMutableArray *quantityMods = [database quantityOptionsModifierTwo:selectedItemId];
@@ -142,13 +145,60 @@
     return cell;
 }
 
-- (void)switchChanged:(UISwitch *)sender {
+- (void)switchChanged:(UISwitch *)sender
+{
     QuickModifierCell *parentCell = (QuickModifierCell *)sender.superview;
     
-    NSLog( @"The switch is %@", sender.on ? @"ON" : @"OFF" );
+    //NSLog( @"The switch is %@", sender.on ? @"ON" : @"OFF" );
     
-    NSLog(@"%@", parentCell.textLabel.text);
+    // index of cell
+    NSString *titleOfCell = parentCell.textLabel.text;
+    NSIndexPath *indexPathOfCell = [self.tableView indexPathForCell:parentCell];
+    NSInteger sectionIndex = indexPathOfCell.section;
     
+    NSString *titleOfSection = [self tableView:self.tableView titleForHeaderInSection:sectionIndex];
+    
+    NSMutableString *stringModOption = [[NSMutableString alloc] initWithFormat:@"%@:%@:", titleOfSection, titleOfCell];
+    
+    if(sender.on) {
+        [stringModOption appendString:@"1"];
+    } else {
+        [stringModOption appendString:@"0"];
+    }
+    
+    [self addStringModOptionToArray:stringModOption];
+    
+    
+    // TODO: RETURN THE ARRAY TO THE CORRECT DICT USING THE ITEMID AS THE KEY
+}
+
+- (void)addStringModOptionToArray:(NSString *)modStringToAdd
+{
+    NSArray *selectedModOptionFromStringToAdd = [modStringToAdd componentsSeparatedByString:@":"];
+    
+    for (int i=0; i<[modifiersToReturnToRoot count]; i++) {
+        NSString *oneModifierString = [modifiersToReturnToRoot objectAtIndex:i];
+        
+        NSArray *selectedModOptions = [oneModifierString componentsSeparatedByString:@":"];
+        if ([[selectedModOptionFromStringToAdd objectAtIndex:0] isEqual:[selectedModOptions objectAtIndex:0]]) {
+            if ([[selectedModOptionFromStringToAdd objectAtIndex:1] isEqual:[selectedModOptions objectAtIndex:1]]) {
+                [modifiersToReturnToRoot replaceObjectAtIndex:i withObject:modStringToAdd];
+                [self printArray];
+                return;
+            }
+        }
+    }
+    [modifiersToReturnToRoot addObject:modStringToAdd];
+    [self printArray];
+}
+
+- (void)printArray
+{
+    //testing
+    NSLog(@"PRINTING ARRAY");
+    for (int i=0; i<[modifiersToReturnToRoot count]; i++) {
+        NSLog(@"%@", [modifiersToReturnToRoot objectAtIndex:i]);
+    }
 }
 
 #pragma mark - Table view delegate
@@ -168,32 +218,9 @@
     //NSString *selected = [array objectAtIndex:indexPath.row];
     selectedModifier = [array objectAtIndex:indexPath.row];
     NSLog(selectedModifier);
-    [self showConfirm];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 }
 
-- (void)showConfirm
-{
-    
-    UIAlertView *confirmSelect = [[UIAlertView alloc] initWithTitle:@"Modifier Selected!"
-                                                            message:@"Are you sure?"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"Cancel"
-                                                  otherButtonTitles:@"Yes", nil];
-    [confirmSelect show];
-    [confirmSelect release];
-    
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-	if (buttonIndex == 0) {
-        // They canceled the modifier.
-        // NOTHING HAPPENS WHEN THEY CANCEL.
-	} else if (buttonIndex == 1) {
-        // They confirmed the modifier.
-	}
-}
 
 @end

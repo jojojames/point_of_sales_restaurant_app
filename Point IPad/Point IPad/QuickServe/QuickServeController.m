@@ -116,8 +116,8 @@
 - (void)applyColorToBackgrounds
 {
     // Set up the background.
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background2.png"]];
-    //self.view.backgroundColor = [UIColor grayColor];
+    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background2.png"]];
+    self.view.backgroundColor = [UIColor grayColor];
     
     // view top right
     self.quickTopView.backgroundColor = [UIColor clearColor];
@@ -175,8 +175,8 @@
     CGPoint point = [sender locationInView:[self quickCollectionView]];
     NSIndexPath *indexPath = [self.quickCollectionView indexPathForItemAtPoint:point];
     self.nameOfSelected = [[self currentMenuItems] objectAtIndex:indexPath.row];
-    NSLog(@"%d", indexPath.row);
-    NSLog(@"%@", nameOfSelected);
+    //NSLog(@"%d", indexPath.row);
+    //NSLog(@"%@", nameOfSelected);
     
     
     /*
@@ -203,6 +203,7 @@
         } else {
             [self savePreviousState];
             [self setIsSubclass:TRUE];
+            self.classNameForDatabase = self.nameOfSelected;
             [self setCurrentMenuItems:[[self database] subclassWhereClassIs:self.nameOfSelected]];
         }
     } else if ([self isSubclass] && ![self isActualItems]) {
@@ -211,22 +212,27 @@
         [self setIsActualItems:TRUE];
         self.subclassNameForDatabase = self.nameOfSelected;
     } else {
-        // actual items
-            // show modifiers, let them pick
-            // ask if they want to see toppings
-            // show toppings if they want, else proceed
-            
-            // don't show modifiers, but ask them if they want to see toppings
+        // actual items, add to the order
         self.selectedItemId = [[self database] itemIdWhereClassIs:self.classNameForDatabase andSubclassIs:self.subclassNameForDatabase andItemIs:self.nameOfSelected];
-        
-        [self extraItemOptions];
-        //NSLog(@"RETURNED");
+        [self addAnOrder];
     }
-    
     
     // refresh the screen with new menu items
     [[self quickCollectionView] reloadData];
     [[self quickTableView] reloadData];
+}
+
+- (void)addAnOrder
+{
+    // no mods, add the order to the model and update all views and labels
+    [order addToOrder:self.selectedItemId];
+    // update the total of the order visually
+    [self updateTotalOfOrderLabels];
+}
+
+- (IBAction)modButtonPressed:(UIBarButtonItem *)sender
+{
+    [self performSegueWithIdentifier:@"showModifiers" sender:self];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
@@ -234,61 +240,10 @@
     return NO;
 }
 
-- (void)extraItemOptions
-{
-    UIAlertView *modMessage = [[UIAlertView alloc] initWithTitle:@"Add To Order"
-                                                      message:@"Would you like any modifiers?"
-                                                     delegate:self
-                                            cancelButtonTitle:@"Cancel Item"
-                                            otherButtonTitles:@"Yes", @"No", nil];
-    [modMessage setTag:1];
-    [modMessage show];
-    [modMessage release];
-    
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    
-    // todo; put contents of each if into a separate function
-    if (alertView.tag == 1) {
-        if (buttonIndex == 1) {
-            // yes, pull modifier information from database, then show toppings
-            [alertView dismissWithClickedButtonIndex:0 animated:YES];
-            
-            
-            //SEGUE TO NEXT VIEW AND HANDLE MODIFIERS THERE
-            //AFTER HANDLING INPUT, RETURN TO THIS VIEW
-            [self performSegueWithIdentifier:@"showModifiers" sender:self];
-            
-        } else if (buttonIndex == 2) {
-            // no, proceed with order
-            //CREATE AN ORDER WITHOUT ANY MODS, UPDATE THE VIEW WITH THE PRICE
-            // WRITE A DATABASE FUNCTION TO GET THE PRICE self.selectedItemId;
-            //NSLog(@"%@ : %@", self.selectedItemId, [[self database] getLunchPriceUsing:self.selectedItemId]);
-            
-            [order addToOrder:self.selectedItemId];
-            
-            // update the total of the order visually
-            [self updateTotalOfOrderLabels];
-            
-            [self.quickTableView reloadData];
-            
-        } else {
-            return;
-            // cancel the order
-            // return without doing anything extra
-        }
-    }
-
-}
-
 - (void)updateTotalOfOrderLabels
 {
     // update the model and then update the view
     [order updateTotals];
-    NSLog(@"total amount: %@", order.totalAmount);
-    NSLog(@"total price: %@", order.totalPrice);
     amountLabel.text = [NSString stringWithFormat:@"%@", order.totalAmount];
     totalLabel.text = [NSString stringWithFormat:@"%@", order.totalPrice];
 }
@@ -301,7 +256,6 @@
         destViewController.database = self.database;
         
     }
-    
 }
 
 - (void)savePreviousState
@@ -352,7 +306,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[order currentNames] count];
+    return [[order currentItemIds] count];
 }
 
 #define STEPPER_MAX_VALUE 20
@@ -377,12 +331,8 @@
     
     stepperView.value = [[[order currentQtys] objectAtIndex:indexPath.row] doubleValue];
     
-    cell.itemNameLabel.text = [[order currentNames] objectAtIndex:indexPath.row];
-    NSLog(@"%@", [[order currentNames] objectAtIndex:indexPath.row]);
-    
-    // currentPrices returns an NSNumber, so convert it to a string while changing the label's text.
-    cell.priceLabel.text = [NSString stringWithFormat:@"$%@", [[order currentPrices] objectAtIndex:indexPath.row] ];
-    NSLog(@"%@", [[order currentPrices] objectAtIndex:indexPath.row]);
+    cell.itemNameLabel.text = [[self database] getItemNameUsing:[[order currentItemIds] objectAtIndex:indexPath.row]];
+    cell.priceLabel.text = [NSString stringWithFormat:@"$%@", [[self database] getLunchPriceUsing:[[order currentItemIds] objectAtIndex:indexPath.row]]];
     
     // currentQuantities returns an NSNumber, so convert it to a string while changing the label's text.
     cell.qtyLabel.text = [NSString stringWithFormat:@"%@", [[order currentQtys] objectAtIndex:indexPath.row]];
@@ -416,6 +366,12 @@
     
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // change the selected item when clicking on the table
+    self.selectedItemId = [[order currentItemIds] objectAtIndex:indexPath.row];
+}
+
 - (IBAction)stepperValueChanged:(UIStepper *)sender
 {
     // Update the model with updated quantity, then display it.
@@ -427,9 +383,8 @@
     // If the stepper reached the max value, it means the item should be removed from the table/order.
     if (sender.value == STEPPER_MAX_VALUE) {
         // remove the object from order model, update every label
+        [[order currentItemIds] removeObjectAtIndex:indexPath.row];
         [[order currentQtys] removeObjectAtIndex:indexPath.row];
-        [[order currentNames] removeObjectAtIndex:indexPath.row];
-        [[order currentPrices] removeObjectAtIndex:indexPath.row];
         [[self quickTableView] reloadData];
         [self updateTotalOfOrderLabels];
     }

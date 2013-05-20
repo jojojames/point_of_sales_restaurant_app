@@ -10,18 +10,18 @@
 
 @implementation Orders
 @synthesize totalPrice;
-@synthesize currentNames;
-@synthesize currentPrices;
 @synthesize currentQtys;
 @synthesize database;
 @synthesize totalAmount;
+@synthesize currentItemIds;
+@synthesize dictionary;
 
 - (Orders *)init
 {
-    currentNames = [[NSMutableArray alloc] init];
-    currentPrices = [[NSMutableArray alloc] init];
+    currentItemIds = [[NSMutableArray alloc] init];
     currentQtys = [[NSMutableArray alloc] init];
     database = [[DatabaseAccess alloc] init];
+    dictionary = [[NSMutableDictionary alloc] init];
     return self;
 }
 
@@ -31,27 +31,41 @@
     // use a database, get the price of the item and then add it to the total of the order
     // add somethign to the currentOrder array
     
-    //NSLog(@"%@ : %@", self.selectedItemId, [[self database] getLunchPriceUsing:self.selectedItemId]);
-    
-    NSString *itemName = [[self database] getItemNameUsing:itemId];
-    NSNumber *itemPrice = [[self database] getLunchPriceUsing:itemId];
     NSNumber *itemQty = [NSNumber numberWithInt:1]; // every item starts at 1 quantity
-    [currentNames addObject:itemName];
-    [currentPrices addObject:itemPrice];
-    [currentQtys addObject:itemQty];
+    
+    // if the item was already selected, increment the quantity instead
+    if([currentItemIds containsObject:itemId]) {
+        for (int qtyIndex=0; qtyIndex<[currentItemIds count]; qtyIndex++) {
+            if ([[currentItemIds objectAtIndex:qtyIndex] isEqual:itemId]) {
+                int incrementQuantity = [[currentQtys objectAtIndex:qtyIndex] intValue] + 1;
+                [currentQtys replaceObjectAtIndex:qtyIndex  withObject:[NSNumber numberWithInt:incrementQuantity]];
+            }
+        }
+    } else {
+        // else add a new item to the order
+        [currentItemIds addObject:itemId];
+        [currentQtys addObject:itemQty];
+        
+        // only create a new dictionary if the item is new
+        [dictionary setObject:[[NSMutableArray alloc] init] forKey:itemId];
+    }
     
     [self updateTotals]; // update the totals internally
-    
 }
 
 #define TAX .09 // tax percentage
 
 - (void)updateTotals
 {
+    // get the price of the item using the item id, adding it to the total amount, then calculate the total price by calculating tax
+    // TODO: create a function to get the tax of that particular item
+    // TODO: create a function to check if there's a global tax to apply
     totalAmount = 0;
-    for (int i=0; i<[currentPrices count]; i++) {
+    NSNumber *tempItemPrice;
+    for (int i=0; i<[currentItemIds count]; i++) {
         for (int j=0; j<[[currentQtys objectAtIndex:i] intValue]; j++) {
-            totalAmount = [NSNumber numberWithInt:[[currentPrices objectAtIndex:i] integerValue] + [totalAmount integerValue]];
+            tempItemPrice = [[self database] getLunchPriceUsing:[[self currentItemIds] objectAtIndex:i]];
+            totalAmount = [NSNumber numberWithInt:[tempItemPrice intValue] + [totalAmount intValue]];
         }
     }
     

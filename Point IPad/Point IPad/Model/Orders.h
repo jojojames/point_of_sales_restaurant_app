@@ -13,9 +13,13 @@
 @property (strong, nonatomic) DatabaseAccess *database; // database query
 @property (nonatomic, strong) NSNumber *totalAmount; // the amount without tax
 @property (nonatomic, strong) NSNumber *totalPrice; // the amount with tax
-@property (nonatomic, strong) NSMutableArray *currentNames;  // contains the names of the current order
-@property (nonatomic, strong) NSMutableArray *currentPrices; // contains the prices of the current order
+
+// possible to use only currentItemIds and currentQtys and have the names and price taken from an SQL query using itemid
+@property (nonatomic, strong) NSMutableArray *currentItemIds; // containts the ids of the current order
 @property (nonatomic, strong) NSMutableArray *currentQtys;   // containts the quantities of every order
+
+
+@property (nonatomic, strong) NSMutableDictionary *dictionary; // keys are itemids, retrieves an array of mod strings, mod strings being in the format of "Modifier 1:M1:1"
 
 - (void)updateTotals;
 - (void)addToOrder:(NSNumber *)itemId;
