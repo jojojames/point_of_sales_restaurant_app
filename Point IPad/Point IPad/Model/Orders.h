@@ -23,5 +23,8 @@
 
 - (void)updateTotals;
 - (void)addToOrder:(NSNumber *)itemId;
+- (BOOL)nameInKey:(NSString *)cellValue ofKey:(NSNumber *)itemId;
+- (void)updateDictionaryWithModifierString:(NSMutableArray *)newChanges forKey:(NSNumber *)itemId;
+
 
 @end

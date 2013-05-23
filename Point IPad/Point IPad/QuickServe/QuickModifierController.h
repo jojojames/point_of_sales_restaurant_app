@@ -9,7 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "DatabaseAccess.h"
 
+@protocol QuickModifierControllerDelegate <NSObject>
+- (void)changedModiferStringArray:(NSMutableArray *)updatedModifierStringArray withItemId:(NSNumber *)itemId;
+- (BOOL)modTrueInDictionary:(NSNumber *)itemId withCellValue:(NSString *)cellValue;
+@end
+
 @interface QuickModifierController : UITableViewController
+
+@property (nonatomic, assign) id<QuickModifierControllerDelegate> delegate;
 @property (nonatomic, strong) NSNumber *selectedItemId;
 @property (nonatomic, strong) NSMutableArray *modsToShow;
 @property (nonatomic, strong) NSMutableArray *modOptionKeys;
@@ -21,5 +28,5 @@
 @property (nonatomic, strong) NSMutableArray *modifiersHoldingModOptions;
 
 // contains lists of strings in this format titleOfSection:titleOfCell:1 or 0
-@property (nonatomic, strong) NSMutableArray *modifiersToReturnToRoot;
+@property (nonatomic, strong) NSMutableArray *modifiersToReturnToParent;
 @end

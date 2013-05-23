@@ -8,10 +8,12 @@
 
 #import "QuickModifierController.h"
 #import "QuickModifierCell.h"
+#import "QuickServeController.h"
 
 @interface QuickModifierController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
+
 
 @implementation QuickModifierController
 @synthesize modsToShow;
@@ -19,7 +21,8 @@
 @synthesize selectedItemId;
 @synthesize modOptionKeys;
 @synthesize selectedModifier;
-@synthesize modifiersToReturnToRoot;
+@synthesize modifiersToReturnToParent;
+@synthesize delegate;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -39,7 +42,7 @@
     modOptionKeys = [[NSMutableArray alloc] init];
     NSString *optionKey = [[NSString alloc] init];
     
-    modifiersToReturnToRoot = [[NSMutableArray alloc] init];
+    modifiersToReturnToParent = [[NSMutableArray alloc] init];
     
     NSMutableArray *hotnessMods = [database hotnessOptionsModifierOne:selectedItemId];
     NSMutableArray *quantityMods = [database quantityOptionsModifierTwo:selectedItemId];
@@ -79,17 +82,17 @@
     }
     
     // Create the button to finish the modifier choices.
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Confirm" style:UIBarButtonItemStylePlain target:self action:@selector(finishSelecting:)];
-    self.navigationItem.rightBarButtonItem = anotherButton;
-    [anotherButton release];
+    //UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Confirm" style:UIBarButtonItemStylePlain target:self action:@selector(finishSelecting:)];
+    //self.navigationItem.rightBarButtonItem = anotherButton;
+    //[anotherButton release];
     
 }
 
-- (IBAction)finishSelecting:(id)sender
-{
+//- (IBAction)finishSelecting:(id)sender
+//{
     // After user is done picking their modifiers, finish and segue back to the previous controller.
     
-}
+//}
 
 
 - (NSArray *)getDelimitedModNames:(NSMutableArray *)modArray
@@ -139,10 +142,23 @@
     UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
     cell.accessoryView = switchView;
     cell.textLabel.text = cellValue;
-    [switchView setOn:NO animated:NO];
+    //[switchView setOn:NO animated:NO];
+    [self determineSwitchStartState:switchView withString:cellValue];
     [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     [switchView release];
     return cell;
+}
+
+- (void)determineSwitchStartState:(UISwitch *)switchView withString:(NSString *)cellValue
+{
+    if ([[self delegate] modTrueInDictionary:selectedItemId withCellValue:cellValue]) {
+        //modifier was turned on to YES before, so set it as ON by default
+        [switchView setOn:YES animated:NO];
+    } else {
+        //modifier was either turned to off or has not been selected yet, so set it to OFF by defaultj
+        [switchView setOn:NO animated:NO];
+    }
+    
 }
 
 - (void)switchChanged:(UISwitch *)sender
@@ -170,25 +186,29 @@
     
     
     // TODO: RETURN THE ARRAY TO THE CORRECT DICT USING THE ITEMID AS THE KEY
+    // WILL BE ABLE TO ACCESS THE order object BY ACCESSING THE ROOT VIEW
+    [[self delegate] changedModiferStringArray:modifiersToReturnToParent withItemId:selectedItemId];
 }
 
 - (void)addStringModOptionToArray:(NSString *)modStringToAdd
 {
     NSArray *selectedModOptionFromStringToAdd = [modStringToAdd componentsSeparatedByString:@":"];
     
-    for (int i=0; i<[modifiersToReturnToRoot count]; i++) {
-        NSString *oneModifierString = [modifiersToReturnToRoot objectAtIndex:i];
+    for (int i=0; i<[modifiersToReturnToParent count]; i++) {
+        NSString *oneModifierString = [modifiersToReturnToParent objectAtIndex:i];
         
         NSArray *selectedModOptions = [oneModifierString componentsSeparatedByString:@":"];
         if ([[selectedModOptionFromStringToAdd objectAtIndex:0] isEqual:[selectedModOptions objectAtIndex:0]]) {
             if ([[selectedModOptionFromStringToAdd objectAtIndex:1] isEqual:[selectedModOptions objectAtIndex:1]]) {
-                [modifiersToReturnToRoot replaceObjectAtIndex:i withObject:modStringToAdd];
+                [modifiersToReturnToParent replaceObjectAtIndex:i withObject:modStringToAdd];
                 [self printArray];
                 return;
             }
         }
     }
-    [modifiersToReturnToRoot addObject:modStringToAdd];
+    [modifiersToReturnToParent addObject:modStringToAdd];
+    
+    // TEST : DELETE LATER
     [self printArray];
 }
 
@@ -196,8 +216,8 @@
 {
     //testing
     NSLog(@"PRINTING ARRAY");
-    for (int i=0; i<[modifiersToReturnToRoot count]; i++) {
-        NSLog(@"%@", [modifiersToReturnToRoot objectAtIndex:i]);
+    for (int i=0; i<[modifiersToReturnToParent count]; i++) {
+        NSLog(@"%@", [modifiersToReturnToParent objectAtIndex:i]);
     }
 }
 

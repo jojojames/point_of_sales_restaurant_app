@@ -372,9 +372,9 @@
 - (NSNumber *)getLunchPriceUsing:(NSNumber *)itemId
 {
     NSString *query = [NSString stringWithFormat:@"SELECT lunch_price from TBL_ITEMS where item_id=%@", itemId];
-    NSLog(@"DATABASEACCESS: ITEM_ID: %@", itemId);
+    //NSLog(@"DATABASEACCESS: ITEM_ID: %@", itemId);
     PGSQLRecordset *rs = [pgConn open:query];
-    NSLog(@"PRICE: %@", [[rs fieldByIndex:0] asNumber]);
+    //NSLog(@"PRICE: %@", [[rs fieldByIndex:0] asNumber]);
     return [[rs fieldByIndex:0] asNumber];
 }
 

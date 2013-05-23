@@ -17,7 +17,7 @@
 #import "QuickTable.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, QuickModifierControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet UITapGestureRecognizer *oneFingerOneTap;
 @property (strong, nonatomic) QuickCollectionFlow *flowLayout;
@@ -106,7 +106,7 @@
     
     // Initialize the labels to nothing.
     amountLabel.text = @"";
-    taxLabel.text = @".09";
+    taxLabel.text = @"";
     totalLabel.text = @"";
     
     [super viewDidLoad];
@@ -243,8 +243,13 @@
 - (void)updateTotalOfOrderLabels
 {
     // update the model and then update the view
+    NSNumberFormatter *numberFormater = [[NSNumberFormatter alloc] init];
+    [numberFormater setNumberStyle:NSNumberFormatterDecimalStyle];
     [order updateTotals];
     amountLabel.text = [NSString stringWithFormat:@"%@", order.totalAmount];
+    NSNumber *nsTaxValue = [NSNumber numberWithDouble:([order.totalPrice doubleValue] - [order.totalAmount intValue])];
+    //taxLabel.text = [NSString stringWithFormat:@"%@", nsTaxValue];
+    taxLabel.text = [numberFormater stringFromNumber:nsTaxValue];
     totalLabel.text = [NSString stringWithFormat:@"%@", order.totalPrice];
 }
 
@@ -252,6 +257,7 @@
 {
     if ([segue.identifier isEqualToString:@"showModifiers"]) {
         QuickModifierController *destViewController = segue.destinationViewController;
+        destViewController.delegate = self;
         destViewController.selectedItemId = self.selectedItemId;
         destViewController.database = self.database;
         
@@ -339,11 +345,6 @@
     return cell;
 }
 
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-    //return @"---------Name----------------------------Price-----Quantity--------------";
-//}
-
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     //UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, quickTableView.frame.size.width, 18)];
@@ -383,12 +384,26 @@
     // If the stepper reached the max value, it means the item should be removed from the table/order.
     if (sender.value == STEPPER_MAX_VALUE) {
         // remove the object from order model, update every label
+        [[order dictionary] removeObjectForKey:[[order currentItemIds] objectAtIndex:indexPath.row]];
         [[order currentItemIds] removeObjectAtIndex:indexPath.row];
         [[order currentQtys] removeObjectAtIndex:indexPath.row];
         [[self quickTableView] reloadData];
         [self updateTotalOfOrderLabels];
     }
     [self updateTotalOfOrderLabels];
+}
+
+#pragma mark Quick Modifier Controller data source
+- (void)changedModiferStringArray:(NSMutableArray *)updatedModifierStringArray withItemId:(NSNumber *)itemId
+{
+    [[self order] updateDictionaryWithModifierString:updatedModifierStringArray forKey:itemId];
+}
+
+
+- (BOOL)modTrueInDictionary:(NSNumber *)itemId withCellValue:(NSString *)cellValue
+{
+    
+    return [[self order] nameInKey:cellValue ofKey:itemId];
 }
 
 - (void)dealloc
@@ -400,6 +415,18 @@
     [taxLabel release];
     [amountLabel release];
     [super dealloc];
+}
+
+- (IBAction)clickedConfirm:(UIBarButtonItem *)sender
+{
+    UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Success!"
+                                                           message:@"You've confirmed your order."
+                                                          delegate:nil
+                                                 cancelButtonTitle:@"Ok"
+                                                 otherButtonTitles:nil];
+    [successAlert show];
+    [successAlert release];
+    
 }
 
 - (void)printStringsFromArray:(NSMutableArray *)array
