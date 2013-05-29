@@ -51,4 +51,6 @@
 // Dealing with orders
 - (NSNumber *)getLunchPriceUsing:(NSNumber *)itemId;
 - (NSString *)getItemNameUsing:(NSNumber *)itemId;
+- (NSNumber *)getModPriceExtra:(NSNumber *)itemId withModName:(NSString *)modName;
+- (NSNumber *)getModPriceQuantity:(NSNumber *)itemId withModName:(NSString *)modName;
 @end

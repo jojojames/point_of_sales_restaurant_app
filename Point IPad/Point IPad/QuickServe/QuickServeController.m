@@ -17,7 +17,9 @@
 #import "QuickTable.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, QuickModifierControllerDelegate>
+@interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
+                                    UIActionSheetDelegate, UITableViewDataSource,
+                                    UITableViewDelegate, QuickModifierControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet UITapGestureRecognizer *oneFingerOneTap;
 @property (strong, nonatomic) QuickCollectionFlow *flowLayout;
@@ -113,6 +115,12 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    // update the amount when coming back from choosing mods
+    [self updateTotalOfOrderLabels];
+}
+
 - (void)applyColorToBackgrounds
 {
     // Set up the background.
@@ -192,7 +200,6 @@
      Then refresh the view for the changes to take effect.
      */
     
-    
     if (![self isSubclass] && ![self isActualItems]) {
         if ([[[self database] subclassWhereClassIs:self.nameOfSelected] count] == 1) {
             [self savePreviousState];
@@ -213,7 +220,9 @@
         self.subclassNameForDatabase = self.nameOfSelected;
     } else {
         // actual items, add to the order
-        self.selectedItemId = [[self database] itemIdWhereClassIs:self.classNameForDatabase andSubclassIs:self.subclassNameForDatabase andItemIs:self.nameOfSelected];
+        self.selectedItemId = [[self database] itemIdWhereClassIs:self.classNameForDatabase
+                                                    andSubclassIs:self.subclassNameForDatabase
+                                                        andItemIs:self.nameOfSelected];
         [self addAnOrder];
     }
     
@@ -242,15 +251,20 @@
 
 - (void)updateTotalOfOrderLabels
 {
-    // update the model and then update the view
+    // update the model
+    [order updateTotals];
+    
+    // get a decimal value to display currency
     NSNumberFormatter *numberFormater = [[NSNumberFormatter alloc] init];
     [numberFormater setNumberStyle:NSNumberFormatterDecimalStyle];
-    [order updateTotals];
-    amountLabel.text = [NSString stringWithFormat:@"%@", order.totalAmount];
     NSNumber *nsTaxValue = [NSNumber numberWithDouble:([order.totalPrice doubleValue] - [order.totalAmount intValue])];
-    //taxLabel.text = [NSString stringWithFormat:@"%@", nsTaxValue];
+    NSNumber *nsAmtValue = [NSNumber numberWithDouble:[order.totalAmount doubleValue]];
+    NSNumber *nsTotValue = [NSNumber numberWithDouble:[order.totalPrice doubleValue]];
+    
+    // update the view
+    amountLabel.text = [numberFormater stringFromNumber:nsAmtValue];
     taxLabel.text = [numberFormater stringFromNumber:nsTaxValue];
-    totalLabel.text = [NSString stringWithFormat:@"%@", order.totalPrice];
+    totalLabel.text = [numberFormater stringFromNumber:nsTotValue];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -338,7 +352,8 @@
     stepperView.value = [[[order currentQtys] objectAtIndex:indexPath.row] doubleValue];
     
     cell.itemNameLabel.text = [[self database] getItemNameUsing:[[order currentItemIds] objectAtIndex:indexPath.row]];
-    cell.priceLabel.text = [NSString stringWithFormat:@"$%@", [[self database] getLunchPriceUsing:[[order currentItemIds] objectAtIndex:indexPath.row]]];
+    cell.priceLabel.text = [NSString stringWithFormat:@"$%@", [[self database] getLunchPriceUsing:[[order currentItemIds]
+                                                                                                   objectAtIndex:indexPath.row]]];
     
     // currentQuantities returns an NSNumber, so convert it to a string while changing the label's text.
     cell.qtyLabel.text = [NSString stringWithFormat:@"%@", [[order currentQtys] objectAtIndex:indexPath.row]];
@@ -402,7 +417,6 @@
 
 - (BOOL)modTrueInDictionary:(NSNumber *)itemId withCellValue:(NSString *)cellValue
 {
-    
     return [[self order] nameInKey:cellValue ofKey:itemId];
 }
 
@@ -419,6 +433,8 @@
 
 - (IBAction)clickedConfirm:(UIBarButtonItem *)sender
 {
+    
+    // TODO: DO STUFF HERE TO COMPLETE THE ORDER
     UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Success!"
                                                            message:@"You've confirmed your order."
                                                           delegate:nil

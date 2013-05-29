@@ -333,6 +333,7 @@
     return [self createModsUsing:query];
 }
 
+//mod1/hotness, mod2/quantity, mod3/extras, mod4/options
 
 
 - (NSMutableArray *)createModsUsing:(NSString *)query
@@ -383,6 +384,24 @@
     NSString *query = [NSString stringWithFormat:@"SELECT name from TBL_ITEMS where item_id=%@", itemId];
     PGSQLRecordset *rs = [pgConn open:query];
     return [[rs fieldByIndex:0] asString];
+}
+
+- (NSNumber *)getModPriceExtra:(NSNumber *)itemId withModName:(NSString *)modName
+{
+    // select price from tbl_extras where item_id='57' AND extras='M3';
+    NSString *query = [NSString stringWithFormat:@"SELECT price from TBL_EXTRAS where item_id=\'%@\' AND extras=\'%@\'", itemId, modName];
+    PGSQLRecordset *rs = [pgConn open:query];
+    //NSLog(@"EXTRA MOD EXTRA : %@", [[rs fieldByIndex:0] asNumber]); // TEST
+    return [[rs fieldByIndex:0] asNumber];
+}
+
+- (NSNumber *)getModPriceQuantity:(NSNumber *)itemId withModName:(NSString *)modName
+{
+    // select price from tbl_quantity where item_id=57 AND size='M2';
+    NSString *query = [NSString stringWithFormat:@"SELECT price from TBL_QUANTITY where item_id=%@ AND size=\'%@\'", itemId, modName];
+    PGSQLRecordset *rs = [pgConn open:query];
+    //NSLog(@"QTY MOD EXTRA : %@", [[rs fieldByIndex:0] asNumber]); // TEST
+    return [[rs fieldByIndex:0] asNumber];
 }
 
 - (void)closeConnection

@@ -25,7 +25,6 @@
     return self;
 }
 
-
 - (void)addToOrder:(NSNumber *)itemId
 {
     // use a database, get the price of the item and then add it to the total of the order
@@ -50,8 +49,13 @@
         [dictionary setObject:[[NSMutableArray alloc] init] forKey:itemId];
     }
     
+    
+    //[currentItemIds addObject:itemId];
+    //[currentQtys addObject:itemQty];
+    //[dictionary setObject:[[NSMutableArray alloc] init] forKey:itemId];
+    
     // show the dictionary in the log
-    CFShow(dictionary);
+    //CFShow(dictionary);
     
     [self updateTotals]; // update the totals internally
 }
@@ -65,10 +69,13 @@
     // TODO: create a function to check if there's a global tax to apply
     totalAmount = 0;
     NSNumber *tempItemPrice;
-    for (int i=0; i<[currentItemIds count]; i++) {
-        for (int j=0; j<[[currentQtys objectAtIndex:i] intValue]; j++) {
-            tempItemPrice = [[self database] getLunchPriceUsing:[[self currentItemIds] objectAtIndex:i]];
-            totalAmount = [NSNumber numberWithInt:[tempItemPrice intValue] + [totalAmount intValue]];
+    NSNumber *modsPrice; // additional price of every modifier attached to an item
+    for (int curItem=0; curItem<[currentItemIds count]; curItem++) {
+        NSNumber *itemId = [[self currentItemIds] objectAtIndex:curItem];
+        for (int curQty=0; curQty<[[currentQtys objectAtIndex:curItem] intValue]; curQty++) {
+            tempItemPrice = [[self database] getLunchPriceUsing:itemId];
+            modsPrice = [self priceOfEveryModUsing:itemId];
+            totalAmount = [NSNumber numberWithInt:[tempItemPrice intValue] + [totalAmount intValue] + [modsPrice intValue]];
         }
     }
     
@@ -78,9 +85,33 @@
 }
 
 // in a string "Modifier 1:M1:1"
-#define MOD_CATEGORY_INDEX 0 // Modifier 1
-#define MOD_CHOICE_NAME_INDEX 1 // M1
-#define MOD_BOOLEAN_INDEX 2 // 1
+#define CATEGORY_INDEX 0 // Modifier 1
+#define CHOICE_INDEX 1 // M1
+#define BOOLEAN_INDEX 2 // 1
+
+- (NSNumber *)priceOfEveryModUsing:(NSNumber *)itemId
+{
+    // mod1/hotness, mod2/quantity, mod3/extras, mod4/options
+    // Only mod2 and mod3 have extra prices associated with them.
+    
+    NSNumber *totalModPrice = [NSNumber numberWithInt:0];
+    NSMutableArray *modsInDict = [dictionary objectForKey:itemId];
+    for (int i=0; i<[modsInDict count]; i++) {
+        NSArray *modString = [[modsInDict objectAtIndex:i] componentsSeparatedByString:@":"];
+        if ([[modString objectAtIndex:BOOLEAN_INDEX] isEqualToString:@"1"]) {
+            if ([[modString objectAtIndex:CATEGORY_INDEX] isEqualToString:@"Modifier 2"]) {
+                int modPriceFromDB = [[database getModPriceQuantity:itemId withModName:[modString objectAtIndex:CHOICE_INDEX]] intValue];
+                totalModPrice = [NSNumber numberWithInt:modPriceFromDB + [totalModPrice intValue]];
+            } else if ([[modString objectAtIndex:CATEGORY_INDEX] isEqualToString:@"Modifier 3"]) {
+                int modPriceFromDB = [[database getModPriceExtra:itemId withModName:[modString objectAtIndex:CHOICE_INDEX]] intValue];
+                totalModPrice = [NSNumber numberWithInt:modPriceFromDB + [totalModPrice intValue]];
+            }
+        }
+    }
+    //NSLog(@"TOTALMODPRICE: %@", totalModPrice);
+    
+    return totalModPrice;
+}
 
 - (void)updateDictionaryWithModifierString:(NSMutableArray *)newChanges forKey:(NSNumber *)itemId
 {
@@ -91,16 +122,16 @@
             NSArray *modUpdate = [[newChanges objectAtIndex:changeIndex] componentsSeparatedByString:@":"];
             for (int modInDictIndex=0; modInDictIndex<[modsInDict count]; modInDictIndex++) {
                 NSArray *modNames = [[modsInDict objectAtIndex:modInDictIndex] componentsSeparatedByString:@":"];
-                if ([[modNames objectAtIndex:MOD_CHOICE_NAME_INDEX] isEqualToString:[modUpdate objectAtIndex:MOD_CHOICE_NAME_INDEX]]) {
+                if ([[modNames objectAtIndex:CHOICE_INDEX] isEqualToString:[modUpdate objectAtIndex:CHOICE_INDEX]]) {
                     
                     // update the array, then update the dictionary
                     NSMutableArray *updateMutableNames = [[NSMutableArray alloc] initWithArray:modNames];
-                    [updateMutableNames replaceObjectAtIndex:MOD_BOOLEAN_INDEX withObject:[modUpdate objectAtIndex:MOD_BOOLEAN_INDEX]];
-                    // create a string from updateMutableNames, UPDATE arrayInDict at index j, THEN replace the dict with arrayInDict
-                    NSMutableString *stringOfupdateMutableNames = [[NSMutableString alloc] initWithFormat:@"%@:%@:%@", [updateMutableNames objectAtIndex:MOD_CATEGORY_INDEX], [updateMutableNames objectAtIndex:MOD_CHOICE_NAME_INDEX], [updateMutableNames objectAtIndex:MOD_BOOLEAN_INDEX]];
+                    [updateMutableNames replaceObjectAtIndex:BOOLEAN_INDEX withObject:[modUpdate objectAtIndex:BOOLEAN_INDEX]];
+                    
+                    // create a new string in format of "Modifier 1:M1:1" and replace a similar string in format of "Modifier 1:M1:0"
+                    NSMutableString *stringOfupdateMutableNames = [[NSMutableString alloc] initWithFormat:@"%@:%@:%@", [updateMutableNames objectAtIndex:CATEGORY_INDEX], [updateMutableNames objectAtIndex:CHOICE_INDEX], [updateMutableNames objectAtIndex:BOOLEAN_INDEX]];
                     [modsInDict replaceObjectAtIndex:modInDictIndex withObject:stringOfupdateMutableNames];
                     [dictionary setObject:modsInDict forKey:itemId];
-                        
                 }
             }
         } else {
@@ -117,7 +148,7 @@
     NSArray *splitNewChange = [newChange componentsSeparatedByString:@":"];
     for (int modStringIndex=0; modStringIndex<[modsInDict count]; modStringIndex++) {
         NSArray *splitModsInDict = [[modsInDict objectAtIndex:modStringIndex] componentsSeparatedByString:@":"];
-        if ([[splitModsInDict objectAtIndex:MOD_CHOICE_NAME_INDEX] isEqualToString:[splitNewChange objectAtIndex:MOD_CHOICE_NAME_INDEX]]) {
+        if ([[splitModsInDict objectAtIndex:CHOICE_INDEX] isEqualToString:[splitNewChange objectAtIndex:CHOICE_INDEX]]) {
             return YES;
         }
     }
@@ -131,8 +162,8 @@
     for (int i=0; i<[arrayOfModStrings count]; i++) {
         // check if the cellValue is a substring of any modifier string
         NSArray *modNames = [[arrayOfModStrings objectAtIndex:i] componentsSeparatedByString:@":"];
-        if ([[modNames objectAtIndex:MOD_CHOICE_NAME_INDEX] isEqualToString:cellValue]) {
-            if ([[modNames objectAtIndex:MOD_BOOLEAN_INDEX] isEqualToString:@"1"]) {
+        if ([[modNames objectAtIndex:CHOICE_INDEX] isEqualToString:cellValue]) {
+            if ([[modNames objectAtIndex:BOOLEAN_INDEX] isEqualToString:@"1"]) {
                 // user had picked the modifier to be on
                 return YES;
             } else {

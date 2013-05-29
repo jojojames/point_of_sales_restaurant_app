@@ -184,9 +184,6 @@
     
     [self addStringModOptionToArray:stringModOption];
     
-    
-    // TODO: RETURN THE ARRAY TO THE CORRECT DICT USING THE ITEMID AS THE KEY
-    // WILL BE ABLE TO ACCESS THE order object BY ACCESSING THE ROOT VIEW
     [[self delegate] changedModiferStringArray:modifiersToReturnToParent withItemId:selectedItemId];
 }
 
@@ -208,8 +205,6 @@
     }
     [modifiersToReturnToParent addObject:modStringToAdd];
     
-    // TEST : DELETE LATER
-    [self printArray];
 }
 
 - (void)printArray
@@ -237,7 +232,7 @@
     NSArray *array = [dictionary objectForKey:[modOptionKeys objectAtIndex:indexPath.section]];
     //NSString *selected = [array objectAtIndex:indexPath.row];
     selectedModifier = [array objectAtIndex:indexPath.row];
-    NSLog(selectedModifier);
+    //NSLog(selectedModifier);
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 }
