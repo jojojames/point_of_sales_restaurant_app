@@ -15,6 +15,8 @@
 @synthesize totalAmount;
 @synthesize currentItemIds;
 @synthesize dictionary;
+@synthesize nameOfFirstTax;
+@synthesize nameOfSecondTax;
 
 - (Orders *)init
 {
@@ -29,6 +31,9 @@
 {
     // use a database, get the price of the item and then add it to the total of the order
     // add somethign to the currentOrder array
+    
+    // change the tax names
+    [self getTaxNames:itemId];
     
     NSNumber *itemQty = [NSNumber numberWithInt:1]; // every item starts at 1 quantity
     
@@ -60,6 +65,14 @@
     [self updateTotals]; // update the totals internally
 }
 
+- (void)getTaxNames:(NSNumber *)itemId
+{
+    if(!nameOfFirstTax || !nameOfSecondTax) {
+        nameOfFirstTax = [database getTaxName:@"1"];
+        nameOfSecondTax = [database getTaxName:@"2"];
+    }
+}
+
 #define TAX .09 // tax percentage
 
 - (void)updateTotals
@@ -70,17 +83,35 @@
     totalAmount = 0;
     NSNumber *tempItemPrice;
     NSNumber *modsPrice; // additional price of every modifier attached to an item
+    
+    
+    NSNumber *firstTax = [NSNumber numberWithInt:0];
+    NSNumber *secondTax = [NSNumber numberWithInt:0];
+    
     for (int curItem=0; curItem<[currentItemIds count]; curItem++) {
         NSNumber *itemId = [[self currentItemIds] objectAtIndex:curItem];
         for (int curQty=0; curQty<[[currentQtys objectAtIndex:curItem] intValue]; curQty++) {
             tempItemPrice = [[self database] getLunchPriceUsing:itemId];
             modsPrice = [self priceOfEveryModUsing:itemId];
-            totalAmount = [NSNumber numberWithInt:[tempItemPrice intValue] + [totalAmount intValue] + [modsPrice intValue]];
+            self.taxOnePercentage = [NSNumber numberWithDouble:[[database getTax:itemId WithTax:@"1"] doubleValue] / 100];
+            self.taxTwoPercentage = [NSNumber numberWithDouble:[[database getTax:itemId WithTax:@"2"] doubleValue] / 100];
+            
+            firstTax = [NSNumber numberWithDouble:[firstTax doubleValue] +
+                        ([tempItemPrice doubleValue] *
+                         [self.taxOnePercentage doubleValue])];
+                         
+            secondTax = [NSNumber numberWithDouble:[secondTax doubleValue] +
+                         ([tempItemPrice doubleValue] *
+                          [self.taxTwoPercentage doubleValue])];
+            
+            totalAmount = [NSNumber numberWithInt:[tempItemPrice intValue] +
+                           [totalAmount intValue] + [modsPrice intValue]];
         }
     }
     
     int intTotalAmount = [totalAmount intValue];
-    double finalPrice = intTotalAmount + (intTotalAmount * TAX);
+    //double finalPrice = intTotalAmount + (intTotalAmount * TAX);
+    double finalPrice = intTotalAmount + [firstTax doubleValue] + [secondTax doubleValue];
     totalPrice = [NSNumber numberWithDouble:finalPrice];
 }
 

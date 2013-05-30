@@ -16,10 +16,12 @@
 #import "QuickServeTableCell.h"
 #import "QuickTable.h"
 #import <QuartzCore/QuartzCore.h>
+#import "PaymentViewController.h"
 
 @interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
                                     UIActionSheetDelegate, UITableViewDataSource,
-                                    UITableViewDelegate, QuickModifierControllerDelegate>
+                                    UITableViewDelegate, QuickModifierControllerDelegate,
+                                    UIAlertViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UITapGestureRecognizer *oneFingerOneTap;
 @property (strong, nonatomic) QuickCollectionFlow *flowLayout;
@@ -36,6 +38,10 @@
 @property (retain, nonatomic) IBOutlet UILabel *amountLabel;
 @property (retain, nonatomic) IBOutlet UILabel *taxLabel;
 @property (retain, nonatomic) IBOutlet UILabel *totalLabel;
+@property (retain, nonatomic) IBOutlet UILabel *firstTaxLabel;
+@property (retain, nonatomic) IBOutlet UILabel *secondTaxLabel;
+@property (retain, nonatomic) IBOutlet UILabel *firstTaxNameLabel;
+@property (retain, nonatomic) IBOutlet UILabel *secondTaxNameLabel;
 
 @end
 
@@ -63,6 +69,10 @@
 @synthesize amountLabel;
 @synthesize taxLabel;
 @synthesize totalLabel;
+@synthesize firstTaxLabel;
+@synthesize secondTaxLabel;
+@synthesize firstTaxNameLabel;
+@synthesize secondTaxNameLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -107,9 +117,11 @@
     ItemProperties *itemProperties = [[ItemProperties alloc] initWithItemId:itemTestid];
     
     // Initialize the labels to nothing.
-    amountLabel.text = @"";
-    taxLabel.text = @"";
-    totalLabel.text = @"";
+    amountLabel.text = @"0";
+    taxLabel.text = @"0";
+    totalLabel.text = @"0";
+    firstTaxLabel.text = @"0";
+    secondTaxLabel.text = @"0";
     
     [super viewDidLoad];
     
@@ -162,13 +174,10 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    
     //ignore any touches from a UIToolbar
-    
     if ([touch.view.superview isKindOfClass:[UIToolbar class]]) {
         return NO;
     }
-    
     return YES;
 }
 
@@ -183,9 +192,6 @@
     CGPoint point = [sender locationInView:[self quickCollectionView]];
     NSIndexPath *indexPath = [self.quickCollectionView indexPathForItemAtPoint:point];
     self.nameOfSelected = [[self currentMenuItems] objectAtIndex:indexPath.row];
-    //NSLog(@"%d", indexPath.row);
-    //NSLog(@"%@", nameOfSelected);
-    
     
     /*
      When the QuickServe is first selected, the collection view only displays Class Names.
@@ -241,6 +247,7 @@
 
 - (IBAction)modButtonPressed:(UIBarButtonItem *)sender
 {
+    // TODO: ADD A CHECK TO SEE IF THERE ARE ANY ORDERS AND NOT TO SEGUE IF THERE ARE NONE
     [self performSegueWithIdentifier:@"showModifiers" sender:self];
 }
 
@@ -261,10 +268,23 @@
     NSNumber *nsAmtValue = [NSNumber numberWithDouble:[order.totalAmount doubleValue]];
     NSNumber *nsTotValue = [NSNumber numberWithDouble:[order.totalPrice doubleValue]];
     
+    
+    NSNumber *nsFTaxValue = [NSNumber numberWithDouble:
+                             [nsTaxValue doubleValue] - ([order.totalAmount doubleValue] * [order.taxTwoPercentage doubleValue])];
+    NSNumber *nsSTaxValue = [NSNumber numberWithDouble:
+                             [nsTaxValue doubleValue] - ([order.totalAmount doubleValue] * [order.taxOnePercentage doubleValue])];
+    
     // update the view
     amountLabel.text = [numberFormater stringFromNumber:nsAmtValue];
     taxLabel.text = [numberFormater stringFromNumber:nsTaxValue];
     totalLabel.text = [numberFormater stringFromNumber:nsTotValue];
+    
+    firstTaxLabel.text = [numberFormater stringFromNumber:nsFTaxValue];
+    secondTaxLabel.text = [numberFormater stringFromNumber:nsSTaxValue];
+    
+    // TODO: FIX CRASH IF THESE ARE UNCOMMENTED
+    //firstTaxNameLabel.text = order.nameOfFirstTax;
+    //secondTaxNameLabel.text = order.nameOfSecondTax;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -274,6 +294,9 @@
         destViewController.delegate = self;
         destViewController.selectedItemId = self.selectedItemId;
         destViewController.database = self.database;
+    } else if([segue.identifier isEqualToString:@"paymentSegue"]) {
+        // TODO: SEND SOME INFORMATION TO THE NEXT VIEW, LIKE A TABLE NUMBER
+        PaymentViewController *destViewController = segue.destinationViewController;
         
     }
 }
@@ -299,7 +322,6 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     /* The collection view cells get filled with names of classes like 'LUNCH'. */
     static NSString *CellIdentifier = @"quickServe";
     QuickServeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -309,7 +331,6 @@
     [cell changeBorders:cell.frame];
     //NSLog(@"%@", cell.itemLabel.text);
     return cell;
-    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -379,7 +400,6 @@
     [view setBackgroundColor:[UIColor clearColor]];
     //[view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]]; //your background color...
     return view;
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -397,6 +417,7 @@
     parentCell.qtyLabel.text = [NSString stringWithFormat:@"%@", [[order currentQtys] objectAtIndex:indexPath.row]];
     
     // If the stepper reached the max value, it means the item should be removed from the table/order.
+    // TODO: FIX BUG WHERE CLICKING THE STEPPER TOO FAST WILL SKIP THE IF STATEMENT
     if (sender.value == STEPPER_MAX_VALUE) {
         // remove the object from order model, update every label
         [[order dictionary] removeObjectForKey:[[order currentItemIds] objectAtIndex:indexPath.row]];
@@ -414,7 +435,6 @@
     [[self order] updateDictionaryWithModifierString:updatedModifierStringArray forKey:itemId];
 }
 
-
 - (BOOL)modTrueInDictionary:(NSNumber *)itemId withCellValue:(NSString *)cellValue
 {
     return [[self order] nameInKey:cellValue ofKey:itemId];
@@ -428,21 +448,49 @@
     [totalLabel release];
     [taxLabel release];
     [amountLabel release];
+    [firstTaxLabel release];
+    [secondTaxLabel release];
+    [firstTaxNameLabel release];
+    [secondTaxNameLabel release];
     [super dealloc];
 }
 
 - (IBAction)clickedConfirm:(UIBarButtonItem *)sender
 {
-    
     // TODO: DO STUFF HERE TO COMPLETE THE ORDER
     UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Success!"
                                                            message:@"You've confirmed your order."
                                                           delegate:nil
-                                                 cancelButtonTitle:@"Ok"
-                                                 otherButtonTitles:nil];
+                                                 cancelButtonTitle:@"Cancel"
+                                                 otherButtonTitles:@"Pay Later", @"Pay Now", nil];
+    successAlert.tag = 1;
+    successAlert.delegate = self;
     [successAlert show];
     [successAlert release];
-    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 1) {
+        // handle confirm
+        if (buttonIndex == 0) {
+            // cancel
+            NSLog(@"0");
+        }
+        if (buttonIndex == 1) {
+            // pay later
+            NSLog(@"1");
+            [self.navigationController popToRootViewControllerAnimated:YES]; // go back to the original screen
+            // TODO: WRITE A WAY TO ACCESS A CONTROLLER AFTER SEGUING TO THE ROOT
+            // MAYBE USE A DICT WITH THE KEY BEING THE TABLE NAME AND THE ARRAY BEING THE CONTROLLER
+            //HomeViewController *hvc = (HomeViewController *) (self.navigationController.viewControllers[0]);
+        }
+        
+        if (buttonIndex == 2) {
+            // pay now
+            [self performSegueWithIdentifier:@"paymentSegue" sender:self];
+        }
+    }
 }
 
 - (void)printStringsFromArray:(NSMutableArray *)array

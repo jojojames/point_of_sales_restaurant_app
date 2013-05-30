@@ -27,4 +27,8 @@
 - (void)updateDictionaryWithModifierString:(NSMutableArray *)newChanges forKey:(NSNumber *)itemId;
 
 
+@property (nonatomic, strong) NSNumber *taxOnePercentage;
+@property (nonatomic, strong) NSNumber *taxTwoPercentage;
+@property (nonatomic, strong) NSString *nameOfFirstTax;
+@property (nonatomic, strong) NSString *nameOfSecondTax;
 @end

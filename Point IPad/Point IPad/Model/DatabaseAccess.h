@@ -53,4 +53,7 @@
 - (NSString *)getItemNameUsing:(NSNumber *)itemId;
 - (NSNumber *)getModPriceExtra:(NSNumber *)itemId withModName:(NSString *)modName;
 - (NSNumber *)getModPriceQuantity:(NSNumber *)itemId withModName:(NSString *)modName;
+
+- (NSNumber *)getTax:(NSNumber *)itemId WithTax:(NSString *)taxNumber;
+- (NSString *)getTaxName:(NSString *)taxNumber;
 @end

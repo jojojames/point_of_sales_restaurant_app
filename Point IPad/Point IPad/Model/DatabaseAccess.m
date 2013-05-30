@@ -404,6 +404,31 @@
     return [[rs fieldByIndex:0] asNumber];
 }
 
+- (NSNumber *)getTax:(NSNumber *)itemId WithTax:(NSString *)taxNumber
+{
+    NSNumber *taxForItem = [NSNumber numberWithInt:0];
+   //select taxed1 from tbl_items where item_id=383;
+    NSString *query = [NSString stringWithFormat:@"SELECT taxed%@ from TBL_ITEMS where item_id=%@", taxNumber, itemId];
+    PGSQLRecordset *rs = [pgConn open:query];
+    
+    
+    if ([[[rs fieldByIndex:0] asString] isEqualToString:@"t"]) {
+        NSString *query2 = [NSString stringWithFormat:@"SELECT tax_rate from TBL_TAX WHERE tax_id=%@", taxNumber];
+        PGSQLRecordset *rs2 = [pgConn open:query2];
+        return [[rs2 fieldByIndex:0] asNumber];
+    }
+    return taxForItem; // return 0 if there are no taxes
+}
+
+- (NSString *)getTaxName:(NSString *)taxNumber
+{
+    //select tax_type from tbl_tax where tax_id = 1;
+    NSString *query = [NSString stringWithFormat:@"SELECT tax_type FROM tbl_tax WHERE tax_id=%@", taxNumber];
+    PGSQLRecordset *rs = [pgConn open:query];
+    return [[rs fieldByIndex:0] asString];
+}
+
+
 - (void)closeConnection
 {
     [pgConn close];

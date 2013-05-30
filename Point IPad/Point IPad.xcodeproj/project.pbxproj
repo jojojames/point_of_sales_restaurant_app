@@ -9,12 +9,10 @@
 /* Begin PBXBuildFile section */
 		8B0F62D2172875CE00752C8B /* QuickCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F62D1172875CE00752C8B /* QuickCollection.m */; };
 		8B0F62D61728766F00752C8B /* QuickCollectionFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F62D51728766F00752C8B /* QuickCollectionFlow.m */; };
-		8B771AED1725F9FC0092003B /* Dec_Art_Jam_Frame_PNG_file_by_mashi.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B771AEC1725F9FC0092003B /* Dec_Art_Jam_Frame_PNG_file_by_mashi.png */; };
-		8B771AEF1725FA070092003B /* SwirlBlkFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B771AEE1725FA070092003B /* SwirlBlkFrame.png */; };
-		8B771AF11725FB420092003B /* Frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B771AF01725FB420092003B /* Frame.png */; };
 		8B771AF41725FCC00092003B /* QuickServeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AF31725FCC00092003B /* QuickServeController.m */; };
 		8B771AF81725FD070092003B /* QuickServeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AF71725FD070092003B /* QuickServeCell.m */; };
 		8B771AFB172853950092003B /* HomeCollectionFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AFA172853950092003B /* HomeCollectionFlow.m */; };
+		8B894B4A1756BC5A00F965A7 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B894B491756BC5A00F965A7 /* PaymentViewController.m */; };
 		8B8C892F1713744B00C9E1BE /* PGSQLColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89241713744B00C9E1BE /* PGSQLColumn.m */; };
 		8B8C89301713744B00C9E1BE /* PGSQLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89261713744B00C9E1BE /* PGSQLConnection.m */; };
 		8B8C89311713744B00C9E1BE /* PGSQLConnectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89281713744B00C9E1BE /* PGSQLConnectionInfo.m */; };
@@ -50,7 +48,6 @@
 		8BF9053517135FF500B02EB3 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF9053417135FF500B02EB3 /* HomeViewController.m */; };
 		8BF9053D171361D200B02EB3 /* HomeCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF9053C171361D200B02EB3 /* HomeCollection.m */; };
 		8BF905411713622E00B02EB3 /* HomeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF905401713622E00B02EB3 /* HomeCollectionCell.m */; };
-		8BF905441713718700B02EB3 /* photo-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BF905431713718700B02EB3 /* photo-frame.png */; };
 		8BFABF3B17416FD600C15FDA /* QuickModifierController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFABF3A17416FD600C15FDA /* QuickModifierController.m */; };
 		8BFABF3E17417F2F00C15FDA /* QuickModifierCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFABF3D17417F2F00C15FDA /* QuickModifierCell.m */; };
 		8BFABF411744158100C15FDA /* QuickServeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFABF401744158100C15FDA /* QuickServeTableCell.m */; };
@@ -79,15 +76,14 @@
 		8B0F62D1172875CE00752C8B /* QuickCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickCollection.m; path = QuickServe/QuickCollection.m; sourceTree = "<group>"; };
 		8B0F62D41728766F00752C8B /* QuickCollectionFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickCollectionFlow.h; path = QuickServe/QuickCollectionFlow.h; sourceTree = "<group>"; };
 		8B0F62D51728766F00752C8B /* QuickCollectionFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickCollectionFlow.m; path = QuickServe/QuickCollectionFlow.m; sourceTree = "<group>"; };
-		8B771AEC1725F9FC0092003B /* Dec_Art_Jam_Frame_PNG_file_by_mashi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dec_Art_Jam_Frame_PNG_file_by_mashi.png; sourceTree = "<group>"; };
-		8B771AEE1725FA070092003B /* SwirlBlkFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwirlBlkFrame.png; sourceTree = "<group>"; };
-		8B771AF01725FB420092003B /* Frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Frame.png; sourceTree = "<group>"; };
 		8B771AF21725FCC00092003B /* QuickServeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickServeController.h; path = QuickServe/QuickServeController.h; sourceTree = "<group>"; };
 		8B771AF31725FCC00092003B /* QuickServeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickServeController.m; path = QuickServe/QuickServeController.m; sourceTree = "<group>"; };
 		8B771AF61725FD070092003B /* QuickServeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickServeCell.h; path = QuickServe/QuickServeCell.h; sourceTree = "<group>"; };
 		8B771AF71725FD070092003B /* QuickServeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickServeCell.m; path = QuickServe/QuickServeCell.m; sourceTree = "<group>"; };
 		8B771AF9172853950092003B /* HomeCollectionFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeCollectionFlow.h; path = HomeScreen/HomeCollectionFlow.h; sourceTree = "<group>"; };
 		8B771AFA172853950092003B /* HomeCollectionFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeCollectionFlow.m; path = HomeScreen/HomeCollectionFlow.m; sourceTree = "<group>"; };
+		8B894B481756BC5A00F965A7 /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentViewController.h; path = OrderManagement/PaymentViewController.h; sourceTree = "<group>"; };
+		8B894B491756BC5A00F965A7 /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentViewController.m; path = OrderManagement/PaymentViewController.m; sourceTree = "<group>"; };
 		8B8C86F51713741400C9E1BE /* ecpg_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpg_config.h; sourceTree = "<group>"; };
 		8B8C86F61713741400C9E1BE /* ecpg_informix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpg_informix.h; sourceTree = "<group>"; };
 		8B8C86F71713741400C9E1BE /* ecpgerrno.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpgerrno.h; sourceTree = "<group>"; };
@@ -665,7 +661,6 @@
 		8BF9053C171361D200B02EB3 /* HomeCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeCollection.m; path = HomeScreen/HomeCollection.m; sourceTree = "<group>"; };
 		8BF9053F1713622E00B02EB3 /* HomeCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeCollectionCell.h; path = HomeScreen/HomeCollectionCell.h; sourceTree = "<group>"; };
 		8BF905401713622E00B02EB3 /* HomeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeCollectionCell.m; path = HomeScreen/HomeCollectionCell.m; sourceTree = "<group>"; };
-		8BF905431713718700B02EB3 /* photo-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-frame.png"; sourceTree = "<group>"; };
 		8BF90545171373C200B02EB3 /* pqtouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = pqtouch.xcodeproj; path = ../../pqtouch/pqtouch.xcodeproj; sourceTree = "<group>"; };
 		8BFABF3917416FD600C15FDA /* QuickModifierController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickModifierController.h; path = QuickServe/QuickModifierController.h; sourceTree = "<group>"; };
 		8BFABF3A17416FD600C15FDA /* QuickModifierController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickModifierController.m; path = QuickServe/QuickModifierController.m; sourceTree = "<group>"; };
@@ -713,6 +708,15 @@
 				8BFABF401744158100C15FDA /* QuickServeTableCell.m */,
 			);
 			name = QuickServe;
+			sourceTree = "<group>";
+		};
+		8B894B4B1756BC6000F965A7 /* OrderManagement */ = {
+			isa = PBXGroup;
+			children = (
+				8B894B481756BC5A00F965A7 /* PaymentViewController.h */,
+				8B894B491756BC5A00F965A7 /* PaymentViewController.m */,
+			);
+			name = OrderManagement;
 			sourceTree = "<group>";
 		};
 		8B8C86F41713741400C9E1BE /* libpq */ = {
@@ -1644,6 +1648,7 @@
 		8BF9051E17135FF500B02EB3 /* Point IPad */ = {
 			isa = PBXGroup;
 			children = (
+				8B894B4B1756BC6000F965A7 /* OrderManagement */,
 				8B771AF51725FCC60092003B /* QuickServe */,
 				8B8C891D1713744B00C9E1BE /* PGSQLKit */,
 				8B8C86F41713741400C9E1BE /* libpq */,
@@ -1693,10 +1698,6 @@
 			children = (
 				8BD30EC4172F4FA900569A01 /* background2.png */,
 				8BD30EBC172F0CEB00569A01 /* background.png */,
-				8B771AF01725FB420092003B /* Frame.png */,
-				8B771AEE1725FA070092003B /* SwirlBlkFrame.png */,
-				8B771AEC1725F9FC0092003B /* Dec_Art_Jam_Frame_PNG_file_by_mashi.png */,
-				8BF905431713718700B02EB3 /* photo-frame.png */,
 			);
 			path = Pictures;
 			sourceTree = "<group>";
@@ -1783,10 +1784,6 @@
 				8BF9052D17135FF500B02EB3 /* Default@2x.png in Resources */,
 				8BF9052F17135FF500B02EB3 /* Default-568h@2x.png in Resources */,
 				8BF9053217135FF500B02EB3 /* MainStoryboard.storyboard in Resources */,
-				8BF905441713718700B02EB3 /* photo-frame.png in Resources */,
-				8B771AED1725F9FC0092003B /* Dec_Art_Jam_Frame_PNG_file_by_mashi.png in Resources */,
-				8B771AEF1725FA070092003B /* SwirlBlkFrame.png in Resources */,
-				8B771AF11725FB420092003B /* Frame.png in Resources */,
 				8BD30EBD172F0CEB00569A01 /* background.png in Resources */,
 				8BD30EC5172F4FA900569A01 /* background2.png in Resources */,
 			);
@@ -1832,6 +1829,7 @@
 				8BFABF3E17417F2F00C15FDA /* QuickModifierCell.m in Sources */,
 				8BFABF411744158100C15FDA /* QuickServeTableCell.m in Sources */,
 				8BFABF44174425F500C15FDA /* QuickTable.m in Sources */,
+				8B894B4A1756BC5A00F965A7 /* PaymentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
