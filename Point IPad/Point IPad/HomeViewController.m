@@ -23,6 +23,8 @@
 @synthesize homeOptions;
 @synthesize homeCollectionView;
 @synthesize HomeTopView;
+@synthesize quickServeDictionary;
+@synthesize listOfTables;
 
 
 - (DatabaseAccess *)database
@@ -42,6 +44,11 @@
     // init the collection view
     self.homeCollectionView = [[HomeCollection alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
     
+    // Initialize the Dictionary that holds QuickServe controllers.
+    quickServeDictionary = [[NSMutableDictionary alloc] init];
+    
+    listOfTables = [[NSMutableArray alloc] initWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10", nil];
+    
     // Set datasource and delegate
     homeCollectionView.delegate = self;
     homeCollectionView.dataSource = self;
@@ -52,19 +59,7 @@
     self.loggedInEmployee = [[NSMutableArray alloc] init];
     
     
-    
-    /*
-    Gold -- R250 G166 B52
-    Blue -- R0 G113 B143
-    Light Grey -- R182 G184 B186
-    Dark Grey -- R76 G90 B82
-     */
-    
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
-    // not working
-    [homeCollectionView setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)didReceiveMemoryWarning

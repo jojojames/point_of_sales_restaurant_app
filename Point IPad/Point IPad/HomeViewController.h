@@ -17,4 +17,12 @@
 @property (nonatomic, strong) NSMutableArray *clockedInEmployees;
 @property (nonatomic, strong) NSMutableArray *loggedInEmployee; // only one will be logged in a time
 @property (nonatomic, assign, getter=isLoggedIn) BOOL isLoggedIn;
+
+
+// Dictionary that holds QuickServe controllers by table numbers.
+@property (nonatomic, strong) NSMutableDictionary *quickServeDictionary;
+
+// Available table numbers.
+@property (nonatomic, strong) NSMutableArray *listOfTables;
+
 @end

@@ -24,6 +24,8 @@
     currentQtys = [[NSMutableArray alloc] init];
     database = [[DatabaseAccess alloc] init];
     dictionary = [[NSMutableDictionary alloc] init];
+    nameOfFirstTax = [[NSString alloc] initWithString:@"Tax One"];
+    nameOfSecondTax = [[NSString alloc] initWithString:@"Tax Two"];
     return self;
 }
 
@@ -34,6 +36,7 @@
     
     // change the tax names
     [self getTaxNames:itemId];
+    
     
     NSNumber *itemQty = [NSNumber numberWithInt:1]; // every item starts at 1 quantity
     
@@ -67,10 +70,9 @@
 
 - (void)getTaxNames:(NSNumber *)itemId
 {
-    if(!nameOfFirstTax || !nameOfSecondTax) {
-        nameOfFirstTax = [database getTaxName:@"1"];
-        nameOfSecondTax = [database getTaxName:@"2"];
-    }
+    // TODO: ONLY QUERY ONCE PER ORDER
+    nameOfFirstTax = [database getTaxName:@"1"];
+    nameOfSecondTax = [database getTaxName:@"2"];
 }
 
 #define TAX .09 // tax percentage

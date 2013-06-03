@@ -16,7 +16,9 @@
 #import "QuickServeTableCell.h"
 #import "QuickTable.h"
 #import <QuartzCore/QuartzCore.h>
-#import "PaymentViewController.h"
+#import "PaymentTableViewController.h"
+#import "PopUpModDescriptionViewController.h"
+#import "HomeViewController.h"
 
 @interface QuickServeController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
                                     UIActionSheetDelegate, UITableViewDataSource,
@@ -28,6 +30,7 @@
 @property (retain, nonatomic) IBOutlet UIToolbar *quickToolbar;
 @property (strong, nonatomic) UIPopoverController *popover;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *modButton;
+
 
 // Views
 @property (retain, nonatomic) IBOutlet QuickCollection *quickCollectionView;
@@ -42,6 +45,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *secondTaxLabel;
 @property (retain, nonatomic) IBOutlet UILabel *firstTaxNameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *secondTaxNameLabel;
+
 
 @end
 
@@ -65,6 +69,8 @@
 @synthesize modButton;
 @synthesize popover;
 @synthesize quickTableView;
+@synthesize tableNumber;
+@synthesize taxNameChanged;
 
 @synthesize amountLabel;
 @synthesize taxLabel;
@@ -92,12 +98,12 @@
     // Set up the order.
     self.order = [[Orders alloc] init];
     
-    
     // The current menu items are always Class Names first.
     self.currentMenuItems = [[self database] classNames];
     
     // Initialize
     [self applyColorToBackgrounds];
+    taxNameChanged = NO;
     
     // Holds previous menu arrays to jump backwards
     self.stackOfMenus = [[NSMutableArray alloc] init];
@@ -282,9 +288,12 @@
     firstTaxLabel.text = [numberFormater stringFromNumber:nsFTaxValue];
     secondTaxLabel.text = [numberFormater stringFromNumber:nsSTaxValue];
     
-    // TODO: FIX CRASH IF THESE ARE UNCOMMENTED
-    //firstTaxNameLabel.text = order.nameOfFirstTax;
-    //secondTaxNameLabel.text = order.nameOfSecondTax;
+    
+    if(!taxNameChanged) {
+        firstTaxNameLabel.text = order.nameOfFirstTax;
+        secondTaxNameLabel.text = order.nameOfSecondTax;
+        taxNameChanged = YES;
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -294,10 +303,10 @@
         destViewController.delegate = self;
         destViewController.selectedItemId = self.selectedItemId;
         destViewController.database = self.database;
-    } else if([segue.identifier isEqualToString:@"paymentSegue"]) {
-        // TODO: SEND SOME INFORMATION TO THE NEXT VIEW, LIKE A TABLE NUMBER
-        PaymentViewController *destViewController = segue.destinationViewController;
-        
+    } else if ([segue.identifier isEqualToString:@"paymentSegue"]) {
+        PaymentTableViewController *destViewController = segue.destinationViewController;
+        destViewController.tableNumber = tableNumber;
+        destViewController.order = order;
     }
 }
 
@@ -404,8 +413,23 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // change the selected item when clicking on the table
+    // Change the selected item when clicking on the table.
     self.selectedItemId = [[order currentItemIds] objectAtIndex:indexPath.row];
+    
+    NSArray *stringModArray = [self.order.dictionary objectForKey:self.selectedItemId];
+    
+    // Display a list of modifiers if there is at least one modifier to display.
+    if ([stringModArray count]) {
+        PopUpModDescriptionViewController *popUpViewController = [[PopUpModDescriptionViewController alloc] initWithStyle:UITableViewStylePlain andArray:stringModArray];
+        
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        CGRect rect=CGRectMake(cell.bounds.origin.x+300, cell.bounds.origin.y+10, 10, 30);
+        popover = [[UIPopoverController alloc] initWithContentViewController:popUpViewController];
+        //[popover setPopoverContentSize:CGSizeMake(220, 300)];
+        //[popover setPopoverContentSize:popUpViewController.tableView.frame.size];
+        [popover presentPopoverFromRect:rect inView:cell permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
+    
 }
 
 - (IBAction)stepperValueChanged:(UIStepper *)sender
@@ -452,12 +476,12 @@
     [secondTaxLabel release];
     [firstTaxNameLabel release];
     [secondTaxNameLabel release];
+    [popover release];
     [super dealloc];
 }
 
 - (IBAction)clickedConfirm:(UIBarButtonItem *)sender
 {
-    // TODO: DO STUFF HERE TO COMPLETE THE ORDER
     UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Success!"
                                                            message:@"You've confirmed your order."
                                                           delegate:nil
@@ -475,15 +499,14 @@
         // handle confirm
         if (buttonIndex == 0) {
             // cancel
-            NSLog(@"0");
         }
         if (buttonIndex == 1) {
             // pay later
-            NSLog(@"1");
             [self.navigationController popToRootViewControllerAnimated:YES]; // go back to the original screen
+            HomeViewController *hvc = (HomeViewController *) (self.navigationController.viewControllers[0]);
+            
             // TODO: WRITE A WAY TO ACCESS A CONTROLLER AFTER SEGUING TO THE ROOT
             // MAYBE USE A DICT WITH THE KEY BEING THE TABLE NAME AND THE ARRAY BEING THE CONTROLLER
-            //HomeViewController *hvc = (HomeViewController *) (self.navigationController.viewControllers[0]);
         }
         
         if (buttonIndex == 2) {

@@ -9,10 +9,12 @@
 /* Begin PBXBuildFile section */
 		8B0F62D2172875CE00752C8B /* QuickCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F62D1172875CE00752C8B /* QuickCollection.m */; };
 		8B0F62D61728766F00752C8B /* QuickCollectionFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F62D51728766F00752C8B /* QuickCollectionFlow.m */; };
+		8B128202175D1DA1000194D1 /* PaymentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B128201175D1DA1000194D1 /* PaymentTableViewController.m */; };
+		8B128205175D1F5B000194D1 /* PaymentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B128204175D1F5B000194D1 /* PaymentTableViewCell.m */; };
+		8B128208175D2E6F000194D1 /* PopUpModDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B128207175D2E6E000194D1 /* PopUpModDescriptionViewController.m */; };
 		8B771AF41725FCC00092003B /* QuickServeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AF31725FCC00092003B /* QuickServeController.m */; };
 		8B771AF81725FD070092003B /* QuickServeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AF71725FD070092003B /* QuickServeCell.m */; };
 		8B771AFB172853950092003B /* HomeCollectionFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AFA172853950092003B /* HomeCollectionFlow.m */; };
-		8B894B4A1756BC5A00F965A7 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B894B491756BC5A00F965A7 /* PaymentViewController.m */; };
 		8B8C892F1713744B00C9E1BE /* PGSQLColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89241713744B00C9E1BE /* PGSQLColumn.m */; };
 		8B8C89301713744B00C9E1BE /* PGSQLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89261713744B00C9E1BE /* PGSQLConnection.m */; };
 		8B8C89311713744B00C9E1BE /* PGSQLConnectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C89281713744B00C9E1BE /* PGSQLConnectionInfo.m */; };
@@ -76,14 +78,18 @@
 		8B0F62D1172875CE00752C8B /* QuickCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickCollection.m; path = QuickServe/QuickCollection.m; sourceTree = "<group>"; };
 		8B0F62D41728766F00752C8B /* QuickCollectionFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickCollectionFlow.h; path = QuickServe/QuickCollectionFlow.h; sourceTree = "<group>"; };
 		8B0F62D51728766F00752C8B /* QuickCollectionFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickCollectionFlow.m; path = QuickServe/QuickCollectionFlow.m; sourceTree = "<group>"; };
+		8B128200175D1DA1000194D1 /* PaymentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentTableViewController.h; path = OrderManagement/PaymentTableViewController.h; sourceTree = "<group>"; };
+		8B128201175D1DA1000194D1 /* PaymentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentTableViewController.m; path = OrderManagement/PaymentTableViewController.m; sourceTree = "<group>"; };
+		8B128203175D1F5B000194D1 /* PaymentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentTableViewCell.h; path = OrderManagement/PaymentTableViewCell.h; sourceTree = "<group>"; };
+		8B128204175D1F5B000194D1 /* PaymentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentTableViewCell.m; path = OrderManagement/PaymentTableViewCell.m; sourceTree = "<group>"; };
+		8B128206175D2E6E000194D1 /* PopUpModDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopUpModDescriptionViewController.h; path = QuickServe/PopUpModDescriptionViewController.h; sourceTree = "<group>"; };
+		8B128207175D2E6E000194D1 /* PopUpModDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopUpModDescriptionViewController.m; path = QuickServe/PopUpModDescriptionViewController.m; sourceTree = "<group>"; };
 		8B771AF21725FCC00092003B /* QuickServeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickServeController.h; path = QuickServe/QuickServeController.h; sourceTree = "<group>"; };
 		8B771AF31725FCC00092003B /* QuickServeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickServeController.m; path = QuickServe/QuickServeController.m; sourceTree = "<group>"; };
 		8B771AF61725FD070092003B /* QuickServeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickServeCell.h; path = QuickServe/QuickServeCell.h; sourceTree = "<group>"; };
 		8B771AF71725FD070092003B /* QuickServeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickServeCell.m; path = QuickServe/QuickServeCell.m; sourceTree = "<group>"; };
 		8B771AF9172853950092003B /* HomeCollectionFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeCollectionFlow.h; path = HomeScreen/HomeCollectionFlow.h; sourceTree = "<group>"; };
 		8B771AFA172853950092003B /* HomeCollectionFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeCollectionFlow.m; path = HomeScreen/HomeCollectionFlow.m; sourceTree = "<group>"; };
-		8B894B481756BC5A00F965A7 /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentViewController.h; path = OrderManagement/PaymentViewController.h; sourceTree = "<group>"; };
-		8B894B491756BC5A00F965A7 /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentViewController.m; path = OrderManagement/PaymentViewController.m; sourceTree = "<group>"; };
 		8B8C86F51713741400C9E1BE /* ecpg_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpg_config.h; sourceTree = "<group>"; };
 		8B8C86F61713741400C9E1BE /* ecpg_informix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpg_informix.h; sourceTree = "<group>"; };
 		8B8C86F71713741400C9E1BE /* ecpgerrno.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecpgerrno.h; sourceTree = "<group>"; };
@@ -706,6 +712,8 @@
 				8BFABF3D17417F2F00C15FDA /* QuickModifierCell.m */,
 				8BFABF3F1744158100C15FDA /* QuickServeTableCell.h */,
 				8BFABF401744158100C15FDA /* QuickServeTableCell.m */,
+				8B128206175D2E6E000194D1 /* PopUpModDescriptionViewController.h */,
+				8B128207175D2E6E000194D1 /* PopUpModDescriptionViewController.m */,
 			);
 			name = QuickServe;
 			sourceTree = "<group>";
@@ -713,8 +721,10 @@
 		8B894B4B1756BC6000F965A7 /* OrderManagement */ = {
 			isa = PBXGroup;
 			children = (
-				8B894B481756BC5A00F965A7 /* PaymentViewController.h */,
-				8B894B491756BC5A00F965A7 /* PaymentViewController.m */,
+				8B128200175D1DA1000194D1 /* PaymentTableViewController.h */,
+				8B128201175D1DA1000194D1 /* PaymentTableViewController.m */,
+				8B128203175D1F5B000194D1 /* PaymentTableViewCell.h */,
+				8B128204175D1F5B000194D1 /* PaymentTableViewCell.m */,
 			);
 			name = OrderManagement;
 			sourceTree = "<group>";
@@ -1829,7 +1839,9 @@
 				8BFABF3E17417F2F00C15FDA /* QuickModifierCell.m in Sources */,
 				8BFABF411744158100C15FDA /* QuickServeTableCell.m in Sources */,
 				8BFABF44174425F500C15FDA /* QuickTable.m in Sources */,
-				8B894B4A1756BC5A00F965A7 /* PaymentViewController.m in Sources */,
+				8B128202175D1DA1000194D1 /* PaymentTableViewController.m in Sources */,
+				8B128205175D1F5B000194D1 /* PaymentTableViewCell.m in Sources */,
+				8B128208175D2E6F000194D1 /* PopUpModDescriptionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
