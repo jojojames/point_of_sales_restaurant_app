@@ -94,12 +94,118 @@
                         <outlet property="HomeTopView" destination="V9U-IW-tmp" id="cdY-hq-muo"/>
                         <outlet property="homeCollectionView" destination="nwa-fW-WPl" id="lQ7-Fl-uT7"/>
                         <segue destination="8dj-QK-7LB" kind="push" identifier="loginSegue" id="mLg-he-2ue"/>
-                        <segue destination="uKR-RY-WVo" kind="push" identifier="quickServe" id="uso-OQ-q71"/>
+                        <segue destination="WCH-uW-dHi" kind="push" identifier="pickTableQuickServe" id="vlc-xE-hhT"/>
+                        <segue destination="89O-HK-utX" kind="push" identifier="selectedOccupiedTable" id="Fr1-ff-BcG"/>
+                        <segue destination="uKR-RY-WVo" kind="push" identifier="onlyQuickServe" id="xVw-fE-4dN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aCy-Or-l6b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2843" y="-1041"/>
+            <point key="canvasLocation" x="-4265" y="-1772"/>
+        </scene>
+        <!--Pick Table Number Collection Controller - Pick Table Number-->
+        <scene sceneID="Z6U-vp-VDM">
+            <objects>
+                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="WCH-uW-dHi" customClass="PickTableNumberCollectionController" sceneMemberID="viewController">
+                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="PQM-Hm-JxQ">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="6zi-oa-It1">
+                            <size key="itemSize" width="137" height="126"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PickTable" id="T0A-nK-jko" customClass="PickTableNumberCollectionCell">
+                                <rect key="frame" x="0.0" y="0.0" width="137" height="126"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="137" height="126"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P3M-Sa-4nx">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="P3M-Sa-4nx" firstAttribute="top" secondItem="T0A-nK-jko" secondAttribute="top" constant="52" id="iIO-sz-n6V"/>
+                                    <constraint firstItem="P3M-Sa-4nx" firstAttribute="centerX" secondItem="T0A-nK-jko" secondAttribute="centerX" type="default" id="xNK-A4-y6y"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="itemLabel" destination="P3M-Sa-4nx" id="Ndb-kE-8py"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="WCH-uW-dHi" id="5A0-Op-eBY"/>
+                            <outlet property="delegate" destination="WCH-uW-dHi" id="tQj-dT-UW5"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Pick Table Number" id="vKH-ZF-yur"/>
+                    <connections>
+                        <segue destination="uKR-RY-WVo" kind="push" identifier="quickServe" id="72b-XF-D69"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dhM-KU-3QW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3307" y="-2960"/>
+        </scene>
+        <!--Occupied Table Collection View Controller - Occupied Tables-->
+        <scene sceneID="spm-Hu-RP1">
+            <objects>
+                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="89O-HK-utX" customClass="OccupiedTableCollectionViewController" sceneMemberID="viewController">
+                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="uh3-yj-JFx">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bpc-sM-M0a">
+                            <size key="itemSize" width="157" height="138"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="occupiedTable" id="slo-KI-aWL" customClass="OccupiedTableCollectionCell">
+                                <rect key="frame" x="0.0" y="0.0" width="157" height="138"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="157" height="138"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6t-xG-1yE">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="h6t-xG-1yE" firstAttribute="top" secondItem="slo-KI-aWL" secondAttribute="top" constant="58" id="1lQ-kf-JsY"/>
+                                    <constraint firstItem="h6t-xG-1yE" firstAttribute="centerX" secondItem="slo-KI-aWL" secondAttribute="centerX" type="default" id="BJE-vI-SG1"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="optionLabel" destination="h6t-xG-1yE" id="XbU-Mp-4zT"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="89O-HK-utX" id="IjL-Wa-16j"/>
+                            <outlet property="delegate" destination="89O-HK-utX" id="6ZM-dq-r1Q"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Occupied Tables" id="5qu-nh-mVO"/>
+                    <connections>
+                        <segue destination="uKR-RY-WVo" kind="push" identifier="quickServe" id="gw0-5M-XNE"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Twv-SD-tif" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3449" y="91"/>
         </scene>
         <!--Quick Serve Controller - Quick Serve-->
         <scene sceneID="A2y-dK-o7z">
@@ -363,7 +469,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1819" y="-1279"/>
+            <point key="canvasLocation" x="-2450" y="-1788"/>
         </scene>
         <!--Payment Table View Controller - Payment-->
         <scene sceneID="q92-ut-UX1">
@@ -408,7 +514,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kf8-3A-As3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-965" y="-1321"/>
+            <point key="canvasLocation" x="-1261" y="-1971"/>
         </scene>
         <!--Quick Modifier Controller - Modifiers-->
         <scene sceneID="r5R-7h-zK9">
@@ -438,7 +544,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UH7-Js-elf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-135" y="-1288"/>
+            <point key="canvasLocation" x="-1261" y="-852"/>
         </scene>
         <!--Login Table View Controller - Login-->
         <scene sceneID="lNb-fc-tkU">
@@ -485,7 +591,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wr7-CV-o5k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1666" y="-70"/>
+            <point key="canvasLocation" x="-2098" y="314"/>
         </scene>
         <!--Employee List Table View Controller - Employees-->
         <scene sceneID="dcb-Lw-NBB">
@@ -532,7 +638,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dpR-Sx-GxF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-794" y="-67"/>
+            <point key="canvasLocation" x="-1261" y="314"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZCE-xH-vWe">
@@ -554,121 +660,15 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xKk-uF-AJN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2128" y="778"/>
+            <point key="canvasLocation" x="-5142" y="-884"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="EmployeeListTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EmployeeListTableViewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="employeeLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EmployeeListTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EmployeeListTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="EmployeeList" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="HomeCollection" superclassName="UICollectionView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeCollection.h"/>
-        </class>
-        <class className="HomeCollectionCell" superclassName="UICollectionViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeCollectionCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="optionLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="HomeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="HomeTopView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="homeCollectionView" candidateClass="HomeCollection"/>
-            </relationships>
-        </class>
-        <class className="LoginTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginTableViewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="loginChoiceLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LoginTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginTableViewController.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PaymentTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentTableViewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="paymentChoiceLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="PaymentTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentTableViewController.h"/>
-        </class>
-        <class className="QuickCollection" superclassName="UICollectionView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickCollection.h"/>
-        </class>
-        <class className="QuickModifierCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickModifierCell.h"/>
-        </class>
-        <class className="QuickModifierController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickModifierController.h"/>
-        </class>
-        <class className="QuickServeCell" superclassName="UICollectionViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickServeCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="itemLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="QuickServeController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickServeController.h"/>
-            <relationships>
-                <relationship kind="action" name="clickedConfirm:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="flipBackMenuItems:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="handleOneTap:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="modButtonPressed:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="stepperValueChanged:" candidateClass="UIStepper"/>
-                <relationship kind="outlet" name="amountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="firstTaxLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="firstTaxNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="modButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="oneFingerOneTap" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="quickCollectionView" candidateClass="QuickCollection"/>
-                <relationship kind="outlet" name="quickTableView" candidateClass="QuickTable"/>
-                <relationship kind="outlet" name="quickToolbar" candidateClass="UIToolbar"/>
-                <relationship kind="outlet" name="quickTopView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="secondTaxLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="secondTaxNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="taxLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="totalLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="QuickServeTableCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickServeTableCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="itemNameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="priceLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="qtyLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="QuickTable" superclassName="UITableView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickTable.h"/>
-        </class>
-        <class className="UICollectionReusableView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
-        </class>
-        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
-        </class>
-        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="xVw-fE-4dN"/>
+    </inferredMetricsTieBreakers>
 </document>

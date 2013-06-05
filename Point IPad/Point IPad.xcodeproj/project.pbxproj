@@ -12,6 +12,10 @@
 		8B128202175D1DA1000194D1 /* PaymentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B128201175D1DA1000194D1 /* PaymentTableViewController.m */; };
 		8B128205175D1F5B000194D1 /* PaymentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B128204175D1F5B000194D1 /* PaymentTableViewCell.m */; };
 		8B128208175D2E6F000194D1 /* PopUpModDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B128207175D2E6E000194D1 /* PopUpModDescriptionViewController.m */; };
+		8B128211175D599D000194D1 /* OccupiedTableCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B128210175D599D000194D1 /* OccupiedTableCollectionViewController.m */; };
+		8B128215175D5A06000194D1 /* OccupiedTableCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B128214175D5A06000194D1 /* OccupiedTableCollectionCell.m */; };
+		8B12821A175FC40B000194D1 /* PickTableNumberCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B128217175FC40B000194D1 /* PickTableNumberCollectionCell.m */; };
+		8B12821B175FC40B000194D1 /* PickTableNumberCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B128219175FC40B000194D1 /* PickTableNumberCollectionController.m */; };
 		8B771AF41725FCC00092003B /* QuickServeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AF31725FCC00092003B /* QuickServeController.m */; };
 		8B771AF81725FD070092003B /* QuickServeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AF71725FD070092003B /* QuickServeCell.m */; };
 		8B771AFB172853950092003B /* HomeCollectionFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B771AFA172853950092003B /* HomeCollectionFlow.m */; };
@@ -84,6 +88,14 @@
 		8B128204175D1F5B000194D1 /* PaymentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentTableViewCell.m; path = OrderManagement/PaymentTableViewCell.m; sourceTree = "<group>"; };
 		8B128206175D2E6E000194D1 /* PopUpModDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopUpModDescriptionViewController.h; path = QuickServe/PopUpModDescriptionViewController.h; sourceTree = "<group>"; };
 		8B128207175D2E6E000194D1 /* PopUpModDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopUpModDescriptionViewController.m; path = QuickServe/PopUpModDescriptionViewController.m; sourceTree = "<group>"; };
+		8B12820F175D599D000194D1 /* OccupiedTableCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OccupiedTableCollectionViewController.h; path = "Point IPad/Tables/OccupiedTableCollectionViewController.h"; sourceTree = SOURCE_ROOT; };
+		8B128210175D599D000194D1 /* OccupiedTableCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OccupiedTableCollectionViewController.m; path = "Point IPad/Tables/OccupiedTableCollectionViewController.m"; sourceTree = SOURCE_ROOT; };
+		8B128213175D5A06000194D1 /* OccupiedTableCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OccupiedTableCollectionCell.h; path = "Point IPad/Tables/OccupiedTableCollectionCell.h"; sourceTree = SOURCE_ROOT; };
+		8B128214175D5A06000194D1 /* OccupiedTableCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OccupiedTableCollectionCell.m; path = "Point IPad/Tables/OccupiedTableCollectionCell.m"; sourceTree = SOURCE_ROOT; };
+		8B128216175FC40B000194D1 /* PickTableNumberCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickTableNumberCollectionCell.h; sourceTree = "<group>"; };
+		8B128217175FC40B000194D1 /* PickTableNumberCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickTableNumberCollectionCell.m; sourceTree = "<group>"; };
+		8B128218175FC40B000194D1 /* PickTableNumberCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickTableNumberCollectionController.h; sourceTree = "<group>"; };
+		8B128219175FC40B000194D1 /* PickTableNumberCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickTableNumberCollectionController.m; sourceTree = "<group>"; };
 		8B771AF21725FCC00092003B /* QuickServeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickServeController.h; path = QuickServe/QuickServeController.h; sourceTree = "<group>"; };
 		8B771AF31725FCC00092003B /* QuickServeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickServeController.m; path = QuickServe/QuickServeController.m; sourceTree = "<group>"; };
 		8B771AF61725FD070092003B /* QuickServeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickServeCell.h; path = QuickServe/QuickServeCell.h; sourceTree = "<group>"; };
@@ -693,6 +705,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B128212175D59A2000194D1 /* Tables */ = {
+			isa = PBXGroup;
+			children = (
+				8B128216175FC40B000194D1 /* PickTableNumberCollectionCell.h */,
+				8B128217175FC40B000194D1 /* PickTableNumberCollectionCell.m */,
+				8B128218175FC40B000194D1 /* PickTableNumberCollectionController.h */,
+				8B128219175FC40B000194D1 /* PickTableNumberCollectionController.m */,
+				8B12820F175D599D000194D1 /* OccupiedTableCollectionViewController.h */,
+				8B128210175D599D000194D1 /* OccupiedTableCollectionViewController.m */,
+				8B128213175D5A06000194D1 /* OccupiedTableCollectionCell.h */,
+				8B128214175D5A06000194D1 /* OccupiedTableCollectionCell.m */,
+			);
+			name = Tables;
+			path = Pictures;
+			sourceTree = "<group>";
+		};
 		8B771AF51725FCC60092003B /* QuickServe */ = {
 			isa = PBXGroup;
 			children = (
@@ -1661,6 +1689,7 @@
 				8B894B4B1756BC6000F965A7 /* OrderManagement */,
 				8B771AF51725FCC60092003B /* QuickServe */,
 				8B8C891D1713744B00C9E1BE /* PGSQLKit */,
+				8B128212175D59A2000194D1 /* Tables */,
 				8B8C86F41713741400C9E1BE /* libpq */,
 				8BF90545171373C200B02EB3 /* pqtouch.xcodeproj */,
 				8BB3FF29171387D800E2C4C0 /* Login */,
@@ -1842,6 +1871,10 @@
 				8B128202175D1DA1000194D1 /* PaymentTableViewController.m in Sources */,
 				8B128205175D1F5B000194D1 /* PaymentTableViewCell.m in Sources */,
 				8B128208175D2E6F000194D1 /* PopUpModDescriptionViewController.m in Sources */,
+				8B128211175D599D000194D1 /* OccupiedTableCollectionViewController.m in Sources */,
+				8B128215175D5A06000194D1 /* OccupiedTableCollectionCell.m in Sources */,
+				8B12821A175FC40B000194D1 /* PickTableNumberCollectionCell.m in Sources */,
+				8B12821B175FC40B000194D1 /* PickTableNumberCollectionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -106,13 +106,12 @@
                          ([tempItemPrice doubleValue] *
                           [self.taxTwoPercentage doubleValue])];
             
-            totalAmount = [NSNumber numberWithInt:[tempItemPrice intValue] +
-                           [totalAmount intValue] + [modsPrice intValue]];
+            totalAmount = [NSNumber numberWithDouble:[tempItemPrice doubleValue] +
+                           [totalAmount doubleValue] + [modsPrice doubleValue]];
         }
     }
     
-    int intTotalAmount = [totalAmount intValue];
-    //double finalPrice = intTotalAmount + (intTotalAmount * TAX);
+    double intTotalAmount = [totalAmount doubleValue];
     double finalPrice = intTotalAmount + [firstTax doubleValue] + [secondTax doubleValue];
     totalPrice = [NSNumber numberWithDouble:finalPrice];
 }
@@ -133,11 +132,11 @@
         NSArray *modString = [[modsInDict objectAtIndex:i] componentsSeparatedByString:@":"];
         if ([[modString objectAtIndex:BOOLEAN_INDEX] isEqualToString:@"1"]) {
             if ([[modString objectAtIndex:CATEGORY_INDEX] isEqualToString:@"Modifier 2"]) {
-                int modPriceFromDB = [[database getModPriceQuantity:itemId withModName:[modString objectAtIndex:CHOICE_INDEX]] intValue];
-                totalModPrice = [NSNumber numberWithInt:modPriceFromDB + [totalModPrice intValue]];
+                double modPriceFromDB = [[database getModPriceQuantity:itemId withModName:[modString objectAtIndex:CHOICE_INDEX]] intValue];
+                totalModPrice = [NSNumber numberWithDouble:modPriceFromDB + [totalModPrice doubleValue]];
             } else if ([[modString objectAtIndex:CATEGORY_INDEX] isEqualToString:@"Modifier 3"]) {
-                int modPriceFromDB = [[database getModPriceExtra:itemId withModName:[modString objectAtIndex:CHOICE_INDEX]] intValue];
-                totalModPrice = [NSNumber numberWithInt:modPriceFromDB + [totalModPrice intValue]];
+                double modPriceFromDB = [[database getModPriceExtra:itemId withModName:[modString objectAtIndex:CHOICE_INDEX]] doubleValue];
+                totalModPrice = [NSNumber numberWithDouble:modPriceFromDB + [totalModPrice doubleValue]];
             }
         }
     }

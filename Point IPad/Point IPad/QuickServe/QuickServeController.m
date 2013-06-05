@@ -43,8 +43,6 @@
 @property (retain, nonatomic) IBOutlet UILabel *totalLabel;
 @property (retain, nonatomic) IBOutlet UILabel *firstTaxLabel;
 @property (retain, nonatomic) IBOutlet UILabel *secondTaxLabel;
-@property (retain, nonatomic) IBOutlet UILabel *firstTaxNameLabel;
-@property (retain, nonatomic) IBOutlet UILabel *secondTaxNameLabel;
 
 
 @end
@@ -80,43 +78,54 @@
 @synthesize firstTaxNameLabel;
 @synthesize secondTaxNameLabel;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithCoder:(NSCoder*)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if(self = [super initWithCoder:aDecoder]) {
+        // Do something
         // set source and delegates
         quickCollectionView.delegate = self;
         quickCollectionView.dataSource = self;
         quickTableView.delegate = self;
         quickTableView.dataSource = self;
+        
+        // Set up the order.
+        self.order = [[Orders alloc] init];
+        
+        // The current menu items are always Class Names first.
+        //self.currentMenuItems = [[self database] classNames];
+        self.currentMenuItems = [[NSMutableArray alloc] init];
+        
+        taxNameChanged = NO;
+        
+        // Holds previous menu arrays to jump backwards
+        self.stackOfMenus = [[NSMutableArray alloc] init];
+        self.stackOfIsSubclassBools = [[NSMutableArray alloc] init];
+        self.stackOfIsActualItemBools = [[NSMutableArray alloc] init];
+        self.selectedItemId = [[NSNumber alloc] init];
+        
+        
+        [self setIsSubclass:FALSE];
+        [self setIsActualItems:FALSE];
+    }
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        
     }
     return self;
 }
 
 - (void)viewDidLoad
 {
-    // Set up the order.
-    self.order = [[Orders alloc] init];
-    
-    // The current menu items are always Class Names first.
-    self.currentMenuItems = [[self database] classNames];
-    
-    // Initialize
     [self applyColorToBackgrounds];
-    taxNameChanged = NO;
-    
-    // Holds previous menu arrays to jump backwards
-    self.stackOfMenus = [[NSMutableArray alloc] init];
-    self.stackOfIsSubclassBools = [[NSMutableArray alloc] init];
-    self.stackOfIsActualItemBools = [[NSMutableArray alloc] init];
-    self.selectedItemId = [[NSNumber alloc] init];
     
     // set a response to one tap
     [oneFingerOneTap setNumberOfTapsRequired:1];
     [oneFingerOneTap setNumberOfTouchesRequired:1];
-    //[quickCollectionView addGestureRecognizer:oneFingerOneTap];
-    [self setIsSubclass:FALSE];
-    [self setIsActualItems:FALSE];
     
     // test on itemproperties
     NSString *itemTestid = [[NSString alloc] initWithFormat:@"%d", 74];
@@ -274,7 +283,6 @@
     NSNumber *nsAmtValue = [NSNumber numberWithDouble:[order.totalAmount doubleValue]];
     NSNumber *nsTotValue = [NSNumber numberWithDouble:[order.totalPrice doubleValue]];
     
-    
     NSNumber *nsFTaxValue = [NSNumber numberWithDouble:
                              [nsTaxValue doubleValue] - ([order.totalAmount doubleValue] * [order.taxTwoPercentage doubleValue])];
     NSNumber *nsSTaxValue = [NSNumber numberWithDouble:
@@ -284,15 +292,17 @@
     amountLabel.text = [numberFormater stringFromNumber:nsAmtValue];
     taxLabel.text = [numberFormater stringFromNumber:nsTaxValue];
     totalLabel.text = [numberFormater stringFromNumber:nsTotValue];
-    
     firstTaxLabel.text = [numberFormater stringFromNumber:nsFTaxValue];
     secondTaxLabel.text = [numberFormater stringFromNumber:nsSTaxValue];
-    
     
     if(!taxNameChanged) {
         firstTaxNameLabel.text = order.nameOfFirstTax;
         secondTaxNameLabel.text = order.nameOfSecondTax;
-        taxNameChanged = YES;
+        if ([order.nameOfFirstTax isEqualToString:@"Tax One"]) {
+            taxNameChanged = NO;
+        } else {
+            taxNameChanged = YES;
+        }
     }
 }
 
@@ -407,7 +417,6 @@
     [view setBackgroundColor:[UIColor blackColor]];
     [label setBackgroundColor:[UIColor clearColor]];
     [view setBackgroundColor:[UIColor clearColor]];
-    //[view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]]; //your background color...
     return view;
 }
 
@@ -425,8 +434,6 @@
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         CGRect rect=CGRectMake(cell.bounds.origin.x+300, cell.bounds.origin.y+10, 10, 30);
         popover = [[UIPopoverController alloc] initWithContentViewController:popUpViewController];
-        //[popover setPopoverContentSize:CGSizeMake(220, 300)];
-        //[popover setPopoverContentSize:popUpViewController.tableView.frame.size];
         [popover presentPopoverFromRect:rect inView:cell permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     
@@ -500,13 +507,11 @@
         if (buttonIndex == 0) {
             // cancel
         }
+        
         if (buttonIndex == 1) {
             // pay later
             [self.navigationController popToRootViewControllerAnimated:YES]; // go back to the original screen
-            HomeViewController *hvc = (HomeViewController *) (self.navigationController.viewControllers[0]);
-            
-            // TODO: WRITE A WAY TO ACCESS A CONTROLLER AFTER SEGUING TO THE ROOT
-            // MAYBE USE A DICT WITH THE KEY BEING THE TABLE NAME AND THE ARRAY BEING THE CONTROLLER
+            //HomeViewController *hvc = (HomeViewController *) (self.navigationController.viewControllers[0]);
         }
         
         if (buttonIndex == 2) {

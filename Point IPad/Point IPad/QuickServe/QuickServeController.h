@@ -38,5 +38,9 @@
 // Table number, the key for a hashmap that holds QuickServe controllers.
 @property (nonatomic, strong) NSNumber *tableNumber;
 
+// tax label names
+@property (retain, nonatomic) IBOutlet UILabel *firstTaxNameLabel;
+@property (retain, nonatomic) IBOutlet UILabel *secondTaxNameLabel;
+
 
 @end

@@ -12,6 +12,8 @@
 #import "LoginTableViewController.h"
 #import "QuickServeController.h"
 #import "HomeCollectionFlow.h"
+#import "PickTableNumberCollectionController.h"
+#import "OccupiedTableCollectionViewController.h"
 
 @interface HomeViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (retain, nonatomic) IBOutlet HomeCollection *homeCollectionView;
@@ -54,7 +56,7 @@
     homeCollectionView.dataSource = self;
     
     // Set the options with this line
-    [self setHomeOptions:[[NSArray alloc] initWithObjects:@"Login", @"Quick Serve", @"Settings", @"Alpha", @"Beta", @"Gamma", @"Delta", @"Epsilon", @"Zeta", @"Eta", @"Theta", @"Iota", @"Kappa", @"Lambda", @"Mu", @"Nu", @"Xi", @"Omicron", @"Pi", @"Rho", @"Sigma", @"Tau", @"Upsilon", @"Phi", @"Chi", @"Psi", @"Omega", nil]];
+    [self setHomeOptions:[[NSArray alloc] initWithObjects:@"Login", @"Quick Serve", @"Pick Table", @"Settings", @"Tables", nil]];
     self.clockedInEmployees = [[NSMutableArray alloc] init];
     self.loggedInEmployee = [[NSMutableArray alloc] init];
     
@@ -82,15 +84,11 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     static NSString *identifier = @"homeOptions";
     HomeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Frame.png"]];
     cell.backgroundColor = [UIColor whiteColor];
     cell.optionLabel.text = [homeOptions objectAtIndex:indexPath.row];
     [cell changeBorders:cell.frame];
-    
-    //NSLog(@"%@", cell.optionLabel.text);
     return cell;
 }
 
@@ -101,8 +99,17 @@
         [self performSegueWithIdentifier:@"loginSegue" sender:self];
     }
     
+    if ([pickedHomeOption isEqualToString:@"Pick Table"]) {
+        //[self performSegueWithIdentifier:@"quickServe" sender:self];
+        [self performSegueWithIdentifier:@"pickTableQuickServe" sender:self];
+    }
+    
     if ([pickedHomeOption isEqualToString:@"Quick Serve"]) {
-        [self performSegueWithIdentifier:@"quickServe" sender:self];
+        [self performSegueWithIdentifier:@"onlyQuickServe" sender:self];
+    }
+    
+    if ([pickedHomeOption isEqualToString:@"Tables"]) {
+        [self performSegueWithIdentifier:@"selectedOccupiedTable" sender:self];
     }
     
     // add more like quickserve in here
@@ -118,11 +125,31 @@
         destViewController.loggedInEmployee = [self loggedInEmployee];
     }
     
-    if ([segue.identifier isEqualToString:@"quickServe"]) {
+    if ([segue.identifier isEqualToString:@"pickTableQuickServe"]) {
+        PickTableNumberCollectionController *destViewController = segue.destinationViewController;
+        // These variables aren't important to PickTableNumberCollectionController.
+        // PickTableNumberCollectionController sends these variables to the next view QuickServeController.
+        destViewController.database = [self database];
+        destViewController.pushedView = @"mainClassItems";
+        destViewController.currentMenuItems = [[self database] classNames];
+        
+        destViewController.isActualItems = NO; // items don't show immediately, only class names
+        // This array contains the list of tables that are currently available to seating.
+        destViewController.listOfTables = self.listOfTables;
+    }
+    
+    if ([segue.identifier isEqualToString:@"selectedOccupiedTable"]) {
+        OccupiedTableCollectionViewController *destViewController = segue.destinationViewController;
+        // This array contains the list of tables that are currently available to seating.
+        destViewController.quickServeDictionary = self.quickServeDictionary;
+    }
+    
+    if ([segue.identifier isEqualToString:@"onlyQuickServe"]) {
         QuickServeController *destViewController = segue.destinationViewController;
         destViewController.database = [self database];
         destViewController.pushedView = @"mainClassItems";
-        destViewController.isActualItems = FALSE; // items don't show immediately, only class names
+        destViewController.currentMenuItems = [[self database] classNames];
+        destViewController.isActualItems = NO; // items don't show immediately, only class names
     }
 }
 

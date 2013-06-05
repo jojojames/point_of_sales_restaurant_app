@@ -88,12 +88,6 @@
     
 }
 
-//- (IBAction)finishSelecting:(id)sender
-//{
-    // After user is done picking their modifiers, finish and segue back to the previous controller.
-    
-//}
-
 - (NSArray *)getDelimitedModNames:(NSMutableArray *)modArray
 {
     // Some mods in the database are in this format M1:M1A:M2, split them up.
